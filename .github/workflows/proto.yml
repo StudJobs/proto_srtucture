@@ -1,0 +1,30 @@
+name: Proto Validation
+on:
+  push:
+    branches: [main]
+  pull_request:
+    paths:
+      - 'proto/**'
+      - 'buf.yaml'
+      - 'buf.gen.yaml'
+
+jobs:
+  proto:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Buf
+        uses: bufbuild/buf-setup-action@v1
+
+      - name: Lint
+        run: buf lint
+
+      - name: Breaking changes check
+        run: buf breaking --against '.git#branch=main'
+
+      - name: Generate and test build
+        run: |
+          buf generate
+          # Проверяем что код компилируется
+          cd gen/go && go mod tidy && go build ./...

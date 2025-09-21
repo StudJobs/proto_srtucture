@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package achievement.v1;
+
+option go_package = "github.com/StudJobs/proto_srtucture/gen/go/achievement/v1";
+
+// Достижение (бинарные данные)
+message AchievementData {
+  bytes data = 1;
+  string name = 2;
+  string user_id = 3;
+}
+
+// Список достижений
+message AchievementList {
+  repeated AchievementData achievements = 1;
+}

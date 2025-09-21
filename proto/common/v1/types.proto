@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package common.v1;
+
+option go_package = "github.com/StudJobs/proto_srtucture/gen/go/common/v1";
+
+import "google/protobuf/timestamp.proto";
+
+// Пагинация
+message Pagination {
+  int32 page = 1;
+  int32 limit = 2;
+}
+
+message PaginationResponse {
+  int32 total = 1;
+  int32 pages = 2;
+  int32 current_page = 3;
+}
+
+// Пустой ответ
+message Empty {}
+
+// Ошибка
+message Error {
+  string code = 1;
+  string message = 2;
+}

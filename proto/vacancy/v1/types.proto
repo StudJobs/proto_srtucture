@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package vacancy.v1;
+
+option go_package = "github.com/StudJobs/proto_srtucture/gen/go/vacancy/v1";
+
+import "google/protobuf/timestamp.proto";
+
+// Вакансия
+message Vacancy {
+  string uuid = 1;
+  string title = 2;
+  string description = 3;
+  string company = 4;
+  string location = 5;
+  string salary_range = 6;
+  repeated string requirements = 7;
+  repeated string benefits = 8;
+  string employment_type = 9;
+  string experience_level = 10;
+  string creator_id = 11;
+  google.protobuf.Timestamp created_at = 12;
+  google.protobuf.Timestamp updated_at = 13;
+  bool is_active = 14;
+}
+
+// Список вакансий
+message VacancyList {
+  repeated Vacancy vacancies = 1;
+}
