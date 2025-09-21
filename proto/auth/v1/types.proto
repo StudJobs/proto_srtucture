@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package auth.v1;
+
+option go_package = "github.com/StudJobs/proto_srtucture/gen/go/auth/v1";
+
+// Данные для входа
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+}
+
+// Ответ с токеном
+message AuthResponse {
+  string token = 1;
+  string refresh_token = 2;
+  string user_id = 3;
+}
+
+// Валидация токена
+message TokenValidation {
+  bool valid = 1;
+  string user_id = 2;
+}

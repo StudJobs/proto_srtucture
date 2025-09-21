@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package achievement.v1;
+
+option go_package = "github.com/StudJobs/proto_srtucture/gen/go/achievement/v1";
+
+import "achievement/v1/types.proto";
+import "common/v1/types.proto";
+
+service AchievementService {
+  // Получить все достижения пользователя
+  rpc GetAllAchievements(GetAllAchievementsRequest) returns (AchievementList);
+
+  // Получить конкретное достижение
+  rpc GetAchievement(GetAchievementRequest) returns (AchievementData);
+
+  // Добавить достижение
+  rpc AddAchievement(AddAchievementRequest) returns (common.v1.Empty);
+
+  // Удалить достижение
+  rpc DeleteAchievement(DeleteAchievementRequest) returns (common.v1.Empty);
+}
+
+message GetAllAchievementsRequest {
+  string uuid = 1;
+}
+
+message GetAchievementRequest {
+  string uuid = 1;
+  string name = 2;
+}
+
+message AddAchievementRequest {
+  bytes data = 1;
+}
+
+message DeleteAchievementRequest {
+  string uuid = 1;
+  string name = 2;
+}

@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package users.v1;
+
+option go_package = "github.com/StudJobs/proto_srtucture/gen/go/users/v1";
+
+import "google/protobuf/timestamp.proto";
+
+// Профиль пользователя
+message Profile {
+  string uuid = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string email = 4;
+  string phone = 5;
+  string position = 6;
+  string company = 7;
+  string bio = 8;
+  string avatar_url = 9;
+  google.protobuf.Timestamp created_at = 10;
+  google.protobuf.Timestamp updated_at = 11;
+}
+
+// Список профилей
+message ProfileList {
+  repeated Profile profiles = 1;
+}
