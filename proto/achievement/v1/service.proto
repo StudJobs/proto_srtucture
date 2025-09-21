@@ -8,33 +8,43 @@ import "proto/achievement/v1/types.proto";
 import "proto/common/v1/types.proto";
 
 service AchievementService {
-  // Получить все достижения пользователя
+  // Получить все достижения пользователя (метаданные)
   rpc GetAllAchievements(GetAllAchievementsRequest) returns (AchievementList);
 
-  // Получить конкретное достижение
-  rpc GetAchievement(GetAchievementRequest) returns (AchievementData);
+  // Получить URL для скачивания достижения
+  rpc GetAchievementDownloadUrl(GetAchievementRequest) returns (AchievementUrl);
 
-  // Добавить достижение
-  rpc AddAchievement(AddAchievementRequest) returns (common.v1.Empty);
+  // Получить URL для загрузки достижения
+  rpc GetAchievementUploadUrl(GetAchievementUploadRequest) returns (AchievementUrl);
+
+  // Добавить метаданные достижения
+  rpc AddAchievementMeta(AddAchievementMetaRequest) returns (common.v1.Empty);
 
   // Удалить достижение
   rpc DeleteAchievement(DeleteAchievementRequest) returns (common.v1.Empty);
 }
 
 message GetAllAchievementsRequest {
-  string uuid = 1;
+  string user_uuid = 1;
 }
 
 message GetAchievementRequest {
-  string uuid = 1;
-  string name = 2;
+  string user_uuid = 1;
+  string achievement_name = 2;
 }
 
-message AddAchievementRequest {
-  bytes data = 1;
+message GetAchievementUploadRequest {
+  string user_uuid = 1;
+  string achievement_name = 2;
+  string file_name = 3;
+  string file_type = 4;
+}
+
+message AddAchievementMetaRequest {
+  AchievementMeta meta = 1;
 }
 
 message DeleteAchievementRequest {
-  string uuid = 1;
-  string name = 2;
+  string user_uuid = 1;
+  string achievement_name = 2;
 }

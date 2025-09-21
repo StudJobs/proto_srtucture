@@ -4,21 +4,43 @@ package auth.v1;
 
 option go_package = "github.com/StudJobs/proto_srtucture/gen/go/auth/v1";
 
+// Роли пользователей
+enum Role {
+  ROLE_UNSPECIFIED = 0;
+  ROLE_STUDENT = 1;      // Студент
+  ROLE_DEVELOPER = 2;    // Разработчик (root)
+  ROLE_EMPLOYER = 3;     // Работодатель/заказчик
+}
+
 // Данные для входа
 message LoginRequest {
   string email = 1;
   string password = 2;
+  Role role = 3;
 }
 
-// Ответ с токеном
+// Данные для регистрации
+message SignUpRequest {
+  string email = 1;
+  string password = 2;
+  Role role = 3;
+}
+
+// Запрос на проверку токена
+message ParseTokenRequest {
+  string access_token = 1;
+}
+
+// Ответ аутентификации
 message AuthResponse {
   string token = 1;
-  string refresh_token = 2;
-  string user_id = 3;
+  string user_uuid = 2;
+  Role role = 3;
 }
 
 // Валидация токена
 message TokenValidation {
   bool valid = 1;
-  string user_id = 2;
+  string user_uuid = 2;
+  Role role = 3;
 }

@@ -4,13 +4,13 @@ package vacancy.v1;
 
 option go_package = "github.com/StudJobs/proto_srtucture/gen/go/vacancy/v1";
 
-// for .py
-//import "vacancy/v1/types.proto";
-//import "common/v1/types.proto";
+// for Python
+import "vacancy/v1/types.proto";
+import "common/v1/types.proto";
 
-// for .go
-import "proto/vacancy/v1/types.proto";
-import "proto/common/v1/types.proto";
+// for Golang
+//import "proto/vacancy/v1/types.proto";
+//import "proto/common/v1/types.proto";
 
 service VacancyService {
   // Создать вакансию
@@ -30,23 +30,24 @@ service VacancyService {
 }
 
 message NewVacancyRequest {
-  string uuid = 1;
-  Vacancy vacancy = 2;
+  Vacancy vacancy = 1;
 }
 
 message UpdateVacancyRequest {
-  string uuid = 1;
+  string id = 1; // UUID вакансии
   Vacancy vacancy = 2;
 }
 
 message DeleteVacancyRequest {
-  string uuid = 1;
+  string id = 1; // UUID вакансии
 }
 
 message GetVacancyRequest {
-  string uuid = 1;
+  string id = 1; // UUID вакансии
 }
 
 message GetAllVacanciesRequest {
   common.v1.Pagination pagination = 1;
+  string company_id = 2; // Опциональный фильтр по компании
+  string position_status = 3; // Опциональный фильтр по статусу позиции
 }

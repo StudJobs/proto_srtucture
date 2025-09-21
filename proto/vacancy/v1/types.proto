@@ -4,27 +4,48 @@ package vacancy.v1;
 
 option go_package = "github.com/StudJobs/proto_srtucture/gen/go/vacancy/v1";
 
-import "google/protobuf/timestamp.proto";
+// for Golang
+//import "proto/common/v1/types.proto";
+
+// for Python
+import "common/v1/types.proto";
+
+// Статус позиции (ENUM как строка)
+message PositionStatus {
+  string value = 1; // intern, Junior_loh, Middle, Senior, ProductManager
+}
+
+// Тип компании (ENUM как строка)
+message CompanyType {
+  string value = 1; // Акредитованная, ИП, Государственная
+}
+
+// Компания
+message Company {
+  string id = 1; // UUID
+  string name = 2; // NameCompany
+  string description = 3;
+  string city = 4;
+  string site = 5;
+  CompanyType type = 6;
+}
 
 // Вакансия
 message Vacancy {
-  string uuid = 1;
-  string title = 2;
-  string description = 3;
-  string company = 4;
-  string location = 5;
-  string salary_range = 6;
-  repeated string requirements = 7;
-  repeated string benefits = 8;
-  string employment_type = 9;
-  string experience_level = 10;
-  string creator_id = 11;
-  google.protobuf.Timestamp created_at = 12;
-  google.protobuf.Timestamp updated_at = 13;
-  bool is_active = 14;
+  string id = 1; // UUID
+  string title = 2; // varchar(128)
+  int32 experience = 3; // integer
+  int32 salary = 4; // integer
+  PositionStatus position_status = 5; // ENUM
+  string usage_format = 6; // varchar(64)
+  int32 schedule = 7; // integer
+  string work_format = 8; // varchar(64)
+  string company_id = 9; // UUID
+  string date_start = 10; // datetime как строка
 }
 
-// Список вакансий
+// Список вакансий с пагинацией
 message VacancyList {
   repeated Vacancy vacancies = 1;
+  common.v1.PaginationResponse pagination = 2;
 }

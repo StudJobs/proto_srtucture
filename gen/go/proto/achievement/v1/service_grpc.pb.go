@@ -20,22 +20,25 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AchievementService_GetAllAchievements_FullMethodName = "/achievement.v1.AchievementService/GetAllAchievements"
-	AchievementService_GetAchievement_FullMethodName     = "/achievement.v1.AchievementService/GetAchievement"
-	AchievementService_AddAchievement_FullMethodName     = "/achievement.v1.AchievementService/AddAchievement"
-	AchievementService_DeleteAchievement_FullMethodName  = "/achievement.v1.AchievementService/DeleteAchievement"
+	AchievementService_GetAllAchievements_FullMethodName        = "/achievement.v1.AchievementService/GetAllAchievements"
+	AchievementService_GetAchievementDownloadUrl_FullMethodName = "/achievement.v1.AchievementService/GetAchievementDownloadUrl"
+	AchievementService_GetAchievementUploadUrl_FullMethodName   = "/achievement.v1.AchievementService/GetAchievementUploadUrl"
+	AchievementService_AddAchievementMeta_FullMethodName        = "/achievement.v1.AchievementService/AddAchievementMeta"
+	AchievementService_DeleteAchievement_FullMethodName         = "/achievement.v1.AchievementService/DeleteAchievement"
 )
 
 // AchievementServiceClient is the client API for AchievementService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AchievementServiceClient interface {
-	// Получить все достижения пользователя
+	// Получить все достижения пользователя (метаданные)
 	GetAllAchievements(ctx context.Context, in *GetAllAchievementsRequest, opts ...grpc.CallOption) (*AchievementList, error)
-	// Получить конкретное достижение
-	GetAchievement(ctx context.Context, in *GetAchievementRequest, opts ...grpc.CallOption) (*AchievementData, error)
-	// Добавить достижение
-	AddAchievement(ctx context.Context, in *AddAchievementRequest, opts ...grpc.CallOption) (*v1.Empty, error)
+	// Получить URL для скачивания достижения
+	GetAchievementDownloadUrl(ctx context.Context, in *GetAchievementRequest, opts ...grpc.CallOption) (*AchievementUrl, error)
+	// Получить URL для загрузки достижения
+	GetAchievementUploadUrl(ctx context.Context, in *GetAchievementUploadRequest, opts ...grpc.CallOption) (*AchievementUrl, error)
+	// Добавить метаданные достижения
+	AddAchievementMeta(ctx context.Context, in *AddAchievementMetaRequest, opts ...grpc.CallOption) (*v1.Empty, error)
 	// Удалить достижение
 	DeleteAchievement(ctx context.Context, in *DeleteAchievementRequest, opts ...grpc.CallOption) (*v1.Empty, error)
 }
@@ -58,20 +61,30 @@ func (c *achievementServiceClient) GetAllAchievements(ctx context.Context, in *G
 	return out, nil
 }
 
-func (c *achievementServiceClient) GetAchievement(ctx context.Context, in *GetAchievementRequest, opts ...grpc.CallOption) (*AchievementData, error) {
+func (c *achievementServiceClient) GetAchievementDownloadUrl(ctx context.Context, in *GetAchievementRequest, opts ...grpc.CallOption) (*AchievementUrl, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AchievementData)
-	err := c.cc.Invoke(ctx, AchievementService_GetAchievement_FullMethodName, in, out, cOpts...)
+	out := new(AchievementUrl)
+	err := c.cc.Invoke(ctx, AchievementService_GetAchievementDownloadUrl_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *achievementServiceClient) AddAchievement(ctx context.Context, in *AddAchievementRequest, opts ...grpc.CallOption) (*v1.Empty, error) {
+func (c *achievementServiceClient) GetAchievementUploadUrl(ctx context.Context, in *GetAchievementUploadRequest, opts ...grpc.CallOption) (*AchievementUrl, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AchievementUrl)
+	err := c.cc.Invoke(ctx, AchievementService_GetAchievementUploadUrl_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *achievementServiceClient) AddAchievementMeta(ctx context.Context, in *AddAchievementMetaRequest, opts ...grpc.CallOption) (*v1.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(v1.Empty)
-	err := c.cc.Invoke(ctx, AchievementService_AddAchievement_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, AchievementService_AddAchievementMeta_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -92,12 +105,14 @@ func (c *achievementServiceClient) DeleteAchievement(ctx context.Context, in *De
 // All implementations should embed UnimplementedAchievementServiceServer
 // for forward compatibility.
 type AchievementServiceServer interface {
-	// Получить все достижения пользователя
+	// Получить все достижения пользователя (метаданные)
 	GetAllAchievements(context.Context, *GetAllAchievementsRequest) (*AchievementList, error)
-	// Получить конкретное достижение
-	GetAchievement(context.Context, *GetAchievementRequest) (*AchievementData, error)
-	// Добавить достижение
-	AddAchievement(context.Context, *AddAchievementRequest) (*v1.Empty, error)
+	// Получить URL для скачивания достижения
+	GetAchievementDownloadUrl(context.Context, *GetAchievementRequest) (*AchievementUrl, error)
+	// Получить URL для загрузки достижения
+	GetAchievementUploadUrl(context.Context, *GetAchievementUploadRequest) (*AchievementUrl, error)
+	// Добавить метаданные достижения
+	AddAchievementMeta(context.Context, *AddAchievementMetaRequest) (*v1.Empty, error)
 	// Удалить достижение
 	DeleteAchievement(context.Context, *DeleteAchievementRequest) (*v1.Empty, error)
 }
@@ -112,11 +127,14 @@ type UnimplementedAchievementServiceServer struct{}
 func (UnimplementedAchievementServiceServer) GetAllAchievements(context.Context, *GetAllAchievementsRequest) (*AchievementList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllAchievements not implemented")
 }
-func (UnimplementedAchievementServiceServer) GetAchievement(context.Context, *GetAchievementRequest) (*AchievementData, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetAchievement not implemented")
+func (UnimplementedAchievementServiceServer) GetAchievementDownloadUrl(context.Context, *GetAchievementRequest) (*AchievementUrl, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAchievementDownloadUrl not implemented")
 }
-func (UnimplementedAchievementServiceServer) AddAchievement(context.Context, *AddAchievementRequest) (*v1.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AddAchievement not implemented")
+func (UnimplementedAchievementServiceServer) GetAchievementUploadUrl(context.Context, *GetAchievementUploadRequest) (*AchievementUrl, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAchievementUploadUrl not implemented")
+}
+func (UnimplementedAchievementServiceServer) AddAchievementMeta(context.Context, *AddAchievementMetaRequest) (*v1.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddAchievementMeta not implemented")
 }
 func (UnimplementedAchievementServiceServer) DeleteAchievement(context.Context, *DeleteAchievementRequest) (*v1.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteAchievement not implemented")
@@ -159,38 +177,56 @@ func _AchievementService_GetAllAchievements_Handler(srv interface{}, ctx context
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AchievementService_GetAchievement_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _AchievementService_GetAchievementDownloadUrl_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetAchievementRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AchievementServiceServer).GetAchievement(ctx, in)
+		return srv.(AchievementServiceServer).GetAchievementDownloadUrl(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AchievementService_GetAchievement_FullMethodName,
+		FullMethod: AchievementService_GetAchievementDownloadUrl_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AchievementServiceServer).GetAchievement(ctx, req.(*GetAchievementRequest))
+		return srv.(AchievementServiceServer).GetAchievementDownloadUrl(ctx, req.(*GetAchievementRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AchievementService_AddAchievement_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AddAchievementRequest)
+func _AchievementService_GetAchievementUploadUrl_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAchievementUploadRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AchievementServiceServer).AddAchievement(ctx, in)
+		return srv.(AchievementServiceServer).GetAchievementUploadUrl(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AchievementService_AddAchievement_FullMethodName,
+		FullMethod: AchievementService_GetAchievementUploadUrl_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AchievementServiceServer).AddAchievement(ctx, req.(*AddAchievementRequest))
+		return srv.(AchievementServiceServer).GetAchievementUploadUrl(ctx, req.(*GetAchievementUploadRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AchievementService_AddAchievementMeta_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddAchievementMetaRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AchievementServiceServer).AddAchievementMeta(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AchievementService_AddAchievementMeta_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AchievementServiceServer).AddAchievementMeta(ctx, req.(*AddAchievementMetaRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -225,12 +261,16 @@ var AchievementService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _AchievementService_GetAllAchievements_Handler,
 		},
 		{
-			MethodName: "GetAchievement",
-			Handler:    _AchievementService_GetAchievement_Handler,
+			MethodName: "GetAchievementDownloadUrl",
+			Handler:    _AchievementService_GetAchievementDownloadUrl_Handler,
 		},
 		{
-			MethodName: "AddAchievement",
-			Handler:    _AchievementService_AddAchievement_Handler,
+			MethodName: "GetAchievementUploadUrl",
+			Handler:    _AchievementService_GetAchievementUploadUrl_Handler,
+		},
+		{
+			MethodName: "AddAchievementMeta",
+			Handler:    _AchievementService_AddAchievementMeta_Handler,
 		},
 		{
 			MethodName: "DeleteAchievement",

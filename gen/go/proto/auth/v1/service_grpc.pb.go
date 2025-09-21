@@ -20,7 +20,7 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	AuthService_Login_FullMethodName      = "/auth.v1.AuthService/Login"
-	AuthService_SignIn_FullMethodName     = "/auth.v1.AuthService/SignIn"
+	AuthService_SignUp_FullMethodName     = "/auth.v1.AuthService/SignUp"
 	AuthService_ParseToken_FullMethodName = "/auth.v1.AuthService/ParseToken"
 )
 
@@ -31,7 +31,7 @@ type AuthServiceClient interface {
 	// Вход в систему
 	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*AuthResponse, error)
 	// Регистрация
-	SignIn(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*AuthResponse, error)
+	SignUp(ctx context.Context, in *SignUpRequest, opts ...grpc.CallOption) (*AuthResponse, error)
 	// Проверка токена
 	ParseToken(ctx context.Context, in *ParseTokenRequest, opts ...grpc.CallOption) (*TokenValidation, error)
 }
@@ -54,10 +54,10 @@ func (c *authServiceClient) Login(ctx context.Context, in *LoginRequest, opts ..
 	return out, nil
 }
 
-func (c *authServiceClient) SignIn(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*AuthResponse, error) {
+func (c *authServiceClient) SignUp(ctx context.Context, in *SignUpRequest, opts ...grpc.CallOption) (*AuthResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(AuthResponse)
-	err := c.cc.Invoke(ctx, AuthService_SignIn_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, AuthService_SignUp_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -81,7 +81,7 @@ type AuthServiceServer interface {
 	// Вход в систему
 	Login(context.Context, *LoginRequest) (*AuthResponse, error)
 	// Регистрация
-	SignIn(context.Context, *LoginRequest) (*AuthResponse, error)
+	SignUp(context.Context, *SignUpRequest) (*AuthResponse, error)
 	// Проверка токена
 	ParseToken(context.Context, *ParseTokenRequest) (*TokenValidation, error)
 }
@@ -96,8 +96,8 @@ type UnimplementedAuthServiceServer struct{}
 func (UnimplementedAuthServiceServer) Login(context.Context, *LoginRequest) (*AuthResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
 }
-func (UnimplementedAuthServiceServer) SignIn(context.Context, *LoginRequest) (*AuthResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SignIn not implemented")
+func (UnimplementedAuthServiceServer) SignUp(context.Context, *SignUpRequest) (*AuthResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SignUp not implemented")
 }
 func (UnimplementedAuthServiceServer) ParseToken(context.Context, *ParseTokenRequest) (*TokenValidation, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ParseToken not implemented")
@@ -140,20 +140,20 @@ func _AuthService_Login_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AuthService_SignIn_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(LoginRequest)
+func _AuthService_SignUp_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SignUpRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AuthServiceServer).SignIn(ctx, in)
+		return srv.(AuthServiceServer).SignUp(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AuthService_SignIn_FullMethodName,
+		FullMethod: AuthService_SignUp_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServiceServer).SignIn(ctx, req.(*LoginRequest))
+		return srv.(AuthServiceServer).SignUp(ctx, req.(*SignUpRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -188,8 +188,8 @@ var AuthService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _AuthService_Login_Handler,
 		},
 		{
-			MethodName: "SignIn",
-			Handler:    _AuthService_SignIn_Handler,
+			MethodName: "SignUp",
+			Handler:    _AuthService_SignUp_Handler,
 		},
 		{
 			MethodName: "ParseToken",

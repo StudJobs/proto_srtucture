@@ -28,7 +28,11 @@ if _version_not_supported:
 
 
 class VacancyServiceStub(object):
-    """Missing associated documentation comment in .proto file."""
+    """for Golang
+    import "proto/vacancy/v1/types.proto";
+    import "proto/common/v1/types.proto";
+
+    """
 
     def __init__(self, channel):
         """Constructor.
@@ -64,7 +68,11 @@ class VacancyServiceStub(object):
 
 
 class VacancyServiceServicer(object):
-    """Missing associated documentation comment in .proto file."""
+    """for Golang
+    import "proto/vacancy/v1/types.proto";
+    import "proto/common/v1/types.proto";
+
+    """
 
     def NewVacancy(self, request, context):
         """Создать вакансию
@@ -138,7 +146,11 @@ def add_VacancyServiceServicer_to_server(servicer, server):
 
  # This class is part of an EXPERIMENTAL API.
 class VacancyService(object):
-    """Missing associated documentation comment in .proto file."""
+    """for Golang
+    import "proto/vacancy/v1/types.proto";
+    import "proto/common/v1/types.proto";
+
+    """
 
     @staticmethod
     def NewVacancy(request,

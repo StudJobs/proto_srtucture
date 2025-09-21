@@ -22,10 +22,10 @@ _runtime_version.ValidateProtobufRuntimeVersion(
 _sym_db = _symbol_database.Default()
 
 
-from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
+from common.v1 import types_pb2 as common_dot_v1_dot_types__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x16vacancy/v1/types.proto\x12\nvacancy.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xd6\x02\n\x07Vacancy\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\r\n\x05title\x18\x02 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\x0f\n\x07\x63ompany\x18\x04 \x01(\t\x12\x10\n\x08location\x18\x05 \x01(\t\x12\x14\n\x0csalary_range\x18\x06 \x01(\t\x12\x14\n\x0crequirements\x18\x07 \x03(\t\x12\x10\n\x08\x62\x65nefits\x18\x08 \x03(\t\x12\x17\n\x0f\x65mployment_type\x18\t \x01(\t\x12\x18\n\x10\x65xperience_level\x18\n \x01(\t\x12\x12\n\ncreator_id\x18\x0b \x01(\t\x12.\n\ncreated_at\x18\x0c \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\nupdated_at\x18\r \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x11\n\tis_active\x18\x0e \x01(\x08\"5\n\x0bVacancyList\x12&\n\tvacancies\x18\x01 \x03(\x0b\x32\x13.vacancy.v1.VacancyB7Z5github.com/StudJobs/proto_srtucture/gen/go/vacancy/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x16vacancy/v1/types.proto\x12\nvacancy.v1\x1a\x15\x63ommon/v1/types.proto\"\x1f\n\x0ePositionStatus\x12\r\n\x05value\x18\x01 \x01(\t\"\x1c\n\x0b\x43ompanyType\x12\r\n\x05value\x18\x01 \x01(\t\"{\n\x07\x43ompany\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\x0c\n\x04\x63ity\x18\x04 \x01(\t\x12\x0c\n\x04site\x18\x05 \x01(\t\x12%\n\x04type\x18\x06 \x01(\x0b\x32\x17.vacancy.v1.CompanyType\"\xe2\x01\n\x07Vacancy\x12\n\n\x02id\x18\x01 \x01(\t\x12\r\n\x05title\x18\x02 \x01(\t\x12\x12\n\nexperience\x18\x03 \x01(\x05\x12\x0e\n\x06salary\x18\x04 \x01(\x05\x12\x33\n\x0fposition_status\x18\x05 \x01(\x0b\x32\x1a.vacancy.v1.PositionStatus\x12\x14\n\x0cusage_format\x18\x06 \x01(\t\x12\x10\n\x08schedule\x18\x07 \x01(\x05\x12\x13\n\x0bwork_format\x18\x08 \x01(\t\x12\x12\n\ncompany_id\x18\t \x01(\t\x12\x12\n\ndate_start\x18\n \x01(\t\"h\n\x0bVacancyList\x12&\n\tvacancies\x18\x01 \x03(\x0b\x32\x13.vacancy.v1.Vacancy\x12\x31\n\npagination\x18\x02 \x01(\x0b\x32\x1d.common.v1.PaginationResponseB7Z5github.com/StudJobs/proto_srtucture/gen/go/vacancy/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -33,8 +33,14 @@ _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'vacancy.v1.types_pb2', _glo
 if not _descriptor._USE_C_DESCRIPTORS:
   _globals['DESCRIPTOR']._loaded_options = None
   _globals['DESCRIPTOR']._serialized_options = b'Z5github.com/StudJobs/proto_srtucture/gen/go/vacancy/v1'
-  _globals['_VACANCY']._serialized_start=72
-  _globals['_VACANCY']._serialized_end=414
-  _globals['_VACANCYLIST']._serialized_start=416
-  _globals['_VACANCYLIST']._serialized_end=469
+  _globals['_POSITIONSTATUS']._serialized_start=61
+  _globals['_POSITIONSTATUS']._serialized_end=92
+  _globals['_COMPANYTYPE']._serialized_start=94
+  _globals['_COMPANYTYPE']._serialized_end=122
+  _globals['_COMPANY']._serialized_start=124
+  _globals['_COMPANY']._serialized_end=247
+  _globals['_VACANCY']._serialized_start=250
+  _globals['_VACANCY']._serialized_end=476
+  _globals['_VACANCYLIST']._serialized_start=478
+  _globals['_VACANCYLIST']._serialized_end=582
 # @@protoc_insertion_point(module_scope)

@@ -24,24 +24,24 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	ApiGatewayService_NewProfile_FullMethodName         = "/apigateway.v1.ApiGatewayService/NewProfile"
-	ApiGatewayService_UpdateProfile_FullMethodName      = "/apigateway.v1.ApiGatewayService/UpdateProfile"
-	ApiGatewayService_DeleteProfile_FullMethodName      = "/apigateway.v1.ApiGatewayService/DeleteProfile"
-	ApiGatewayService_GetProfile_FullMethodName         = "/apigateway.v1.ApiGatewayService/GetProfile"
-	ApiGatewayService_GetAllProfiles_FullMethodName     = "/apigateway.v1.ApiGatewayService/GetAllProfiles"
-	ApiGatewayService_NewVacancy_FullMethodName         = "/apigateway.v1.ApiGatewayService/NewVacancy"
-	ApiGatewayService_UpdateVacancy_FullMethodName      = "/apigateway.v1.ApiGatewayService/UpdateVacancy"
-	ApiGatewayService_DeleteVacancy_FullMethodName      = "/apigateway.v1.ApiGatewayService/DeleteVacancy"
-	ApiGatewayService_GetVacancy_FullMethodName         = "/apigateway.v1.ApiGatewayService/GetVacancy"
-	ApiGatewayService_GetAllVacancies_FullMethodName    = "/apigateway.v1.ApiGatewayService/GetAllVacancies"
-	ApiGatewayService_GetAllAchievements_FullMethodName = "/apigateway.v1.ApiGatewayService/GetAllAchievements"
-	ApiGatewayService_GetAchievement_FullMethodName     = "/apigateway.v1.ApiGatewayService/GetAchievement"
-	ApiGatewayService_AddAchievement_FullMethodName     = "/apigateway.v1.ApiGatewayService/AddAchievement"
-	ApiGatewayService_DeleteAchievement_FullMethodName  = "/apigateway.v1.ApiGatewayService/DeleteAchievement"
-	ApiGatewayService_Login_FullMethodName              = "/apigateway.v1.ApiGatewayService/Login"
-	ApiGatewayService_SignIn_FullMethodName             = "/apigateway.v1.ApiGatewayService/SignIn"
-	ApiGatewayService_ParseToken_FullMethodName         = "/apigateway.v1.ApiGatewayService/ParseToken"
-	ApiGatewayService_GetCurrentUser_FullMethodName     = "/apigateway.v1.ApiGatewayService/GetCurrentUser"
+	ApiGatewayService_NewProfile_FullMethodName                = "/apigateway.v1.ApiGatewayService/NewProfile"
+	ApiGatewayService_UpdateProfile_FullMethodName             = "/apigateway.v1.ApiGatewayService/UpdateProfile"
+	ApiGatewayService_DeleteProfile_FullMethodName             = "/apigateway.v1.ApiGatewayService/DeleteProfile"
+	ApiGatewayService_GetProfile_FullMethodName                = "/apigateway.v1.ApiGatewayService/GetProfile"
+	ApiGatewayService_GetAllProfiles_FullMethodName            = "/apigateway.v1.ApiGatewayService/GetAllProfiles"
+	ApiGatewayService_NewVacancy_FullMethodName                = "/apigateway.v1.ApiGatewayService/NewVacancy"
+	ApiGatewayService_UpdateVacancy_FullMethodName             = "/apigateway.v1.ApiGatewayService/UpdateVacancy"
+	ApiGatewayService_DeleteVacancy_FullMethodName             = "/apigateway.v1.ApiGatewayService/DeleteVacancy"
+	ApiGatewayService_GetVacancy_FullMethodName                = "/apigateway.v1.ApiGatewayService/GetVacancy"
+	ApiGatewayService_GetAllVacancies_FullMethodName           = "/apigateway.v1.ApiGatewayService/GetAllVacancies"
+	ApiGatewayService_GetAllAchievements_FullMethodName        = "/apigateway.v1.ApiGatewayService/GetAllAchievements"
+	ApiGatewayService_GetAchievementDownloadUrl_FullMethodName = "/apigateway.v1.ApiGatewayService/GetAchievementDownloadUrl"
+	ApiGatewayService_GetAchievementUploadUrl_FullMethodName   = "/apigateway.v1.ApiGatewayService/GetAchievementUploadUrl"
+	ApiGatewayService_AddAchievementMeta_FullMethodName        = "/apigateway.v1.ApiGatewayService/AddAchievementMeta"
+	ApiGatewayService_DeleteAchievement_FullMethodName         = "/apigateway.v1.ApiGatewayService/DeleteAchievement"
+	ApiGatewayService_Login_FullMethodName                     = "/apigateway.v1.ApiGatewayService/Login"
+	ApiGatewayService_SignUp_FullMethodName                    = "/apigateway.v1.ApiGatewayService/SignUp"
+	ApiGatewayService_ParseToken_FullMethodName                = "/apigateway.v1.ApiGatewayService/ParseToken"
 )
 
 // ApiGatewayServiceClient is the client API for ApiGatewayService service.
@@ -50,29 +50,28 @@ const (
 //
 // API Gateway сервис - агрегирует все методы
 type ApiGatewayServiceClient interface {
-	// Users methods
+	// === Users methods ===
 	NewProfile(ctx context.Context, in *v1.NewProfileRequest, opts ...grpc.CallOption) (*v1.Profile, error)
 	UpdateProfile(ctx context.Context, in *v1.UpdateProfileRequest, opts ...grpc.CallOption) (*v1.Profile, error)
 	DeleteProfile(ctx context.Context, in *v1.DeleteProfileRequest, opts ...grpc.CallOption) (*v11.Empty, error)
 	GetProfile(ctx context.Context, in *v1.GetProfileRequest, opts ...grpc.CallOption) (*v1.Profile, error)
 	GetAllProfiles(ctx context.Context, in *v1.GetAllProfilesRequest, opts ...grpc.CallOption) (*v1.ProfileList, error)
-	// Vacancy methods
+	// === Vacancy methods ===
 	NewVacancy(ctx context.Context, in *v12.NewVacancyRequest, opts ...grpc.CallOption) (*v12.Vacancy, error)
 	UpdateVacancy(ctx context.Context, in *v12.UpdateVacancyRequest, opts ...grpc.CallOption) (*v12.Vacancy, error)
 	DeleteVacancy(ctx context.Context, in *v12.DeleteVacancyRequest, opts ...grpc.CallOption) (*v11.Empty, error)
 	GetVacancy(ctx context.Context, in *v12.GetVacancyRequest, opts ...grpc.CallOption) (*v12.Vacancy, error)
 	GetAllVacancies(ctx context.Context, in *v12.GetAllVacanciesRequest, opts ...grpc.CallOption) (*v12.VacancyList, error)
-	// Achievement methods
+	// === Achievement methods ===
 	GetAllAchievements(ctx context.Context, in *v13.GetAllAchievementsRequest, opts ...grpc.CallOption) (*v13.AchievementList, error)
-	GetAchievement(ctx context.Context, in *v13.GetAchievementRequest, opts ...grpc.CallOption) (*v13.AchievementData, error)
-	AddAchievement(ctx context.Context, in *v13.AddAchievementRequest, opts ...grpc.CallOption) (*v11.Empty, error)
+	GetAchievementDownloadUrl(ctx context.Context, in *v13.GetAchievementRequest, opts ...grpc.CallOption) (*v13.AchievementUrl, error)
+	GetAchievementUploadUrl(ctx context.Context, in *v13.GetAchievementUploadRequest, opts ...grpc.CallOption) (*v13.AchievementUrl, error)
+	AddAchievementMeta(ctx context.Context, in *v13.AddAchievementMetaRequest, opts ...grpc.CallOption) (*v11.Empty, error)
 	DeleteAchievement(ctx context.Context, in *v13.DeleteAchievementRequest, opts ...grpc.CallOption) (*v11.Empty, error)
-	// Auth methods
+	// === Auth methods ===
 	Login(ctx context.Context, in *v14.LoginRequest, opts ...grpc.CallOption) (*v14.AuthResponse, error)
-	SignIn(ctx context.Context, in *v14.LoginRequest, opts ...grpc.CallOption) (*v14.AuthResponse, error)
+	SignUp(ctx context.Context, in *v14.SignUpRequest, opts ...grpc.CallOption) (*v14.AuthResponse, error)
 	ParseToken(ctx context.Context, in *v14.ParseTokenRequest, opts ...grpc.CallOption) (*v14.TokenValidation, error)
-	// Internal auth method
-	GetCurrentUser(ctx context.Context, in *v11.Empty, opts ...grpc.CallOption) (*v1.Profile, error)
 }
 
 type apiGatewayServiceClient struct {
@@ -193,20 +192,30 @@ func (c *apiGatewayServiceClient) GetAllAchievements(ctx context.Context, in *v1
 	return out, nil
 }
 
-func (c *apiGatewayServiceClient) GetAchievement(ctx context.Context, in *v13.GetAchievementRequest, opts ...grpc.CallOption) (*v13.AchievementData, error) {
+func (c *apiGatewayServiceClient) GetAchievementDownloadUrl(ctx context.Context, in *v13.GetAchievementRequest, opts ...grpc.CallOption) (*v13.AchievementUrl, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(v13.AchievementData)
-	err := c.cc.Invoke(ctx, ApiGatewayService_GetAchievement_FullMethodName, in, out, cOpts...)
+	out := new(v13.AchievementUrl)
+	err := c.cc.Invoke(ctx, ApiGatewayService_GetAchievementDownloadUrl_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *apiGatewayServiceClient) AddAchievement(ctx context.Context, in *v13.AddAchievementRequest, opts ...grpc.CallOption) (*v11.Empty, error) {
+func (c *apiGatewayServiceClient) GetAchievementUploadUrl(ctx context.Context, in *v13.GetAchievementUploadRequest, opts ...grpc.CallOption) (*v13.AchievementUrl, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(v13.AchievementUrl)
+	err := c.cc.Invoke(ctx, ApiGatewayService_GetAchievementUploadUrl_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *apiGatewayServiceClient) AddAchievementMeta(ctx context.Context, in *v13.AddAchievementMetaRequest, opts ...grpc.CallOption) (*v11.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(v11.Empty)
-	err := c.cc.Invoke(ctx, ApiGatewayService_AddAchievement_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, ApiGatewayService_AddAchievementMeta_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -233,10 +242,10 @@ func (c *apiGatewayServiceClient) Login(ctx context.Context, in *v14.LoginReques
 	return out, nil
 }
 
-func (c *apiGatewayServiceClient) SignIn(ctx context.Context, in *v14.LoginRequest, opts ...grpc.CallOption) (*v14.AuthResponse, error) {
+func (c *apiGatewayServiceClient) SignUp(ctx context.Context, in *v14.SignUpRequest, opts ...grpc.CallOption) (*v14.AuthResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(v14.AuthResponse)
-	err := c.cc.Invoke(ctx, ApiGatewayService_SignIn_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, ApiGatewayService_SignUp_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -253,45 +262,34 @@ func (c *apiGatewayServiceClient) ParseToken(ctx context.Context, in *v14.ParseT
 	return out, nil
 }
 
-func (c *apiGatewayServiceClient) GetCurrentUser(ctx context.Context, in *v11.Empty, opts ...grpc.CallOption) (*v1.Profile, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(v1.Profile)
-	err := c.cc.Invoke(ctx, ApiGatewayService_GetCurrentUser_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // ApiGatewayServiceServer is the server API for ApiGatewayService service.
 // All implementations should embed UnimplementedApiGatewayServiceServer
 // for forward compatibility.
 //
 // API Gateway сервис - агрегирует все методы
 type ApiGatewayServiceServer interface {
-	// Users methods
+	// === Users methods ===
 	NewProfile(context.Context, *v1.NewProfileRequest) (*v1.Profile, error)
 	UpdateProfile(context.Context, *v1.UpdateProfileRequest) (*v1.Profile, error)
 	DeleteProfile(context.Context, *v1.DeleteProfileRequest) (*v11.Empty, error)
 	GetProfile(context.Context, *v1.GetProfileRequest) (*v1.Profile, error)
 	GetAllProfiles(context.Context, *v1.GetAllProfilesRequest) (*v1.ProfileList, error)
-	// Vacancy methods
+	// === Vacancy methods ===
 	NewVacancy(context.Context, *v12.NewVacancyRequest) (*v12.Vacancy, error)
 	UpdateVacancy(context.Context, *v12.UpdateVacancyRequest) (*v12.Vacancy, error)
 	DeleteVacancy(context.Context, *v12.DeleteVacancyRequest) (*v11.Empty, error)
 	GetVacancy(context.Context, *v12.GetVacancyRequest) (*v12.Vacancy, error)
 	GetAllVacancies(context.Context, *v12.GetAllVacanciesRequest) (*v12.VacancyList, error)
-	// Achievement methods
+	// === Achievement methods ===
 	GetAllAchievements(context.Context, *v13.GetAllAchievementsRequest) (*v13.AchievementList, error)
-	GetAchievement(context.Context, *v13.GetAchievementRequest) (*v13.AchievementData, error)
-	AddAchievement(context.Context, *v13.AddAchievementRequest) (*v11.Empty, error)
+	GetAchievementDownloadUrl(context.Context, *v13.GetAchievementRequest) (*v13.AchievementUrl, error)
+	GetAchievementUploadUrl(context.Context, *v13.GetAchievementUploadRequest) (*v13.AchievementUrl, error)
+	AddAchievementMeta(context.Context, *v13.AddAchievementMetaRequest) (*v11.Empty, error)
 	DeleteAchievement(context.Context, *v13.DeleteAchievementRequest) (*v11.Empty, error)
-	// Auth methods
+	// === Auth methods ===
 	Login(context.Context, *v14.LoginRequest) (*v14.AuthResponse, error)
-	SignIn(context.Context, *v14.LoginRequest) (*v14.AuthResponse, error)
+	SignUp(context.Context, *v14.SignUpRequest) (*v14.AuthResponse, error)
 	ParseToken(context.Context, *v14.ParseTokenRequest) (*v14.TokenValidation, error)
-	// Internal auth method
-	GetCurrentUser(context.Context, *v11.Empty) (*v1.Profile, error)
 }
 
 // UnimplementedApiGatewayServiceServer should be embedded to have
@@ -334,11 +332,14 @@ func (UnimplementedApiGatewayServiceServer) GetAllVacancies(context.Context, *v1
 func (UnimplementedApiGatewayServiceServer) GetAllAchievements(context.Context, *v13.GetAllAchievementsRequest) (*v13.AchievementList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllAchievements not implemented")
 }
-func (UnimplementedApiGatewayServiceServer) GetAchievement(context.Context, *v13.GetAchievementRequest) (*v13.AchievementData, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetAchievement not implemented")
+func (UnimplementedApiGatewayServiceServer) GetAchievementDownloadUrl(context.Context, *v13.GetAchievementRequest) (*v13.AchievementUrl, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAchievementDownloadUrl not implemented")
 }
-func (UnimplementedApiGatewayServiceServer) AddAchievement(context.Context, *v13.AddAchievementRequest) (*v11.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AddAchievement not implemented")
+func (UnimplementedApiGatewayServiceServer) GetAchievementUploadUrl(context.Context, *v13.GetAchievementUploadRequest) (*v13.AchievementUrl, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAchievementUploadUrl not implemented")
+}
+func (UnimplementedApiGatewayServiceServer) AddAchievementMeta(context.Context, *v13.AddAchievementMetaRequest) (*v11.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddAchievementMeta not implemented")
 }
 func (UnimplementedApiGatewayServiceServer) DeleteAchievement(context.Context, *v13.DeleteAchievementRequest) (*v11.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteAchievement not implemented")
@@ -346,14 +347,11 @@ func (UnimplementedApiGatewayServiceServer) DeleteAchievement(context.Context, *
 func (UnimplementedApiGatewayServiceServer) Login(context.Context, *v14.LoginRequest) (*v14.AuthResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
 }
-func (UnimplementedApiGatewayServiceServer) SignIn(context.Context, *v14.LoginRequest) (*v14.AuthResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SignIn not implemented")
+func (UnimplementedApiGatewayServiceServer) SignUp(context.Context, *v14.SignUpRequest) (*v14.AuthResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SignUp not implemented")
 }
 func (UnimplementedApiGatewayServiceServer) ParseToken(context.Context, *v14.ParseTokenRequest) (*v14.TokenValidation, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ParseToken not implemented")
-}
-func (UnimplementedApiGatewayServiceServer) GetCurrentUser(context.Context, *v11.Empty) (*v1.Profile, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetCurrentUser not implemented")
 }
 func (UnimplementedApiGatewayServiceServer) testEmbeddedByValue() {}
 
@@ -573,38 +571,56 @@ func _ApiGatewayService_GetAllAchievements_Handler(srv interface{}, ctx context.
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ApiGatewayService_GetAchievement_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _ApiGatewayService_GetAchievementDownloadUrl_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(v13.GetAchievementRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ApiGatewayServiceServer).GetAchievement(ctx, in)
+		return srv.(ApiGatewayServiceServer).GetAchievementDownloadUrl(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: ApiGatewayService_GetAchievement_FullMethodName,
+		FullMethod: ApiGatewayService_GetAchievementDownloadUrl_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ApiGatewayServiceServer).GetAchievement(ctx, req.(*v13.GetAchievementRequest))
+		return srv.(ApiGatewayServiceServer).GetAchievementDownloadUrl(ctx, req.(*v13.GetAchievementRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ApiGatewayService_AddAchievement_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v13.AddAchievementRequest)
+func _ApiGatewayService_GetAchievementUploadUrl_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(v13.GetAchievementUploadRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ApiGatewayServiceServer).AddAchievement(ctx, in)
+		return srv.(ApiGatewayServiceServer).GetAchievementUploadUrl(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: ApiGatewayService_AddAchievement_FullMethodName,
+		FullMethod: ApiGatewayService_GetAchievementUploadUrl_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ApiGatewayServiceServer).AddAchievement(ctx, req.(*v13.AddAchievementRequest))
+		return srv.(ApiGatewayServiceServer).GetAchievementUploadUrl(ctx, req.(*v13.GetAchievementUploadRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ApiGatewayService_AddAchievementMeta_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(v13.AddAchievementMetaRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ApiGatewayServiceServer).AddAchievementMeta(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ApiGatewayService_AddAchievementMeta_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ApiGatewayServiceServer).AddAchievementMeta(ctx, req.(*v13.AddAchievementMetaRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -645,20 +661,20 @@ func _ApiGatewayService_Login_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ApiGatewayService_SignIn_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v14.LoginRequest)
+func _ApiGatewayService_SignUp_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(v14.SignUpRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ApiGatewayServiceServer).SignIn(ctx, in)
+		return srv.(ApiGatewayServiceServer).SignUp(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: ApiGatewayService_SignIn_FullMethodName,
+		FullMethod: ApiGatewayService_SignUp_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ApiGatewayServiceServer).SignIn(ctx, req.(*v14.LoginRequest))
+		return srv.(ApiGatewayServiceServer).SignUp(ctx, req.(*v14.SignUpRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -677,24 +693,6 @@ func _ApiGatewayService_ParseToken_Handler(srv interface{}, ctx context.Context,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ApiGatewayServiceServer).ParseToken(ctx, req.(*v14.ParseTokenRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ApiGatewayService_GetCurrentUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v11.Empty)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ApiGatewayServiceServer).GetCurrentUser(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: ApiGatewayService_GetCurrentUser_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ApiGatewayServiceServer).GetCurrentUser(ctx, req.(*v11.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -751,12 +749,16 @@ var ApiGatewayService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _ApiGatewayService_GetAllAchievements_Handler,
 		},
 		{
-			MethodName: "GetAchievement",
-			Handler:    _ApiGatewayService_GetAchievement_Handler,
+			MethodName: "GetAchievementDownloadUrl",
+			Handler:    _ApiGatewayService_GetAchievementDownloadUrl_Handler,
 		},
 		{
-			MethodName: "AddAchievement",
-			Handler:    _ApiGatewayService_AddAchievement_Handler,
+			MethodName: "GetAchievementUploadUrl",
+			Handler:    _ApiGatewayService_GetAchievementUploadUrl_Handler,
+		},
+		{
+			MethodName: "AddAchievementMeta",
+			Handler:    _ApiGatewayService_AddAchievementMeta_Handler,
 		},
 		{
 			MethodName: "DeleteAchievement",
@@ -767,16 +769,12 @@ var ApiGatewayService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _ApiGatewayService_Login_Handler,
 		},
 		{
-			MethodName: "SignIn",
-			Handler:    _ApiGatewayService_SignIn_Handler,
+			MethodName: "SignUp",
+			Handler:    _ApiGatewayService_SignUp_Handler,
 		},
 		{
 			MethodName: "ParseToken",
 			Handler:    _ApiGatewayService_ParseToken_Handler,
-		},
-		{
-			MethodName: "GetCurrentUser",
-			Handler:    _ApiGatewayService_GetCurrentUser_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

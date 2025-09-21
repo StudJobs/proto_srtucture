@@ -4,10 +4,12 @@ package apigateway.v1;
 
 option go_package = "github.com/StudJobs/proto_srtucture/gen/go/apigateway/v1";
 
+// Импорты сервисов
 import "proto/users/v1/service.proto";
 import "proto/vacancy/v1/service.proto";
 import "proto/achievement/v1/service.proto";
 import "proto/auth/v1/service.proto";
+
 import "proto/common/v1/types.proto";
 
 import "proto/users/v1/types.proto";
@@ -15,33 +17,33 @@ import "proto/vacancy/v1/types.proto";
 import "proto/achievement/v1/types.proto";
 import "proto/auth/v1/types.proto";
 
+
 // API Gateway сервис - агрегирует все методы
 service ApiGatewayService {
-  // Users methods
+  // === Users methods ===
   rpc NewProfile(users.v1.NewProfileRequest) returns (users.v1.Profile);
   rpc UpdateProfile(users.v1.UpdateProfileRequest) returns (users.v1.Profile);
   rpc DeleteProfile(users.v1.DeleteProfileRequest) returns (common.v1.Empty);
   rpc GetProfile(users.v1.GetProfileRequest) returns (users.v1.Profile);
   rpc GetAllProfiles(users.v1.GetAllProfilesRequest) returns (users.v1.ProfileList);
 
-  // Vacancy methods
+  // === Vacancy methods ===
   rpc NewVacancy(vacancy.v1.NewVacancyRequest) returns (vacancy.v1.Vacancy);
   rpc UpdateVacancy(vacancy.v1.UpdateVacancyRequest) returns (vacancy.v1.Vacancy);
   rpc DeleteVacancy(vacancy.v1.DeleteVacancyRequest) returns (common.v1.Empty);
   rpc GetVacancy(vacancy.v1.GetVacancyRequest) returns (vacancy.v1.Vacancy);
   rpc GetAllVacancies(vacancy.v1.GetAllVacanciesRequest) returns (vacancy.v1.VacancyList);
 
-  // Achievement methods
+  // === Achievement methods ===
   rpc GetAllAchievements(achievement.v1.GetAllAchievementsRequest) returns (achievement.v1.AchievementList);
-  rpc GetAchievement(achievement.v1.GetAchievementRequest) returns (achievement.v1.AchievementData);
-  rpc AddAchievement(achievement.v1.AddAchievementRequest) returns (common.v1.Empty);
+  rpc GetAchievementDownloadUrl(achievement.v1.GetAchievementRequest) returns (achievement.v1.AchievementUrl);
+  rpc GetAchievementUploadUrl(achievement.v1.GetAchievementUploadRequest) returns (achievement.v1.AchievementUrl);
+  rpc AddAchievementMeta(achievement.v1.AddAchievementMetaRequest) returns (common.v1.Empty);
   rpc DeleteAchievement(achievement.v1.DeleteAchievementRequest) returns (common.v1.Empty);
 
-  // Auth methods
+  // === Auth methods ===
   rpc Login(auth.v1.LoginRequest) returns (auth.v1.AuthResponse);
-  rpc SignIn(auth.v1.LoginRequest) returns (auth.v1.AuthResponse);
+  rpc SignUp(auth.v1.SignUpRequest) returns (auth.v1.AuthResponse);
   rpc ParseToken(auth.v1.ParseTokenRequest) returns (auth.v1.TokenValidation);
 
-  // Internal auth method
-  rpc GetCurrentUser(common.v1.Empty) returns (users.v1.Profile);
 }

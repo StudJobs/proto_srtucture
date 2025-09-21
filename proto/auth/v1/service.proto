@@ -12,12 +12,8 @@ service AuthService {
   rpc Login(LoginRequest) returns (AuthResponse);
 
   // Регистрация
-  rpc SignIn(LoginRequest) returns (AuthResponse);
+  rpc SignUp(SignUpRequest) returns (AuthResponse);
 
   // Проверка токена
   rpc ParseToken(ParseTokenRequest) returns (TokenValidation);
-}
-
-message ParseTokenRequest {
-  string access_token = 1;
 }

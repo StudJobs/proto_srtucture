@@ -26,7 +26,7 @@ from vacancy.v1 import types_pb2 as vacancy_dot_v1_dot_types__pb2
 from common.v1 import types_pb2 as common_dot_v1_dot_types__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x18vacancy/v1/service.proto\x12\nvacancy.v1\x1a\x16vacancy/v1/types.proto\x1a\x15\x63ommon/v1/types.proto\"G\n\x11NewVacancyRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12$\n\x07vacancy\x18\x02 \x01(\x0b\x32\x13.vacancy.v1.Vacancy\"J\n\x14UpdateVacancyRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12$\n\x07vacancy\x18\x02 \x01(\x0b\x32\x13.vacancy.v1.Vacancy\"$\n\x14\x44\x65leteVacancyRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\"!\n\x11GetVacancyRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\"C\n\x16GetAllVacanciesRequest\x12)\n\npagination\x18\x01 \x01(\x0b\x32\x15.common.v1.Pagination2\xf1\x02\n\x0eVacancyService\x12@\n\nNewVacancy\x12\x1d.vacancy.v1.NewVacancyRequest\x1a\x13.vacancy.v1.Vacancy\x12\x46\n\rUpdateVacancy\x12 .vacancy.v1.UpdateVacancyRequest\x1a\x13.vacancy.v1.Vacancy\x12\x43\n\rDeleteVacancy\x12 .vacancy.v1.DeleteVacancyRequest\x1a\x10.common.v1.Empty\x12@\n\nGetVacancy\x12\x1d.vacancy.v1.GetVacancyRequest\x1a\x13.vacancy.v1.Vacancy\x12N\n\x0fGetAllVacancies\x12\".vacancy.v1.GetAllVacanciesRequest\x1a\x17.vacancy.v1.VacancyListB7Z5github.com/StudJobs/proto_srtucture/gen/go/vacancy/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x18vacancy/v1/service.proto\x12\nvacancy.v1\x1a\x16vacancy/v1/types.proto\x1a\x15\x63ommon/v1/types.proto\"9\n\x11NewVacancyRequest\x12$\n\x07vacancy\x18\x01 \x01(\x0b\x32\x13.vacancy.v1.Vacancy\"H\n\x14UpdateVacancyRequest\x12\n\n\x02id\x18\x01 \x01(\t\x12$\n\x07vacancy\x18\x02 \x01(\x0b\x32\x13.vacancy.v1.Vacancy\"\"\n\x14\x44\x65leteVacancyRequest\x12\n\n\x02id\x18\x01 \x01(\t\"\x1f\n\x11GetVacancyRequest\x12\n\n\x02id\x18\x01 \x01(\t\"p\n\x16GetAllVacanciesRequest\x12)\n\npagination\x18\x01 \x01(\x0b\x32\x15.common.v1.Pagination\x12\x12\n\ncompany_id\x18\x02 \x01(\t\x12\x17\n\x0fposition_status\x18\x03 \x01(\t2\xf1\x02\n\x0eVacancyService\x12@\n\nNewVacancy\x12\x1d.vacancy.v1.NewVacancyRequest\x1a\x13.vacancy.v1.Vacancy\x12\x46\n\rUpdateVacancy\x12 .vacancy.v1.UpdateVacancyRequest\x1a\x13.vacancy.v1.Vacancy\x12\x43\n\rDeleteVacancy\x12 .vacancy.v1.DeleteVacancyRequest\x1a\x10.common.v1.Empty\x12@\n\nGetVacancy\x12\x1d.vacancy.v1.GetVacancyRequest\x1a\x13.vacancy.v1.Vacancy\x12N\n\x0fGetAllVacancies\x12\".vacancy.v1.GetAllVacanciesRequest\x1a\x17.vacancy.v1.VacancyListB7Z5github.com/StudJobs/proto_srtucture/gen/go/vacancy/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -35,15 +35,15 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['DESCRIPTOR']._loaded_options = None
   _globals['DESCRIPTOR']._serialized_options = b'Z5github.com/StudJobs/proto_srtucture/gen/go/vacancy/v1'
   _globals['_NEWVACANCYREQUEST']._serialized_start=87
-  _globals['_NEWVACANCYREQUEST']._serialized_end=158
-  _globals['_UPDATEVACANCYREQUEST']._serialized_start=160
-  _globals['_UPDATEVACANCYREQUEST']._serialized_end=234
-  _globals['_DELETEVACANCYREQUEST']._serialized_start=236
-  _globals['_DELETEVACANCYREQUEST']._serialized_end=272
-  _globals['_GETVACANCYREQUEST']._serialized_start=274
-  _globals['_GETVACANCYREQUEST']._serialized_end=307
-  _globals['_GETALLVACANCIESREQUEST']._serialized_start=309
-  _globals['_GETALLVACANCIESREQUEST']._serialized_end=376
-  _globals['_VACANCYSERVICE']._serialized_start=379
-  _globals['_VACANCYSERVICE']._serialized_end=748
+  _globals['_NEWVACANCYREQUEST']._serialized_end=144
+  _globals['_UPDATEVACANCYREQUEST']._serialized_start=146
+  _globals['_UPDATEVACANCYREQUEST']._serialized_end=218
+  _globals['_DELETEVACANCYREQUEST']._serialized_start=220
+  _globals['_DELETEVACANCYREQUEST']._serialized_end=254
+  _globals['_GETVACANCYREQUEST']._serialized_start=256
+  _globals['_GETVACANCYREQUEST']._serialized_end=287
+  _globals['_GETALLVACANCIESREQUEST']._serialized_start=289
+  _globals['_GETALLVACANCIESREQUEST']._serialized_end=401
+  _globals['_VACANCYSERVICE']._serialized_start=404
+  _globals['_VACANCYSERVICE']._serialized_end=773
 # @@protoc_insertion_point(module_scope)

@@ -25,23 +25,23 @@ service UsersService {
 }
 
 message NewProfileRequest {
-  string uuid = 1;
-  Profile profile = 2;
+  Profile profile = 1;
 }
 
 message UpdateProfileRequest {
-  string uuid = 1;
+  string id = 1; // UUID профиля
   Profile profile = 2;
 }
 
 message DeleteProfileRequest {
-  string uuid = 1;
+  string id = 1; // UUID профиля
 }
 
 message GetProfileRequest {
-  string uuid = 1;
+  string id = 1; // UUID профиля
 }
 
 message GetAllProfilesRequest {
   common.v1.Pagination pagination = 1;
+  string profession_category = 2; // Опциональный фильтр по категории
 }
