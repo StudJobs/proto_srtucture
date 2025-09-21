@@ -1,30 +1,64 @@
 name: Proto Validation
+
 on:
   push:
-    branches: [main]
+    branches: [main, master]
+    paths:
+      - 'proto/**'
+      - 'buf.yaml'
+      - 'buf.gen.yaml'
+      - '.github/workflows/proto-validation.yml'
   pull_request:
     paths:
       - 'proto/**'
       - 'buf.yaml'
       - 'buf.gen.yaml'
+      - '.github/workflows/proto-validation.yml'
 
 jobs:
-  proto:
+  proto-validation:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./proto
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Важно для buf breaking against main
 
       - name: Setup Buf
         uses: bufbuild/buf-setup-action@v1
 
-      - name: Lint
+      - name: Verify proto structure
+        run: |
+          pwd
+          ls -la
+          find . -name "*.proto" -type f
+
+      - name: Lint proto files
         run: buf lint
 
-      - name: Breaking changes check
-        run: buf breaking --against '.git#branch=main'
+      - name: Check for breaking changes
+        run: buf breaking --against '.git#branch=main' --path proto/
 
-      - name: Generate and test build
+      - name: Generate code
         run: |
-          buf generate
-          # Проверяем что код компилируется
-          cd gen/go && go mod tidy && go build ./...
+          cd ..
+          buf generate proto
+
+      - name: Verify generated code
+        run: |
+          cd ../gen/go
+          go mod init github.com/StudJobs/proto_structure/gen/go 2>/dev/null || true
+          go mod tidy
+          go build ./...
+
+      - name: Check import paths
+        run: |
+          # Проверяем корректность импортов
+          if grep -r "memory/v3/types-proto" . --include="*.proto"; then
+            echo "ERROR: Found invalid import paths"
+            exit 1
+          fi

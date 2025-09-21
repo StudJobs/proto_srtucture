@@ -1,11 +1,14 @@
-version: v1
-breaking:
-  use:
-    - FILE
+version: v2
+modules:
+  - path: proto
+    exclude:
+      - proto/memory/v3  # Исключаем несуществующие пути
+build:
+  roots:
+    - proto
 lint:
   use:
     - DEFAULT
-  except:
-    - PACKAGE_DIRECTORY_MATCH
-#deps:
-#  - buf.build/googleapis/googleapis
+breaking:
+  use:
+    - FILE
