@@ -5,10 +5,10 @@ package vacancy.v1;
 option go_package = "github.com/StudJobs/proto_srtucture/gen/go/vacancy/v1";
 
 // for Golang
-//import "proto/common/v1/types.proto";
+import "proto/common/v1/types.proto";
 
 // for Python
-import "common/v1/types.proto";
+//import "common/v1/types.proto";
 
 // Статус позиции (ENUM как строка)
 message PositionStatus {
