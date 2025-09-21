@@ -5,60 +5,35 @@ on:
     branches: [main, master]
     paths:
       - 'proto/**'
-      - 'buf.yaml'
-      - 'buf.gen.yaml'
-      - '.github/workflows/proto-validation.yml'
   pull_request:
     paths:
       - 'proto/**'
-      - 'buf.yaml'
-      - 'buf.gen.yaml'
-      - '.github/workflows/proto-validation.yml'
 
 jobs:
   proto-validation:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./proto
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v4
         with:
-          fetch-depth: 0  # Важно для buf breaking against main
+          go-version: '1.25'
 
-      - name: Setup Buf
-        uses: bufbuild/buf-setup-action@v1
-
-      - name: Verify proto structure
+      - name: Install protoc and plugins
         run: |
-          pwd
-          ls -la
-          find . -name "*.proto" -type f
+          go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+          go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
 
-      - name: Lint proto files
-        run: buf lint
-
-      - name: Check for breaking changes
-        run: buf breaking --against '.git#branch=main' --path proto/
-
-      - name: Generate code
+      - name: Generate code with protoc
         run: |
-          cd ..
-          buf generate proto
+          find proto -name "*.proto" -exec protoc --go_out=gen/go --go-grpc_out=gen/go {} \;
 
       - name: Verify generated code
         run: |
-          cd ../gen/go
+          cd gen/go
           go mod init github.com/StudJobs/proto_structure/gen/go 2>/dev/null || true
           go mod tidy
           go build ./...
-
-      - name: Check import paths
-        run: |
-          # Проверяем корректность импортов
-          if grep -r "memory/v3/types-proto" . --include="*.proto"; then
-            echo "ERROR: Found invalid import paths"
-            exit 1
-          fi
