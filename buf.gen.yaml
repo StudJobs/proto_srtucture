@@ -14,17 +14,12 @@ plugins:
     out: gen/go
     opt: paths=source_relative,require_unimplemented_servers=false
 
-  # Для Python - генерируем ВСЕ, но используем только vacancy
-  - name: python
-    out: gen/python
-    opt: paths=source_relative
-
-  # Для Python GRPC - генерируем ВСЕ
-  - name: grpc-python
-    out: gen/python
-    opt: paths=source_relative
-
-  # OpenAPI для документации
-  - name: openapiv2
-    out: gen/openapi
-    opt: allow_repeated_fields_in_body=true
+#  # Для Python - генерируем ВСЕ, но используем только vacancy
+#  - name: python
+#    out: gen/python
+#    opt: paths=source_relative
+#
+#  # Для Python GRPC - генерируем ВСЕ
+#  - name: grpc-python
+#    out: gen/python
+#    opt: paths=source_relative

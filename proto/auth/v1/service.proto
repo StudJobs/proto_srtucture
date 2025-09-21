@@ -4,8 +4,8 @@ package auth.v1;
 
 option go_package = "github.com/StudJobs/proto_srtucture/gen/go/auth/v1";
 
-import "auth/v1/types.proto";
-import "common/v1/types.proto";
+import "proto/auth/v1/types.proto";
+import "proto/common/v1/types.proto";
 
 service AuthService {
   // Вход в систему

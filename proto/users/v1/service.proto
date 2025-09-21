@@ -4,8 +4,8 @@ package users.v1;
 
 option go_package = "github.com/StudJobs/proto_srtucture/gen/go/users/v1";
 
-import "users/v1/types.proto";
-import "common/v1/types.proto";
+import "proto/users/v1/types.proto";
+import "proto/common/v1/types.proto";
 
 service UsersService {
   // Создать профиль

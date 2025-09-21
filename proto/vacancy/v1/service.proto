@@ -4,8 +4,13 @@ package vacancy.v1;
 
 option go_package = "github.com/StudJobs/proto_srtucture/gen/go/vacancy/v1";
 
-import "vacancy/v1/types.proto";
-import "common/v1/types.proto";
+// for .py
+//import "vacancy/v1/types.proto";
+//import "common/v1/types.proto";
+
+// for .go
+import "proto/vacancy/v1/types.proto";
+import "proto/common/v1/types.proto";
 
 service VacancyService {
   // Создать вакансию
