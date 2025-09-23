@@ -1,8 +1,6 @@
 module github.com/StudJobs/proto_srtucture/gen/go
 
-go 1.24.0
-
-toolchain go1.24.4
+go 1.25.1
 
 require (
 	google.golang.org/grpc v1.75.1
