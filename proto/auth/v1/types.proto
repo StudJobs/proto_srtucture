@@ -44,3 +44,13 @@ message TokenValidation {
   string user_uuid = 2;
   Role role = 3;
 }
+
+// Удаление пользователя
+message DeleteRequest {
+  string user_uuid = 1;
+}
+
+// Выход пользователя из системы
+message LogoutRequest {
+  string user_uuid = 1;
+}

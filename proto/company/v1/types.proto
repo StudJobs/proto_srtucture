@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package company.v1;
+
+option go_package = "github.com/StudJobs/proto_srtucture/gen/go/company/v1";
+
+import "proto/common/v1/types.proto";
+
+message CompanyType {
+  string value = 1;
+}
+
+message Company {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  string city = 4;
+  string site = 5;
+  CompanyType type = 6;
+}
+
+message CompanyList {
+  repeated Company companies = 1;
+  common.v1.PaginationResponse pagination = 2;
+}

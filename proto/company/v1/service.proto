@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package company.v1;
+
+option go_package = "github.com/StudJobs/proto_srtucture/gen/go/company/v1";
+
+import "proto/company/v1/types.proto";
+import "proto/common/v1/types.proto";
+
+service CompanyService {
+  rpc NewCompany(NewCompanyRequest) returns (Company);
+  rpc UpdateCompany(UpdateCompanyRequest) returns (Company);
+  rpc DeleteCompany(DeleteCompanyRequest) returns (common.v1.Empty);
+  rpc GetCompany(GetCompanyRequest) returns (Company);
+  rpc GetAllCompanies(GetAllCompaniesRequest) returns (CompanyList);
+}
+
+message NewCompanyRequest {
+  Company company = 1;
+}
+
+message UpdateCompanyRequest {
+  string id = 1;
+  Company company = 2;
+}
+
+message DeleteCompanyRequest {
+  string id = 1;
+}
+
+message GetCompanyRequest {
+  string id = 1;
+}
+
+message GetAllCompaniesRequest {
+  common.v1.Pagination pagination = 1;
+  string city = 2;
+  string company_type = 3;
+}

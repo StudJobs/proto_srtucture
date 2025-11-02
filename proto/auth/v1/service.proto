@@ -16,4 +16,10 @@ service AuthService {
 
   // Проверка токена
   rpc ParseToken(ParseTokenRequest) returns (TokenValidation);
+
+  // Удаление пользователя
+  rpc Delete(DeleteRequest) returns (common.v1.Empty);
+
+  // Выход из системы
+  rpc Logout(LogoutRequest) returns (common.v1.Empty);
 }

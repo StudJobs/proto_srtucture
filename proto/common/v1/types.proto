@@ -4,8 +4,6 @@ package common.v1;
 
 option go_package = "github.com/StudJobs/proto_srtucture/gen/go/common/v1";
 
-//import "google/protobuf/timestamp.proto";
-
 // Пагинация
 message Pagination {
   int32 page = 1;
