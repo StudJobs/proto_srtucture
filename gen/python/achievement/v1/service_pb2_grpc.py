@@ -3,9 +3,9 @@
 import grpc
 import warnings
 
-from proto.achievement.v1 import service_pb2 as proto_dot_achievement_dot_v1_dot_service__pb2
-from proto.achievement.v1 import types_pb2 as proto_dot_achievement_dot_v1_dot_types__pb2
-from proto.common.v1 import types_pb2 as proto_dot_common_dot_v1_dot_types__pb2
+from achievement.v1 import service_pb2 as achievement_dot_v1_dot_service__pb2
+from achievement.v1 import types_pb2 as achievement_dot_v1_dot_types__pb2
+from common.v1 import types_pb2 as common_dot_v1_dot_types__pb2
 
 GRPC_GENERATED_VERSION = '1.75.0'
 GRPC_VERSION = grpc.__version__
@@ -20,7 +20,7 @@ except ImportError:
 if _version_not_supported:
     raise RuntimeError(
         f'The grpc package installed is at version {GRPC_VERSION},'
-        + f' but the generated code in proto/achievement/v1/service_pb2_grpc.py depends on'
+        + f' but the generated code in achievement/v1/service_pb2_grpc.py depends on'
         + f' grpcio>={GRPC_GENERATED_VERSION}.'
         + f' Please upgrade your grpc module to grpcio>={GRPC_GENERATED_VERSION}'
         + f' or downgrade your generated code using grpcio-tools<={GRPC_VERSION}.'
@@ -38,28 +38,28 @@ class AchievementServiceStub(object):
         """
         self.GetAllAchievements = channel.unary_unary(
                 '/achievement.v1.AchievementService/GetAllAchievements',
-                request_serializer=proto_dot_achievement_dot_v1_dot_service__pb2.GetAllAchievementsRequest.SerializeToString,
-                response_deserializer=proto_dot_achievement_dot_v1_dot_types__pb2.AchievementList.FromString,
+                request_serializer=achievement_dot_v1_dot_service__pb2.GetAllAchievementsRequest.SerializeToString,
+                response_deserializer=achievement_dot_v1_dot_types__pb2.AchievementList.FromString,
                 _registered_method=True)
         self.GetAchievementDownloadUrl = channel.unary_unary(
                 '/achievement.v1.AchievementService/GetAchievementDownloadUrl',
-                request_serializer=proto_dot_achievement_dot_v1_dot_service__pb2.GetAchievementRequest.SerializeToString,
-                response_deserializer=proto_dot_achievement_dot_v1_dot_types__pb2.AchievementUrl.FromString,
+                request_serializer=achievement_dot_v1_dot_service__pb2.GetAchievementRequest.SerializeToString,
+                response_deserializer=achievement_dot_v1_dot_types__pb2.AchievementUrl.FromString,
                 _registered_method=True)
         self.GetAchievementUploadUrl = channel.unary_unary(
                 '/achievement.v1.AchievementService/GetAchievementUploadUrl',
-                request_serializer=proto_dot_achievement_dot_v1_dot_service__pb2.GetAchievementUploadRequest.SerializeToString,
-                response_deserializer=proto_dot_achievement_dot_v1_dot_types__pb2.AchievementUrl.FromString,
+                request_serializer=achievement_dot_v1_dot_service__pb2.GetAchievementUploadRequest.SerializeToString,
+                response_deserializer=achievement_dot_v1_dot_types__pb2.AchievementUrl.FromString,
                 _registered_method=True)
         self.AddAchievementMeta = channel.unary_unary(
                 '/achievement.v1.AchievementService/AddAchievementMeta',
-                request_serializer=proto_dot_achievement_dot_v1_dot_service__pb2.AddAchievementMetaRequest.SerializeToString,
-                response_deserializer=proto_dot_common_dot_v1_dot_types__pb2.Empty.FromString,
+                request_serializer=achievement_dot_v1_dot_service__pb2.AddAchievementMetaRequest.SerializeToString,
+                response_deserializer=common_dot_v1_dot_types__pb2.Empty.FromString,
                 _registered_method=True)
         self.DeleteAchievement = channel.unary_unary(
                 '/achievement.v1.AchievementService/DeleteAchievement',
-                request_serializer=proto_dot_achievement_dot_v1_dot_service__pb2.DeleteAchievementRequest.SerializeToString,
-                response_deserializer=proto_dot_common_dot_v1_dot_types__pb2.Empty.FromString,
+                request_serializer=achievement_dot_v1_dot_service__pb2.DeleteAchievementRequest.SerializeToString,
+                response_deserializer=common_dot_v1_dot_types__pb2.Empty.FromString,
                 _registered_method=True)
 
 
@@ -106,28 +106,28 @@ def add_AchievementServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'GetAllAchievements': grpc.unary_unary_rpc_method_handler(
                     servicer.GetAllAchievements,
-                    request_deserializer=proto_dot_achievement_dot_v1_dot_service__pb2.GetAllAchievementsRequest.FromString,
-                    response_serializer=proto_dot_achievement_dot_v1_dot_types__pb2.AchievementList.SerializeToString,
+                    request_deserializer=achievement_dot_v1_dot_service__pb2.GetAllAchievementsRequest.FromString,
+                    response_serializer=achievement_dot_v1_dot_types__pb2.AchievementList.SerializeToString,
             ),
             'GetAchievementDownloadUrl': grpc.unary_unary_rpc_method_handler(
                     servicer.GetAchievementDownloadUrl,
-                    request_deserializer=proto_dot_achievement_dot_v1_dot_service__pb2.GetAchievementRequest.FromString,
-                    response_serializer=proto_dot_achievement_dot_v1_dot_types__pb2.AchievementUrl.SerializeToString,
+                    request_deserializer=achievement_dot_v1_dot_service__pb2.GetAchievementRequest.FromString,
+                    response_serializer=achievement_dot_v1_dot_types__pb2.AchievementUrl.SerializeToString,
             ),
             'GetAchievementUploadUrl': grpc.unary_unary_rpc_method_handler(
                     servicer.GetAchievementUploadUrl,
-                    request_deserializer=proto_dot_achievement_dot_v1_dot_service__pb2.GetAchievementUploadRequest.FromString,
-                    response_serializer=proto_dot_achievement_dot_v1_dot_types__pb2.AchievementUrl.SerializeToString,
+                    request_deserializer=achievement_dot_v1_dot_service__pb2.GetAchievementUploadRequest.FromString,
+                    response_serializer=achievement_dot_v1_dot_types__pb2.AchievementUrl.SerializeToString,
             ),
             'AddAchievementMeta': grpc.unary_unary_rpc_method_handler(
                     servicer.AddAchievementMeta,
-                    request_deserializer=proto_dot_achievement_dot_v1_dot_service__pb2.AddAchievementMetaRequest.FromString,
-                    response_serializer=proto_dot_common_dot_v1_dot_types__pb2.Empty.SerializeToString,
+                    request_deserializer=achievement_dot_v1_dot_service__pb2.AddAchievementMetaRequest.FromString,
+                    response_serializer=common_dot_v1_dot_types__pb2.Empty.SerializeToString,
             ),
             'DeleteAchievement': grpc.unary_unary_rpc_method_handler(
                     servicer.DeleteAchievement,
-                    request_deserializer=proto_dot_achievement_dot_v1_dot_service__pb2.DeleteAchievementRequest.FromString,
-                    response_serializer=proto_dot_common_dot_v1_dot_types__pb2.Empty.SerializeToString,
+                    request_deserializer=achievement_dot_v1_dot_service__pb2.DeleteAchievementRequest.FromString,
+                    response_serializer=common_dot_v1_dot_types__pb2.Empty.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -155,8 +155,8 @@ class AchievementService(object):
             request,
             target,
             '/achievement.v1.AchievementService/GetAllAchievements',
-            proto_dot_achievement_dot_v1_dot_service__pb2.GetAllAchievementsRequest.SerializeToString,
-            proto_dot_achievement_dot_v1_dot_types__pb2.AchievementList.FromString,
+            achievement_dot_v1_dot_service__pb2.GetAllAchievementsRequest.SerializeToString,
+            achievement_dot_v1_dot_types__pb2.AchievementList.FromString,
             options,
             channel_credentials,
             insecure,
@@ -182,8 +182,8 @@ class AchievementService(object):
             request,
             target,
             '/achievement.v1.AchievementService/GetAchievementDownloadUrl',
-            proto_dot_achievement_dot_v1_dot_service__pb2.GetAchievementRequest.SerializeToString,
-            proto_dot_achievement_dot_v1_dot_types__pb2.AchievementUrl.FromString,
+            achievement_dot_v1_dot_service__pb2.GetAchievementRequest.SerializeToString,
+            achievement_dot_v1_dot_types__pb2.AchievementUrl.FromString,
             options,
             channel_credentials,
             insecure,
@@ -209,8 +209,8 @@ class AchievementService(object):
             request,
             target,
             '/achievement.v1.AchievementService/GetAchievementUploadUrl',
-            proto_dot_achievement_dot_v1_dot_service__pb2.GetAchievementUploadRequest.SerializeToString,
-            proto_dot_achievement_dot_v1_dot_types__pb2.AchievementUrl.FromString,
+            achievement_dot_v1_dot_service__pb2.GetAchievementUploadRequest.SerializeToString,
+            achievement_dot_v1_dot_types__pb2.AchievementUrl.FromString,
             options,
             channel_credentials,
             insecure,
@@ -236,8 +236,8 @@ class AchievementService(object):
             request,
             target,
             '/achievement.v1.AchievementService/AddAchievementMeta',
-            proto_dot_achievement_dot_v1_dot_service__pb2.AddAchievementMetaRequest.SerializeToString,
-            proto_dot_common_dot_v1_dot_types__pb2.Empty.FromString,
+            achievement_dot_v1_dot_service__pb2.AddAchievementMetaRequest.SerializeToString,
+            common_dot_v1_dot_types__pb2.Empty.FromString,
             options,
             channel_credentials,
             insecure,
@@ -263,8 +263,8 @@ class AchievementService(object):
             request,
             target,
             '/achievement.v1.AchievementService/DeleteAchievement',
-            proto_dot_achievement_dot_v1_dot_service__pb2.DeleteAchievementRequest.SerializeToString,
-            proto_dot_common_dot_v1_dot_types__pb2.Empty.FromString,
+            achievement_dot_v1_dot_service__pb2.DeleteAchievementRequest.SerializeToString,
+            common_dot_v1_dot_types__pb2.Empty.FromString,
             options,
             channel_credentials,
             insecure,
