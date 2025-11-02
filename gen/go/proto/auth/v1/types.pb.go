@@ -546,3 +546,4 @@ func file_proto_auth_v1_types_proto_init() {
 	file_proto_auth_v1_types_proto_goTypes = nil
 	file_proto_auth_v1_types_proto_depIdxs = nil
 }
+

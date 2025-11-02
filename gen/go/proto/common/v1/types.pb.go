@@ -240,7 +240,7 @@ const file_proto_common_v1_types_proto_rawDesc = "" +
 	"\x05Empty\"5\n" +
 	"\x05Error\x12\x12\n" +
 	"\x04code\x18\x01 \x01(\tR\x04code\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessageB6Z4github.com/StudJobs/proto_srtucture/gen/go/common/v1b\x06proto3"
+	"\amessage\x18\x02 \x01(\tR\amessageB6Z4github.com/StudJobs/proto_srtucture/gen/go/proto/common/v1b\x06proto3"
 
 var (
 	file_proto_common_v1_types_proto_rawDescOnce sync.Once
@@ -292,3 +292,4 @@ func file_proto_common_v1_types_proto_init() {
 	file_proto_common_v1_types_proto_goTypes = nil
 	file_proto_common_v1_types_proto_depIdxs = nil
 }
+

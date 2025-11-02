@@ -7,7 +7,7 @@
 package v1
 
 import (
-	v1 "github.com/StudJobs/proto_srtucture/gen/go/common/v1"
+	v1 "github.com/StudJobs/proto_srtucture/gen/go/proto/common/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -85,3 +85,4 @@ func file_proto_auth_v1_service_proto_init() {
 	file_proto_auth_v1_service_proto_goTypes = nil
 	file_proto_auth_v1_service_proto_depIdxs = nil
 }
+
