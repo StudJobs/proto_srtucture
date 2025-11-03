@@ -25,10 +25,11 @@ const (
 type Role int32
 
 const (
-	Role_ROLE_UNSPECIFIED Role = 0
-	Role_ROLE_STUDENT     Role = 1 // Студент
-	Role_ROLE_DEVELOPER   Role = 2 // Разработчик (root)
-	Role_ROLE_EMPLOYER    Role = 3 // Работодатель/заказчик
+	Role_ROLE_UNSPECIFIED   Role = 0
+	Role_ROLE_STUDENT       Role = 1 // Студент
+	Role_ROLE_DEVELOPER     Role = 2 // Разработчик (root)
+	Role_ROLE_EMPLOYER      Role = 3 // Работодатель/заказчик
+	Role_ROLE_COMPANY_OWNER Role = 4
 )
 
 // Enum value maps for Role.
@@ -38,12 +39,14 @@ var (
 		1: "ROLE_STUDENT",
 		2: "ROLE_DEVELOPER",
 		3: "ROLE_EMPLOYER",
+		4: "ROLE_COMPANY_OWNER",
 	}
 	Role_value = map[string]int32{
-		"ROLE_UNSPECIFIED": 0,
-		"ROLE_STUDENT":     1,
-		"ROLE_DEVELOPER":   2,
-		"ROLE_EMPLOYER":    3,
+		"ROLE_UNSPECIFIED":   0,
+		"ROLE_STUDENT":       1,
+		"ROLE_DEVELOPER":     2,
+		"ROLE_EMPLOYER":      3,
+		"ROLE_COMPANY_OWNER": 4,
 	}
 )
 
@@ -479,12 +482,13 @@ const file_proto_auth_v1_types_proto_rawDesc = "" +
 	"\rDeleteRequest\x12\x1b\n" +
 	"\tuser_uuid\x18\x01 \x01(\tR\buserUuid\",\n" +
 	"\rLogoutRequest\x12\x1b\n" +
-	"\tuser_uuid\x18\x01 \x01(\tR\buserUuid*U\n" +
+	"\tuser_uuid\x18\x01 \x01(\tR\buserUuid*m\n" +
 	"\x04Role\x12\x14\n" +
 	"\x10ROLE_UNSPECIFIED\x10\x00\x12\x10\n" +
 	"\fROLE_STUDENT\x10\x01\x12\x12\n" +
 	"\x0eROLE_DEVELOPER\x10\x02\x12\x11\n" +
-	"\rROLE_EMPLOYER\x10\x03B4Z2github.com/StudJobs/proto_srtucture/gen/go/auth/v1b\x06proto3"
+	"\rROLE_EMPLOYER\x10\x03\x12\x16\n" +
+	"\x12ROLE_COMPANY_OWNER\x10\x04B4Z2github.com/StudJobs/proto_srtucture/gen/go/auth/v1b\x06proto3"
 
 var (
 	file_proto_auth_v1_types_proto_rawDescOnce sync.Once

@@ -10,6 +10,7 @@ enum Role {
   ROLE_STUDENT = 1;      // Студент
   ROLE_DEVELOPER = 2;    // Разработчик (root)
   ROLE_EMPLOYER = 3;     // Работодатель/заказчик
+  ROLE_COMPANY_OWNER = 4;
 }
 
 // Данные для входа
