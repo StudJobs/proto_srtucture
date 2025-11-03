@@ -4,10 +4,6 @@ package vacancy.v1;
 
 option go_package = "github.com/StudJobs/proto_srtucture/gen/go/vacancy/v1";
 
-// for Python
-//import "vacancy/v1/types.proto";
-//import "common/v1/types.proto";
-
 // for Golang
 import "proto/vacancy/v1/types.proto";
 import "proto/common/v1/types.proto";
@@ -27,6 +23,9 @@ service VacancyService {
 
   // Получить все вакансии
   rpc GetAllVacancies(GetAllVacanciesRequest) returns (VacancyList);
+
+  // получение всех позиций
+  rpc GetAllExistPositions(PositionsRequest) returns (PositionsResponse);
 }
 
 message NewVacancyRequest {
@@ -50,4 +49,10 @@ message GetAllVacanciesRequest {
   common.v1.Pagination pagination = 1;
   string company_id = 2; // Опциональный фильтр по компании
   string position_status = 3; // Опциональный фильтр по статусу позиции
+}
+
+message PositionsRequest {}
+
+message PositionsResponse {
+  repeated string position = 1;
 }

@@ -4,28 +4,28 @@ package vacancy.v1;
 
 option go_package = "github.com/StudJobs/proto_srtucture/gen/go/vacancy/v1";
 
-// for Golang
 import "proto/common/v1/types.proto";
-
-// for Python
-//import "common/v1/types.proto";
-
-// Статус позиции (ENUM как строка)
-message PositionStatus {
-  string value = 1; // intern, Junior_loh, Middle, Senior, ProductManager
-}
 
 // Вакансия
 message Vacancy {
-  string id = 1; // UUID
-  string title = 2; // varchar(128)
-  int32 experience = 3; // integer
-  int32 salary = 4; // integer
-  PositionStatus position_status = 5; // ENUM
-  int32 schedule = 6; // integer
-  string work_format = 7; // varchar(64)
-  string company_id = 8; // UUID
-  string date_start = 9; // datetime как строка
+  // uuid вакансии
+  string id = 1;
+  // заголовок
+  string title = 2;
+  // опыт
+  int32 experience = 3;
+  // ЗП
+  int32 salary = 4;
+  // Должность (intern, Junior_loh, Middle, Senior, ProductManager...)
+  string position_status = 5;
+  //
+  string schedule = 6;
+  //
+  string work_format = 7;
+  //
+  string company_id = 8;
+  //
+  string create_at = 9;
 }
 
 // Список вакансий с пагинацией

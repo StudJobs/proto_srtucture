@@ -25,38 +25,34 @@ var File_proto_auth_v1_service_proto protoreflect.FileDescriptor
 
 const file_proto_auth_v1_service_proto_rawDesc = "" +
 	"\n" +
-	"\x1bproto/auth/v1/service.proto\x12\aauth.v1\x1a\x19proto/auth/v1/types.proto\x1a\x1bproto/common/v1/types.proto2\xa9\x02\n" +
+	"\x1bproto/auth/v1/service.proto\x12\aauth.v1\x1a\x19proto/auth/v1/types.proto\x1a\x1bproto/common/v1/types.proto2\xf5\x01\n" +
 	"\vAuthService\x125\n" +
 	"\x05Login\x12\x15.auth.v1.LoginRequest\x1a\x15.auth.v1.AuthResponse\x127\n" +
 	"\x06SignUp\x12\x16.auth.v1.SignUpRequest\x1a\x15.auth.v1.AuthResponse\x12B\n" +
 	"\n" +
 	"ParseToken\x12\x1a.auth.v1.ParseTokenRequest\x1a\x18.auth.v1.TokenValidation\x122\n" +
-	"\x06Delete\x12\x16.auth.v1.DeleteRequest\x1a\x10.common.v1.Empty\x122\n" +
-	"\x06Logout\x12\x16.auth.v1.LogoutRequest\x1a\x10.common.v1.EmptyB4Z2github.com/StudJobs/proto_srtucture/gen/go/auth/v1b\x06proto3"
+	"\x06Delete\x12\x16.auth.v1.DeleteRequest\x1a\x10.common.v1.EmptyB4Z2github.com/StudJobs/proto_srtucture/gen/go/auth/v1b\x06proto3"
 
 var file_proto_auth_v1_service_proto_goTypes = []any{
 	(*LoginRequest)(nil),      // 0: auth.v1.LoginRequest
 	(*SignUpRequest)(nil),     // 1: auth.v1.SignUpRequest
 	(*ParseTokenRequest)(nil), // 2: auth.v1.ParseTokenRequest
 	(*DeleteRequest)(nil),     // 3: auth.v1.DeleteRequest
-	(*LogoutRequest)(nil),     // 4: auth.v1.LogoutRequest
-	(*AuthResponse)(nil),      // 5: auth.v1.AuthResponse
-	(*TokenValidation)(nil),   // 6: auth.v1.TokenValidation
-	(*v1.Empty)(nil),          // 7: common.v1.Empty
+	(*AuthResponse)(nil),      // 4: auth.v1.AuthResponse
+	(*TokenValidation)(nil),   // 5: auth.v1.TokenValidation
+	(*v1.Empty)(nil),          // 6: common.v1.Empty
 }
 var file_proto_auth_v1_service_proto_depIdxs = []int32{
 	0, // 0: auth.v1.AuthService.Login:input_type -> auth.v1.LoginRequest
 	1, // 1: auth.v1.AuthService.SignUp:input_type -> auth.v1.SignUpRequest
 	2, // 2: auth.v1.AuthService.ParseToken:input_type -> auth.v1.ParseTokenRequest
 	3, // 3: auth.v1.AuthService.Delete:input_type -> auth.v1.DeleteRequest
-	4, // 4: auth.v1.AuthService.Logout:input_type -> auth.v1.LogoutRequest
-	5, // 5: auth.v1.AuthService.Login:output_type -> auth.v1.AuthResponse
-	5, // 6: auth.v1.AuthService.SignUp:output_type -> auth.v1.AuthResponse
-	6, // 7: auth.v1.AuthService.ParseToken:output_type -> auth.v1.TokenValidation
-	7, // 8: auth.v1.AuthService.Delete:output_type -> common.v1.Empty
-	7, // 9: auth.v1.AuthService.Logout:output_type -> common.v1.Empty
-	5, // [5:10] is the sub-list for method output_type
-	0, // [0:5] is the sub-list for method input_type
+	4, // 4: auth.v1.AuthService.Login:output_type -> auth.v1.AuthResponse
+	4, // 5: auth.v1.AuthService.SignUp:output_type -> auth.v1.AuthResponse
+	5, // 6: auth.v1.AuthService.ParseToken:output_type -> auth.v1.TokenValidation
+	6, // 7: auth.v1.AuthService.Delete:output_type -> common.v1.Empty
+	4, // [4:8] is the sub-list for method output_type
+	0, // [0:4] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name

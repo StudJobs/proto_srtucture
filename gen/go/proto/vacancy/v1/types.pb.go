@@ -22,70 +22,30 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// Статус позиции (ENUM как строка)
-type PositionStatus struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Value         string                 `protobuf:"bytes,1,opt,name=value,proto3" json:"value,omitempty"` // intern, Junior_loh, Middle, Senior, ProductManager
+// Вакансия
+type Vacancy struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// uuid вакансии
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// заголовок
+	Title string `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty"`
+	// опыт
+	Experience int32 `protobuf:"varint,3,opt,name=experience,proto3" json:"experience,omitempty"`
+	// ЗП
+	Salary int32 `protobuf:"varint,4,opt,name=salary,proto3" json:"salary,omitempty"`
+	// Должность (intern, Junior_loh, Middle, Senior, ProductManager...)
+	PositionStatus string `protobuf:"bytes,5,opt,name=position_status,json=positionStatus,proto3" json:"position_status,omitempty"`
+	Schedule string `protobuf:"bytes,6,opt,name=schedule,proto3" json:"schedule,omitempty"`
+	WorkFormat string `protobuf:"bytes,7,opt,name=work_format,json=workFormat,proto3" json:"work_format,omitempty"`
+	CompanyId string `protobuf:"bytes,8,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	CreateAt      string `protobuf:"bytes,9,opt,name=create_at,json=createAt,proto3" json:"create_at,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *PositionStatus) Reset() {
-	*x = PositionStatus{}
-	mi := &file_proto_vacancy_v1_types_proto_msgTypes[0]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *PositionStatus) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*PositionStatus) ProtoMessage() {}
-
-func (x *PositionStatus) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_vacancy_v1_types_proto_msgTypes[0]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use PositionStatus.ProtoReflect.Descriptor instead.
-func (*PositionStatus) Descriptor() ([]byte, []int) {
-	return file_proto_vacancy_v1_types_proto_rawDescGZIP(), []int{0}
-}
-
-func (x *PositionStatus) GetValue() string {
-	if x != nil {
-		return x.Value
-	}
-	return ""
-}
-
-// Вакансия
-type Vacancy struct {
-	state          protoimpl.MessageState `protogen:"open.v1"`
-	Id             string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`                                               // UUID
-	Title          string                 `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty"`                                         // varchar(128)
-	Experience     int32                  `protobuf:"varint,3,opt,name=experience,proto3" json:"experience,omitempty"`                              // integer
-	Salary         int32                  `protobuf:"varint,4,opt,name=salary,proto3" json:"salary,omitempty"`                                      // integer
-	PositionStatus *PositionStatus        `protobuf:"bytes,5,opt,name=position_status,json=positionStatus,proto3" json:"position_status,omitempty"` // ENUM
-	Schedule       int32                  `protobuf:"varint,6,opt,name=schedule,proto3" json:"schedule,omitempty"`                                  // integer
-	WorkFormat     string                 `protobuf:"bytes,7,opt,name=work_format,json=workFormat,proto3" json:"work_format,omitempty"`             // varchar(64)
-	CompanyId      string                 `protobuf:"bytes,8,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`                // UUID
-	DateStart      string                 `protobuf:"bytes,9,opt,name=date_start,json=dateStart,proto3" json:"date_start,omitempty"`                // datetime как строка
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
-}
-
 func (x *Vacancy) Reset() {
 	*x = Vacancy{}
-	mi := &file_proto_vacancy_v1_types_proto_msgTypes[1]
+	mi := &file_proto_vacancy_v1_types_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -97,7 +57,7 @@ func (x *Vacancy) String() string {
 func (*Vacancy) ProtoMessage() {}
 
 func (x *Vacancy) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_vacancy_v1_types_proto_msgTypes[1]
+	mi := &file_proto_vacancy_v1_types_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -110,7 +70,7 @@ func (x *Vacancy) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Vacancy.ProtoReflect.Descriptor instead.
 func (*Vacancy) Descriptor() ([]byte, []int) {
-	return file_proto_vacancy_v1_types_proto_rawDescGZIP(), []int{1}
+	return file_proto_vacancy_v1_types_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *Vacancy) GetId() string {
@@ -141,18 +101,18 @@ func (x *Vacancy) GetSalary() int32 {
 	return 0
 }
 
-func (x *Vacancy) GetPositionStatus() *PositionStatus {
+func (x *Vacancy) GetPositionStatus() string {
 	if x != nil {
 		return x.PositionStatus
 	}
-	return nil
+	return ""
 }
 
-func (x *Vacancy) GetSchedule() int32 {
+func (x *Vacancy) GetSchedule() string {
 	if x != nil {
 		return x.Schedule
 	}
-	return 0
+	return ""
 }
 
 func (x *Vacancy) GetWorkFormat() string {
@@ -169,9 +129,9 @@ func (x *Vacancy) GetCompanyId() string {
 	return ""
 }
 
-func (x *Vacancy) GetDateStart() string {
+func (x *Vacancy) GetCreateAt() string {
 	if x != nil {
-		return x.DateStart
+		return x.CreateAt
 	}
 	return ""
 }
@@ -187,7 +147,7 @@ type VacancyList struct {
 
 func (x *VacancyList) Reset() {
 	*x = VacancyList{}
-	mi := &file_proto_vacancy_v1_types_proto_msgTypes[2]
+	mi := &file_proto_vacancy_v1_types_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -199,7 +159,7 @@ func (x *VacancyList) String() string {
 func (*VacancyList) ProtoMessage() {}
 
 func (x *VacancyList) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_vacancy_v1_types_proto_msgTypes[2]
+	mi := &file_proto_vacancy_v1_types_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -212,7 +172,7 @@ func (x *VacancyList) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VacancyList.ProtoReflect.Descriptor instead.
 func (*VacancyList) Descriptor() ([]byte, []int) {
-	return file_proto_vacancy_v1_types_proto_rawDescGZIP(), []int{2}
+	return file_proto_vacancy_v1_types_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *VacancyList) GetVacancies() []*Vacancy {
@@ -234,24 +194,21 @@ var File_proto_vacancy_v1_types_proto protoreflect.FileDescriptor
 const file_proto_vacancy_v1_types_proto_rawDesc = "" +
 	"\n" +
 	"\x1cproto/vacancy/v1/types.proto\x12\n" +
-	"vacancy.v1\x1a\x1bproto/common/v1/types.proto\"&\n" +
-	"\x0ePositionStatus\x12\x14\n" +
-	"\x05value\x18\x01 \x01(\tR\x05value\"\xa7\x02\n" +
+	"vacancy.v1\x1a\x1bproto/common/v1/types.proto\"\x89\x02\n" +
 	"\aVacancy\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x14\n" +
 	"\x05title\x18\x02 \x01(\tR\x05title\x12\x1e\n" +
 	"\n" +
 	"experience\x18\x03 \x01(\x05R\n" +
 	"experience\x12\x16\n" +
-	"\x06salary\x18\x04 \x01(\x05R\x06salary\x12C\n" +
-	"\x0fposition_status\x18\x05 \x01(\v2\x1a.vacancy.v1.PositionStatusR\x0epositionStatus\x12\x1a\n" +
-	"\bschedule\x18\x06 \x01(\x05R\bschedule\x12\x1f\n" +
+	"\x06salary\x18\x04 \x01(\x05R\x06salary\x12'\n" +
+	"\x0fposition_status\x18\x05 \x01(\tR\x0epositionStatus\x12\x1a\n" +
+	"\bschedule\x18\x06 \x01(\tR\bschedule\x12\x1f\n" +
 	"\vwork_format\x18\a \x01(\tR\n" +
 	"workFormat\x12\x1d\n" +
 	"\n" +
-	"company_id\x18\b \x01(\tR\tcompanyId\x12\x1d\n" +
-	"\n" +
-	"date_start\x18\t \x01(\tR\tdateStart\"\x7f\n" +
+	"company_id\x18\b \x01(\tR\tcompanyId\x12\x1b\n" +
+	"\tcreate_at\x18\t \x01(\tR\bcreateAt\"\x7f\n" +
 	"\vVacancyList\x121\n" +
 	"\tvacancies\x18\x01 \x03(\v2\x13.vacancy.v1.VacancyR\tvacancies\x12=\n" +
 	"\n" +
@@ -270,22 +227,20 @@ func file_proto_vacancy_v1_types_proto_rawDescGZIP() []byte {
 	return file_proto_vacancy_v1_types_proto_rawDescData
 }
 
-var file_proto_vacancy_v1_types_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
+var file_proto_vacancy_v1_types_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_proto_vacancy_v1_types_proto_goTypes = []any{
-	(*PositionStatus)(nil),        // 0: vacancy.v1.PositionStatus
-	(*Vacancy)(nil),               // 1: vacancy.v1.Vacancy
-	(*VacancyList)(nil),           // 2: vacancy.v1.VacancyList
-	(*v1.PaginationResponse)(nil), // 3: common.v1.PaginationResponse
+	(*Vacancy)(nil),               // 0: vacancy.v1.Vacancy
+	(*VacancyList)(nil),           // 1: vacancy.v1.VacancyList
+	(*v1.PaginationResponse)(nil), // 2: common.v1.PaginationResponse
 }
 var file_proto_vacancy_v1_types_proto_depIdxs = []int32{
-	0, // 0: vacancy.v1.Vacancy.position_status:type_name -> vacancy.v1.PositionStatus
-	1, // 1: vacancy.v1.VacancyList.vacancies:type_name -> vacancy.v1.Vacancy
-	3, // 2: vacancy.v1.VacancyList.pagination:type_name -> common.v1.PaginationResponse
-	3, // [3:3] is the sub-list for method output_type
-	3, // [3:3] is the sub-list for method input_type
-	3, // [3:3] is the sub-list for extension type_name
-	3, // [3:3] is the sub-list for extension extendee
-	0, // [0:3] is the sub-list for field type_name
+	0, // 0: vacancy.v1.VacancyList.vacancies:type_name -> vacancy.v1.Vacancy
+	2, // 1: vacancy.v1.VacancyList.pagination:type_name -> common.v1.PaginationResponse
+	2, // [2:2] is the sub-list for method output_type
+	2, // [2:2] is the sub-list for method input_type
+	2, // [2:2] is the sub-list for extension type_name
+	2, // [2:2] is the sub-list for extension extendee
+	0, // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_proto_vacancy_v1_types_proto_init() }
@@ -299,7 +254,7 @@ func file_proto_vacancy_v1_types_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_vacancy_v1_types_proto_rawDesc), len(file_proto_vacancy_v1_types_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   3,
+			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

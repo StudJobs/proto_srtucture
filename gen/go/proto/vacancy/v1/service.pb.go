@@ -266,6 +266,86 @@ func (x *GetAllVacanciesRequest) GetPositionStatus() string {
 	return ""
 }
 
+type PositionsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PositionsRequest) Reset() {
+	*x = PositionsRequest{}
+	mi := &file_proto_vacancy_v1_service_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PositionsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PositionsRequest) ProtoMessage() {}
+
+func (x *PositionsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_vacancy_v1_service_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PositionsRequest.ProtoReflect.Descriptor instead.
+func (*PositionsRequest) Descriptor() ([]byte, []int) {
+	return file_proto_vacancy_v1_service_proto_rawDescGZIP(), []int{5}
+}
+
+type PositionsResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Position      []string               `protobuf:"bytes,1,rep,name=position,proto3" json:"position,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PositionsResponse) Reset() {
+	*x = PositionsResponse{}
+	mi := &file_proto_vacancy_v1_service_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PositionsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PositionsResponse) ProtoMessage() {}
+
+func (x *PositionsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_vacancy_v1_service_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PositionsResponse.ProtoReflect.Descriptor instead.
+func (*PositionsResponse) Descriptor() ([]byte, []int) {
+	return file_proto_vacancy_v1_service_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *PositionsResponse) GetPosition() []string {
+	if x != nil {
+		return x.Position
+	}
+	return nil
+}
+
 var File_proto_vacancy_v1_service_proto protoreflect.FileDescriptor
 
 const file_proto_vacancy_v1_service_proto_rawDesc = "" +
@@ -287,7 +367,10 @@ const file_proto_vacancy_v1_service_proto_rawDesc = "" +
 	"pagination\x12\x1d\n" +
 	"\n" +
 	"company_id\x18\x02 \x01(\tR\tcompanyId\x12'\n" +
-	"\x0fposition_status\x18\x03 \x01(\tR\x0epositionStatus2\xf1\x02\n" +
+	"\x0fposition_status\x18\x03 \x01(\tR\x0epositionStatus\"\x12\n" +
+	"\x10PositionsRequest\"/\n" +
+	"\x11PositionsResponse\x12\x1a\n" +
+	"\bposition\x18\x01 \x03(\tR\bposition2\xc6\x03\n" +
 	"\x0eVacancyService\x12@\n" +
 	"\n" +
 	"NewVacancy\x12\x1d.vacancy.v1.NewVacancyRequest\x1a\x13.vacancy.v1.Vacancy\x12F\n" +
@@ -295,7 +378,8 @@ const file_proto_vacancy_v1_service_proto_rawDesc = "" +
 	"\rDeleteVacancy\x12 .vacancy.v1.DeleteVacancyRequest\x1a\x10.common.v1.Empty\x12@\n" +
 	"\n" +
 	"GetVacancy\x12\x1d.vacancy.v1.GetVacancyRequest\x1a\x13.vacancy.v1.Vacancy\x12N\n" +
-	"\x0fGetAllVacancies\x12\".vacancy.v1.GetAllVacanciesRequest\x1a\x17.vacancy.v1.VacancyListB7Z5github.com/StudJobs/proto_srtucture/gen/go/vacancy/v1b\x06proto3"
+	"\x0fGetAllVacancies\x12\".vacancy.v1.GetAllVacanciesRequest\x1a\x17.vacancy.v1.VacancyList\x12S\n" +
+	"\x14GetAllExistPositions\x12\x1c.vacancy.v1.PositionsRequest\x1a\x1d.vacancy.v1.PositionsResponseB7Z5github.com/StudJobs/proto_srtucture/gen/go/vacancy/v1b\x06proto3"
 
 var (
 	file_proto_vacancy_v1_service_proto_rawDescOnce sync.Once
@@ -309,37 +393,41 @@ func file_proto_vacancy_v1_service_proto_rawDescGZIP() []byte {
 	return file_proto_vacancy_v1_service_proto_rawDescData
 }
 
-var file_proto_vacancy_v1_service_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_proto_vacancy_v1_service_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_proto_vacancy_v1_service_proto_goTypes = []any{
 	(*NewVacancyRequest)(nil),      // 0: vacancy.v1.NewVacancyRequest
 	(*UpdateVacancyRequest)(nil),   // 1: vacancy.v1.UpdateVacancyRequest
 	(*DeleteVacancyRequest)(nil),   // 2: vacancy.v1.DeleteVacancyRequest
 	(*GetVacancyRequest)(nil),      // 3: vacancy.v1.GetVacancyRequest
 	(*GetAllVacanciesRequest)(nil), // 4: vacancy.v1.GetAllVacanciesRequest
-	(*Vacancy)(nil),                // 5: vacancy.v1.Vacancy
-	(*v1.Pagination)(nil),          // 6: common.v1.Pagination
-	(*v1.Empty)(nil),               // 7: common.v1.Empty
-	(*VacancyList)(nil),            // 8: vacancy.v1.VacancyList
+	(*PositionsRequest)(nil),       // 5: vacancy.v1.PositionsRequest
+	(*PositionsResponse)(nil),      // 6: vacancy.v1.PositionsResponse
+	(*Vacancy)(nil),                // 7: vacancy.v1.Vacancy
+	(*v1.Pagination)(nil),          // 8: common.v1.Pagination
+	(*v1.Empty)(nil),               // 9: common.v1.Empty
+	(*VacancyList)(nil),            // 10: vacancy.v1.VacancyList
 }
 var file_proto_vacancy_v1_service_proto_depIdxs = []int32{
-	5, // 0: vacancy.v1.NewVacancyRequest.vacancy:type_name -> vacancy.v1.Vacancy
-	5, // 1: vacancy.v1.UpdateVacancyRequest.vacancy:type_name -> vacancy.v1.Vacancy
-	6, // 2: vacancy.v1.GetAllVacanciesRequest.pagination:type_name -> common.v1.Pagination
-	0, // 3: vacancy.v1.VacancyService.NewVacancy:input_type -> vacancy.v1.NewVacancyRequest
-	1, // 4: vacancy.v1.VacancyService.UpdateVacancy:input_type -> vacancy.v1.UpdateVacancyRequest
-	2, // 5: vacancy.v1.VacancyService.DeleteVacancy:input_type -> vacancy.v1.DeleteVacancyRequest
-	3, // 6: vacancy.v1.VacancyService.GetVacancy:input_type -> vacancy.v1.GetVacancyRequest
-	4, // 7: vacancy.v1.VacancyService.GetAllVacancies:input_type -> vacancy.v1.GetAllVacanciesRequest
-	5, // 8: vacancy.v1.VacancyService.NewVacancy:output_type -> vacancy.v1.Vacancy
-	5, // 9: vacancy.v1.VacancyService.UpdateVacancy:output_type -> vacancy.v1.Vacancy
-	7, // 10: vacancy.v1.VacancyService.DeleteVacancy:output_type -> common.v1.Empty
-	5, // 11: vacancy.v1.VacancyService.GetVacancy:output_type -> vacancy.v1.Vacancy
-	8, // 12: vacancy.v1.VacancyService.GetAllVacancies:output_type -> vacancy.v1.VacancyList
-	8, // [8:13] is the sub-list for method output_type
-	3, // [3:8] is the sub-list for method input_type
-	3, // [3:3] is the sub-list for extension type_name
-	3, // [3:3] is the sub-list for extension extendee
-	0, // [0:3] is the sub-list for field type_name
+	7,  // 0: vacancy.v1.NewVacancyRequest.vacancy:type_name -> vacancy.v1.Vacancy
+	7,  // 1: vacancy.v1.UpdateVacancyRequest.vacancy:type_name -> vacancy.v1.Vacancy
+	8,  // 2: vacancy.v1.GetAllVacanciesRequest.pagination:type_name -> common.v1.Pagination
+	0,  // 3: vacancy.v1.VacancyService.NewVacancy:input_type -> vacancy.v1.NewVacancyRequest
+	1,  // 4: vacancy.v1.VacancyService.UpdateVacancy:input_type -> vacancy.v1.UpdateVacancyRequest
+	2,  // 5: vacancy.v1.VacancyService.DeleteVacancy:input_type -> vacancy.v1.DeleteVacancyRequest
+	3,  // 6: vacancy.v1.VacancyService.GetVacancy:input_type -> vacancy.v1.GetVacancyRequest
+	4,  // 7: vacancy.v1.VacancyService.GetAllVacancies:input_type -> vacancy.v1.GetAllVacanciesRequest
+	5,  // 8: vacancy.v1.VacancyService.GetAllExistPositions:input_type -> vacancy.v1.PositionsRequest
+	7,  // 9: vacancy.v1.VacancyService.NewVacancy:output_type -> vacancy.v1.Vacancy
+	7,  // 10: vacancy.v1.VacancyService.UpdateVacancy:output_type -> vacancy.v1.Vacancy
+	9,  // 11: vacancy.v1.VacancyService.DeleteVacancy:output_type -> common.v1.Empty
+	7,  // 12: vacancy.v1.VacancyService.GetVacancy:output_type -> vacancy.v1.Vacancy
+	10, // 13: vacancy.v1.VacancyService.GetAllVacancies:output_type -> vacancy.v1.VacancyList
+	6,  // 14: vacancy.v1.VacancyService.GetAllExistPositions:output_type -> vacancy.v1.PositionsResponse
+	9,  // [9:15] is the sub-list for method output_type
+	3,  // [3:9] is the sub-list for method input_type
+	3,  // [3:3] is the sub-list for extension type_name
+	3,  // [3:3] is the sub-list for extension extendee
+	0,  // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_proto_vacancy_v1_service_proto_init() }
@@ -354,7 +442,7 @@ func file_proto_vacancy_v1_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_vacancy_v1_service_proto_rawDesc), len(file_proto_vacancy_v1_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   5,
+			NumMessages:   7,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

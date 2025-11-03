@@ -20,11 +20,12 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	VacancyService_NewVacancy_FullMethodName      = "/vacancy.v1.VacancyService/NewVacancy"
-	VacancyService_UpdateVacancy_FullMethodName   = "/vacancy.v1.VacancyService/UpdateVacancy"
-	VacancyService_DeleteVacancy_FullMethodName   = "/vacancy.v1.VacancyService/DeleteVacancy"
-	VacancyService_GetVacancy_FullMethodName      = "/vacancy.v1.VacancyService/GetVacancy"
-	VacancyService_GetAllVacancies_FullMethodName = "/vacancy.v1.VacancyService/GetAllVacancies"
+	VacancyService_NewVacancy_FullMethodName           = "/vacancy.v1.VacancyService/NewVacancy"
+	VacancyService_UpdateVacancy_FullMethodName        = "/vacancy.v1.VacancyService/UpdateVacancy"
+	VacancyService_DeleteVacancy_FullMethodName        = "/vacancy.v1.VacancyService/DeleteVacancy"
+	VacancyService_GetVacancy_FullMethodName           = "/vacancy.v1.VacancyService/GetVacancy"
+	VacancyService_GetAllVacancies_FullMethodName      = "/vacancy.v1.VacancyService/GetAllVacancies"
+	VacancyService_GetAllExistPositions_FullMethodName = "/vacancy.v1.VacancyService/GetAllExistPositions"
 )
 
 // VacancyServiceClient is the client API for VacancyService service.
@@ -41,6 +42,8 @@ type VacancyServiceClient interface {
 	GetVacancy(ctx context.Context, in *GetVacancyRequest, opts ...grpc.CallOption) (*Vacancy, error)
 	// Получить все вакансии
 	GetAllVacancies(ctx context.Context, in *GetAllVacanciesRequest, opts ...grpc.CallOption) (*VacancyList, error)
+	// получение всех позиций
+	GetAllExistPositions(ctx context.Context, in *PositionsRequest, opts ...grpc.CallOption) (*PositionsResponse, error)
 }
 
 type vacancyServiceClient struct {
@@ -101,6 +104,16 @@ func (c *vacancyServiceClient) GetAllVacancies(ctx context.Context, in *GetAllVa
 	return out, nil
 }
 
+func (c *vacancyServiceClient) GetAllExistPositions(ctx context.Context, in *PositionsRequest, opts ...grpc.CallOption) (*PositionsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(PositionsResponse)
+	err := c.cc.Invoke(ctx, VacancyService_GetAllExistPositions_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // VacancyServiceServer is the server API for VacancyService service.
 // All implementations must embed UnimplementedVacancyServiceServer
 // for forward compatibility.
@@ -115,6 +128,8 @@ type VacancyServiceServer interface {
 	GetVacancy(context.Context, *GetVacancyRequest) (*Vacancy, error)
 	// Получить все вакансии
 	GetAllVacancies(context.Context, *GetAllVacanciesRequest) (*VacancyList, error)
+	// получение всех позиций
+	GetAllExistPositions(context.Context, *PositionsRequest) (*PositionsResponse, error)
 	mustEmbedUnimplementedVacancyServiceServer()
 }
 
@@ -139,6 +154,9 @@ func (UnimplementedVacancyServiceServer) GetVacancy(context.Context, *GetVacancy
 }
 func (UnimplementedVacancyServiceServer) GetAllVacancies(context.Context, *GetAllVacanciesRequest) (*VacancyList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllVacancies not implemented")
+}
+func (UnimplementedVacancyServiceServer) GetAllExistPositions(context.Context, *PositionsRequest) (*PositionsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAllExistPositions not implemented")
 }
 func (UnimplementedVacancyServiceServer) mustEmbedUnimplementedVacancyServiceServer() {}
 func (UnimplementedVacancyServiceServer) testEmbeddedByValue()                        {}
@@ -251,6 +269,24 @@ func _VacancyService_GetAllVacancies_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _VacancyService_GetAllExistPositions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PositionsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VacancyServiceServer).GetAllExistPositions(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: VacancyService_GetAllExistPositions_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VacancyServiceServer).GetAllExistPositions(ctx, req.(*PositionsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // VacancyService_ServiceDesc is the grpc.ServiceDesc for VacancyService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -277,6 +313,10 @@ var VacancyService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAllVacancies",
 			Handler:    _VacancyService_GetAllVacancies_Handler,
+		},
+		{
+			MethodName: "GetAllExistPositions",
+			Handler:    _VacancyService_GetAllExistPositions_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
