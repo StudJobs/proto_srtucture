@@ -35,9 +35,13 @@ type Vacancy struct {
 	Salary int32 `protobuf:"varint,4,opt,name=salary,proto3" json:"salary,omitempty"`
 	// Должность (intern, Junior_loh, Middle, Senior, ProductManager...)
 	PositionStatus string `protobuf:"bytes,5,opt,name=position_status,json=positionStatus,proto3" json:"position_status,omitempty"`
+	// график работы (5/2, 3/3)
 	Schedule string `protobuf:"bytes,6,opt,name=schedule,proto3" json:"schedule,omitempty"`
+	// формат работы (удаленно, гибрид ...)
 	WorkFormat string `protobuf:"bytes,7,opt,name=work_format,json=workFormat,proto3" json:"work_format,omitempty"`
+	// uuid кампании
 	CompanyId string `protobuf:"bytes,8,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	// создание компании
 	CreateAt      string `protobuf:"bytes,9,opt,name=create_at,json=createAt,proto3" json:"create_at,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache

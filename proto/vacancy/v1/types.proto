@@ -18,13 +18,13 @@ message Vacancy {
   int32 salary = 4;
   // Должность (intern, Junior_loh, Middle, Senior, ProductManager...)
   string position_status = 5;
-  //
+  // график работы (5/2, 3/3)
   string schedule = 6;
-  //
+  // формат работы (удаленно, гибрид ...)
   string work_format = 7;
-  //
+  // uuid кампании
   string company_id = 8;
-  //
+  // создание компании
   string create_at = 9;
 }
 
