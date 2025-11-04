@@ -30,7 +30,6 @@ type AchievementMeta struct {
 	FileType      string                 `protobuf:"bytes,4,opt,name=file_type,json=fileType,proto3" json:"file_type,omitempty"`    // MIME-тип файла (например, "image/jpeg", "application/pdf")
 	FileSize      int64                  `protobuf:"varint,5,opt,name=file_size,json=fileSize,proto3" json:"file_size,omitempty"`   // Размер файла в байтах
 	CreatedAt     string                 `protobuf:"bytes,6,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"` // Дата создания в формате RFC3339
-	S3Key         string                 `protobuf:"bytes,7,opt,name=s3_key,json=s3Key,proto3" json:"s3_key,omitempty"`             // Ключ файла в S3 (генерируется сервисом)
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -103,13 +102,6 @@ func (x *AchievementMeta) GetFileSize() int64 {
 func (x *AchievementMeta) GetCreatedAt() string {
 	if x != nil {
 		return x.CreatedAt
-	}
-	return ""
-}
-
-func (x *AchievementMeta) GetS3Key() string {
-	if x != nil {
-		return x.S3Key
 	}
 	return ""
 }
@@ -216,7 +208,7 @@ var File_proto_achievement_v1_types_proto protoreflect.FileDescriptor
 
 const file_proto_achievement_v1_types_proto_rawDesc = "" +
 	"\n" +
-	" proto/achievement/v1/types.proto\x12\x0eachievement.v1\"\xcf\x01\n" +
+	" proto/achievement/v1/types.proto\x12\x0eachievement.v1\"\xb8\x01\n" +
 	"\x0fAchievementMeta\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x1b\n" +
 	"\tuser_uuid\x18\x02 \x01(\tR\buserUuid\x12\x1b\n" +
@@ -224,8 +216,7 @@ const file_proto_achievement_v1_types_proto_rawDesc = "" +
 	"\tfile_type\x18\x04 \x01(\tR\bfileType\x12\x1b\n" +
 	"\tfile_size\x18\x05 \x01(\x03R\bfileSize\x12\x1d\n" +
 	"\n" +
-	"created_at\x18\x06 \x01(\tR\tcreatedAt\x12\x15\n" +
-	"\x06s3_key\x18\a \x01(\tR\x05s3Key\"V\n" +
+	"created_at\x18\x06 \x01(\tR\tcreatedAt\"V\n" +
 	"\x0fAchievementList\x12C\n" +
 	"\fachievements\x18\x01 \x03(\v2\x1f.achievement.v1.AchievementMetaR\fachievements\"A\n" +
 	"\x0eAchievementUrl\x12\x10\n" +

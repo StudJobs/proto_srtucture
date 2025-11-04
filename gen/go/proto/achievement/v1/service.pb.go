@@ -200,7 +200,7 @@ func (x *GetAchievementUploadRequest) GetFileSize() int64 {
 // Запрос на добавление метаданных достижения
 type AddAchievementMetaRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Metadata      *AchievementMeta       `protobuf:"bytes,1,opt,name=metadata,proto3" json:"metadata,omitempty"` // Метаданные достижения
+	Meta          *AchievementMeta       `protobuf:"bytes,1,opt,name=meta,proto3" json:"meta,omitempty"` // Метаданные достижения (ИСПРАВЛЕНО: было metadata)
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -235,9 +235,9 @@ func (*AddAchievementMetaRequest) Descriptor() ([]byte, []int) {
 	return file_proto_achievement_v1_service_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *AddAchievementMetaRequest) GetMetadata() *AchievementMeta {
+func (x *AddAchievementMetaRequest) GetMeta() *AchievementMeta {
 	if x != nil {
-		return x.Metadata
+		return x.Meta
 	}
 	return nil
 }
@@ -310,9 +310,9 @@ const file_proto_achievement_v1_service_proto_rawDesc = "" +
 	"\x10achievement_name\x18\x02 \x01(\tR\x0fachievementName\x12\x1b\n" +
 	"\tfile_name\x18\x03 \x01(\tR\bfileName\x12\x1b\n" +
 	"\tfile_type\x18\x04 \x01(\tR\bfileType\x12\x1b\n" +
-	"\tfile_size\x18\x05 \x01(\x03R\bfileSize\"X\n" +
-	"\x19AddAchievementMetaRequest\x12;\n" +
-	"\bmetadata\x18\x01 \x01(\v2\x1f.achievement.v1.AchievementMetaR\bmetadata\"b\n" +
+	"\tfile_size\x18\x05 \x01(\x03R\bfileSize\"P\n" +
+	"\x19AddAchievementMetaRequest\x123\n" +
+	"\x04meta\x18\x01 \x01(\v2\x1f.achievement.v1.AchievementMetaR\x04meta\"b\n" +
 	"\x18DeleteAchievementRequest\x12\x1b\n" +
 	"\tuser_uuid\x18\x01 \x01(\tR\buserUuid\x12)\n" +
 	"\x10achievement_name\x18\x02 \x01(\tR\x0fachievementName2\xe6\x03\n" +
@@ -348,7 +348,7 @@ var file_proto_achievement_v1_service_proto_goTypes = []any{
 	(*v1.Empty)(nil),                    // 8: common.v1.Empty
 }
 var file_proto_achievement_v1_service_proto_depIdxs = []int32{
-	5, // 0: achievement.v1.AddAchievementMetaRequest.metadata:type_name -> achievement.v1.AchievementMeta
+	5, // 0: achievement.v1.AddAchievementMetaRequest.meta:type_name -> achievement.v1.AchievementMeta
 	0, // 1: achievement.v1.AchievementService.GetAllAchievements:input_type -> achievement.v1.GetAllAchievementsRequest
 	1, // 2: achievement.v1.AchievementService.GetAchievementDownloadUrl:input_type -> achievement.v1.GetAchievementRequest
 	2, // 3: achievement.v1.AchievementService.GetAchievementUploadUrl:input_type -> achievement.v1.GetAchievementUploadRequest

@@ -14,7 +14,6 @@ message AchievementMeta {
   string file_type = 4;      // MIME-тип файла (например, "image/jpeg", "application/pdf")
   int64 file_size = 5;       // Размер файла в байтах
   string created_at = 6;     // Дата создания в формате RFC3339
-  string s3_key = 7;         // Ключ файла в S3 (генерируется сервисом)
 }
 
 // Список метаданных достижений

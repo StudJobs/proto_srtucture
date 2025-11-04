@@ -48,7 +48,7 @@ message GetAchievementUploadRequest {
 
 // Запрос на добавление метаданных достижения
 message AddAchievementMetaRequest {
-  AchievementMeta metadata = 1; // Метаданные достижения
+  AchievementMeta meta = 1; // Метаданные достижения (ИСПРАВЛЕНО: было metadata)
 }
 
 // Запрос на удаление достижения
@@ -56,4 +56,3 @@ message DeleteAchievementRequest {
   string user_uuid = 1;        // UUID пользователя
   string achievement_name = 2; // Имя удаляемого достижения
 }
-
