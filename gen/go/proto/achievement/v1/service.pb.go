@@ -22,9 +22,10 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// Запрос на получение всех достижений пользователя
 type GetAllAchievementsRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserUuid      string                 `protobuf:"bytes,1,opt,name=user_uuid,json=userUuid,proto3" json:"user_uuid,omitempty"`
+	UserUuid      string                 `protobuf:"bytes,1,opt,name=user_uuid,json=userUuid,proto3" json:"user_uuid,omitempty"` // UUID пользователя для фильтрации
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -66,10 +67,11 @@ func (x *GetAllAchievementsRequest) GetUserUuid() string {
 	return ""
 }
 
+// Запрос на получение конкретного достижения
 type GetAchievementRequest struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
-	UserUuid        string                 `protobuf:"bytes,1,opt,name=user_uuid,json=userUuid,proto3" json:"user_uuid,omitempty"`
-	AchievementName string                 `protobuf:"bytes,2,opt,name=achievement_name,json=achievementName,proto3" json:"achievement_name,omitempty"`
+	UserUuid        string                 `protobuf:"bytes,1,opt,name=user_uuid,json=userUuid,proto3" json:"user_uuid,omitempty"`                      // UUID пользователя (для проверки прав доступа)
+	AchievementName string                 `protobuf:"bytes,2,opt,name=achievement_name,json=achievementName,proto3" json:"achievement_name,omitempty"` // Уникальное имя достижения в рамках пользователя
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -118,12 +120,14 @@ func (x *GetAchievementRequest) GetAchievementName() string {
 	return ""
 }
 
+// Запрос на получение URL для загрузки файла в S3
 type GetAchievementUploadRequest struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
-	UserUuid        string                 `protobuf:"bytes,1,opt,name=user_uuid,json=userUuid,proto3" json:"user_uuid,omitempty"`
-	AchievementName string                 `protobuf:"bytes,2,opt,name=achievement_name,json=achievementName,proto3" json:"achievement_name,omitempty"`
-	FileName        string                 `protobuf:"bytes,3,opt,name=file_name,json=fileName,proto3" json:"file_name,omitempty"`
-	FileType        string                 `protobuf:"bytes,4,opt,name=file_type,json=fileType,proto3" json:"file_type,omitempty"`
+	UserUuid        string                 `protobuf:"bytes,1,opt,name=user_uuid,json=userUuid,proto3" json:"user_uuid,omitempty"`                      // UUID пользователя
+	AchievementName string                 `protobuf:"bytes,2,opt,name=achievement_name,json=achievementName,proto3" json:"achievement_name,omitempty"` // Уникальное имя достижения
+	FileName        string                 `protobuf:"bytes,3,opt,name=file_name,json=fileName,proto3" json:"file_name,omitempty"`                      // Оригинальное имя файла
+	FileType        string                 `protobuf:"bytes,4,opt,name=file_type,json=fileType,proto3" json:"file_type,omitempty"`                      // MIME-тип файла
+	FileSize        int64                  `protobuf:"varint,5,opt,name=file_size,json=fileSize,proto3" json:"file_size,omitempty"`                     // Размер файла в байтах (для валидации)
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -186,9 +190,17 @@ func (x *GetAchievementUploadRequest) GetFileType() string {
 	return ""
 }
 
+func (x *GetAchievementUploadRequest) GetFileSize() int64 {
+	if x != nil {
+		return x.FileSize
+	}
+	return 0
+}
+
+// Запрос на добавление метаданных достижения
 type AddAchievementMetaRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Meta          *AchievementMeta       `protobuf:"bytes,1,opt,name=meta,proto3" json:"meta,omitempty"`
+	Metadata      *AchievementMeta       `protobuf:"bytes,1,opt,name=metadata,proto3" json:"metadata,omitempty"` // Метаданные достижения
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -223,17 +235,18 @@ func (*AddAchievementMetaRequest) Descriptor() ([]byte, []int) {
 	return file_proto_achievement_v1_service_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *AddAchievementMetaRequest) GetMeta() *AchievementMeta {
+func (x *AddAchievementMetaRequest) GetMetadata() *AchievementMeta {
 	if x != nil {
-		return x.Meta
+		return x.Metadata
 	}
 	return nil
 }
 
+// Запрос на удаление достижения
 type DeleteAchievementRequest struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
-	UserUuid        string                 `protobuf:"bytes,1,opt,name=user_uuid,json=userUuid,proto3" json:"user_uuid,omitempty"`
-	AchievementName string                 `protobuf:"bytes,2,opt,name=achievement_name,json=achievementName,proto3" json:"achievement_name,omitempty"`
+	UserUuid        string                 `protobuf:"bytes,1,opt,name=user_uuid,json=userUuid,proto3" json:"user_uuid,omitempty"`                      // UUID пользователя
+	AchievementName string                 `protobuf:"bytes,2,opt,name=achievement_name,json=achievementName,proto3" json:"achievement_name,omitempty"` // Имя удаляемого достижения
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -291,14 +304,15 @@ const file_proto_achievement_v1_service_proto_rawDesc = "" +
 	"\tuser_uuid\x18\x01 \x01(\tR\buserUuid\"_\n" +
 	"\x15GetAchievementRequest\x12\x1b\n" +
 	"\tuser_uuid\x18\x01 \x01(\tR\buserUuid\x12)\n" +
-	"\x10achievement_name\x18\x02 \x01(\tR\x0fachievementName\"\x9f\x01\n" +
+	"\x10achievement_name\x18\x02 \x01(\tR\x0fachievementName\"\xbc\x01\n" +
 	"\x1bGetAchievementUploadRequest\x12\x1b\n" +
 	"\tuser_uuid\x18\x01 \x01(\tR\buserUuid\x12)\n" +
 	"\x10achievement_name\x18\x02 \x01(\tR\x0fachievementName\x12\x1b\n" +
 	"\tfile_name\x18\x03 \x01(\tR\bfileName\x12\x1b\n" +
-	"\tfile_type\x18\x04 \x01(\tR\bfileType\"P\n" +
-	"\x19AddAchievementMetaRequest\x123\n" +
-	"\x04meta\x18\x01 \x01(\v2\x1f.achievement.v1.AchievementMetaR\x04meta\"b\n" +
+	"\tfile_type\x18\x04 \x01(\tR\bfileType\x12\x1b\n" +
+	"\tfile_size\x18\x05 \x01(\x03R\bfileSize\"X\n" +
+	"\x19AddAchievementMetaRequest\x12;\n" +
+	"\bmetadata\x18\x01 \x01(\v2\x1f.achievement.v1.AchievementMetaR\bmetadata\"b\n" +
 	"\x18DeleteAchievementRequest\x12\x1b\n" +
 	"\tuser_uuid\x18\x01 \x01(\tR\buserUuid\x12)\n" +
 	"\x10achievement_name\x18\x02 \x01(\tR\x0fachievementName2\xe6\x03\n" +
@@ -334,7 +348,7 @@ var file_proto_achievement_v1_service_proto_goTypes = []any{
 	(*v1.Empty)(nil),                    // 8: common.v1.Empty
 }
 var file_proto_achievement_v1_service_proto_depIdxs = []int32{
-	5, // 0: achievement.v1.AddAchievementMetaRequest.meta:type_name -> achievement.v1.AchievementMeta
+	5, // 0: achievement.v1.AddAchievementMetaRequest.metadata:type_name -> achievement.v1.AchievementMeta
 	0, // 1: achievement.v1.AchievementService.GetAllAchievements:input_type -> achievement.v1.GetAllAchievementsRequest
 	1, // 2: achievement.v1.AchievementService.GetAchievementDownloadUrl:input_type -> achievement.v1.GetAchievementRequest
 	2, // 3: achievement.v1.AchievementService.GetAchievementUploadUrl:input_type -> achievement.v1.GetAchievementUploadRequest

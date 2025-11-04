@@ -31,15 +31,15 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AchievementServiceClient interface {
-	// Получить все достижения пользователя (метаданные)
+	// Получить все достижения пользователя (только метаданные)
 	GetAllAchievements(ctx context.Context, in *GetAllAchievementsRequest, opts ...grpc.CallOption) (*AchievementList, error)
-	// Получить URL для скачивания достижения
+	// Получить URL для скачивания достижения (просмотра)
 	GetAchievementDownloadUrl(ctx context.Context, in *GetAchievementRequest, opts ...grpc.CallOption) (*AchievementUrl, error)
-	// Получить URL для загрузки достижения
+	// Получить URL для загрузки файла достижения (presigned URL)
 	GetAchievementUploadUrl(ctx context.Context, in *GetAchievementUploadRequest, opts ...grpc.CallOption) (*AchievementUrl, error)
-	// Добавить метаданные достижения
+	// Добавить метаданные достижения после успешной загрузки в S3
 	AddAchievementMeta(ctx context.Context, in *AddAchievementMetaRequest, opts ...grpc.CallOption) (*v1.Empty, error)
-	// Удалить достижение
+	// Удалить достижение (метаданные + файл из S3)
 	DeleteAchievement(ctx context.Context, in *DeleteAchievementRequest, opts ...grpc.CallOption) (*v1.Empty, error)
 }
 
@@ -105,15 +105,15 @@ func (c *achievementServiceClient) DeleteAchievement(ctx context.Context, in *De
 // All implementations must embed UnimplementedAchievementServiceServer
 // for forward compatibility.
 type AchievementServiceServer interface {
-	// Получить все достижения пользователя (метаданные)
+	// Получить все достижения пользователя (только метаданные)
 	GetAllAchievements(context.Context, *GetAllAchievementsRequest) (*AchievementList, error)
-	// Получить URL для скачивания достижения
+	// Получить URL для скачивания достижения (просмотра)
 	GetAchievementDownloadUrl(context.Context, *GetAchievementRequest) (*AchievementUrl, error)
-	// Получить URL для загрузки достижения
+	// Получить URL для загрузки файла достижения (presigned URL)
 	GetAchievementUploadUrl(context.Context, *GetAchievementUploadRequest) (*AchievementUrl, error)
-	// Добавить метаданные достижения
+	// Добавить метаданные достижения после успешной загрузки в S3
 	AddAchievementMeta(context.Context, *AddAchievementMetaRequest) (*v1.Empty, error)
-	// Удалить достижение
+	// Удалить достижение (метаданные + файл из S3)
 	DeleteAchievement(context.Context, *DeleteAchievementRequest) (*v1.Empty, error)
 	mustEmbedUnimplementedAchievementServiceServer()
 }

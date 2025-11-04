@@ -8,43 +8,52 @@ import "proto/achievement/v1/types.proto";
 import "proto/common/v1/types.proto";
 
 service AchievementService {
-  // Получить все достижения пользователя (метаданные)
+  // Получить все достижения пользователя (только метаданные)
   rpc GetAllAchievements(GetAllAchievementsRequest) returns (AchievementList);
 
-  // Получить URL для скачивания достижения
+  // Получить URL для скачивания достижения (просмотра)
   rpc GetAchievementDownloadUrl(GetAchievementRequest) returns (AchievementUrl);
 
-  // Получить URL для загрузки достижения
+  // Получить URL для загрузки файла достижения (presigned URL)
   rpc GetAchievementUploadUrl(GetAchievementUploadRequest) returns (AchievementUrl);
 
-  // Добавить метаданные достижения
+  // Добавить метаданные достижения после успешной загрузки в S3
   rpc AddAchievementMeta(AddAchievementMetaRequest) returns (common.v1.Empty);
 
-  // Удалить достижение
+  // Удалить достижение (метаданные + файл из S3)
   rpc DeleteAchievement(DeleteAchievementRequest) returns (common.v1.Empty);
 }
 
+// ============ REQUEST/RESPONSE MESSAGES ============
+
+// Запрос на получение всех достижений пользователя
 message GetAllAchievementsRequest {
-  string user_uuid = 1;
+  string user_uuid = 1; // UUID пользователя для фильтрации
 }
 
+// Запрос на получение конкретного достижения
 message GetAchievementRequest {
-  string user_uuid = 1;
-  string achievement_name = 2;
+  string user_uuid = 1;        // UUID пользователя (для проверки прав доступа)
+  string achievement_name = 2; // Уникальное имя достижения в рамках пользователя
 }
 
+// Запрос на получение URL для загрузки файла в S3
 message GetAchievementUploadRequest {
-  string user_uuid = 1;
-  string achievement_name = 2;
-  string file_name = 3;
-  string file_type = 4;
+  string user_uuid = 1;        // UUID пользователя
+  string achievement_name = 2; // Уникальное имя достижения
+  string file_name = 3;        // Оригинальное имя файла
+  string file_type = 4;        // MIME-тип файла
+  int64 file_size = 5;         // Размер файла в байтах (для валидации)
 }
 
+// Запрос на добавление метаданных достижения
 message AddAchievementMetaRequest {
-  AchievementMeta meta = 1;
+  AchievementMeta metadata = 1; // Метаданные достижения
 }
 
+// Запрос на удаление достижения
 message DeleteAchievementRequest {
-  string user_uuid = 1;
-  string achievement_name = 2;
+  string user_uuid = 1;        // UUID пользователя
+  string achievement_name = 2; // Имя удаляемого достижения
 }
+
