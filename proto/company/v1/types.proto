@@ -17,6 +17,7 @@ message Company {
   string city = 4;
   string site = 5;
   CompanyType type = 6;
+  string logo_id = 7;
 }
 
 message CompanyList {

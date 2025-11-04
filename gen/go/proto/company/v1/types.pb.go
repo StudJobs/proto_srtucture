@@ -74,6 +74,7 @@ type Company struct {
 	City          string                 `protobuf:"bytes,4,opt,name=city,proto3" json:"city,omitempty"`
 	Site          string                 `protobuf:"bytes,5,opt,name=site,proto3" json:"site,omitempty"`
 	Type          *CompanyType           `protobuf:"bytes,6,opt,name=type,proto3" json:"type,omitempty"`
+	LogoId        string                 `protobuf:"bytes,7,opt,name=logo_id,json=logoId,proto3" json:"logo_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -150,6 +151,13 @@ func (x *Company) GetType() *CompanyType {
 	return nil
 }
 
+func (x *Company) GetLogoId() string {
+	if x != nil {
+		return x.LogoId
+	}
+	return ""
+}
+
 type CompanyList struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Companies     []*Company             `protobuf:"bytes,1,rep,name=companies,proto3" json:"companies,omitempty"`
@@ -209,14 +217,15 @@ const file_proto_company_v1_types_proto_rawDesc = "" +
 	"\x1cproto/company/v1/types.proto\x12\n" +
 	"company.v1\x1a\x1bproto/common/v1/types.proto\"#\n" +
 	"\vCompanyType\x12\x14\n" +
-	"\x05value\x18\x01 \x01(\tR\x05value\"\xa4\x01\n" +
+	"\x05value\x18\x01 \x01(\tR\x05value\"\xbd\x01\n" +
 	"\aCompany\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12 \n" +
 	"\vdescription\x18\x03 \x01(\tR\vdescription\x12\x12\n" +
 	"\x04city\x18\x04 \x01(\tR\x04city\x12\x12\n" +
 	"\x04site\x18\x05 \x01(\tR\x04site\x12+\n" +
-	"\x04type\x18\x06 \x01(\v2\x17.company.v1.CompanyTypeR\x04type\"\x7f\n" +
+	"\x04type\x18\x06 \x01(\v2\x17.company.v1.CompanyTypeR\x04type\x12\x17\n" +
+	"\alogo_id\x18\a \x01(\tR\x06logoId\"\x7f\n" +
 	"\vCompanyList\x121\n" +
 	"\tcompanies\x18\x01 \x03(\v2\x13.company.v1.CompanyR\tcompanies\x12=\n" +
 	"\n" +
