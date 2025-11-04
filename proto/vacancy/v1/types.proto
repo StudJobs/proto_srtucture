@@ -26,6 +26,8 @@ message Vacancy {
   string company_id = 8;
   // создание компании
   string create_at = 9;
+  // ID прикрепленного файла
+  string attachment_id = 10;
 }
 
 // Список вакансий с пагинацией

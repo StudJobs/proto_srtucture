@@ -25,6 +25,7 @@ const (
 	VacancyService_DeleteVacancy_FullMethodName        = "/vacancy.v1.VacancyService/DeleteVacancy"
 	VacancyService_GetVacancy_FullMethodName           = "/vacancy.v1.VacancyService/GetVacancy"
 	VacancyService_GetAllVacancies_FullMethodName      = "/vacancy.v1.VacancyService/GetAllVacancies"
+	VacancyService_GetHRVacancies_FullMethodName       = "/vacancy.v1.VacancyService/GetHRVacancies"
 	VacancyService_GetAllExistPositions_FullMethodName = "/vacancy.v1.VacancyService/GetAllExistPositions"
 )
 
@@ -40,8 +41,10 @@ type VacancyServiceClient interface {
 	DeleteVacancy(ctx context.Context, in *DeleteVacancyRequest, opts ...grpc.CallOption) (*v1.Empty, error)
 	// Получить вакансию
 	GetVacancy(ctx context.Context, in *GetVacancyRequest, opts ...grpc.CallOption) (*Vacancy, error)
-	// Получить все вакансии
+	// Получить все вакансии с фильтрами
 	GetAllVacancies(ctx context.Context, in *GetAllVacanciesRequest, opts ...grpc.CallOption) (*VacancyList, error)
+	// Получить вакансии HR с фильтрами
+	GetHRVacancies(ctx context.Context, in *GetHRVacanciesRequest, opts ...grpc.CallOption) (*VacancyList, error)
 	// получение всех позиций
 	GetAllExistPositions(ctx context.Context, in *PositionsRequest, opts ...grpc.CallOption) (*PositionsResponse, error)
 }
@@ -104,6 +107,16 @@ func (c *vacancyServiceClient) GetAllVacancies(ctx context.Context, in *GetAllVa
 	return out, nil
 }
 
+func (c *vacancyServiceClient) GetHRVacancies(ctx context.Context, in *GetHRVacanciesRequest, opts ...grpc.CallOption) (*VacancyList, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(VacancyList)
+	err := c.cc.Invoke(ctx, VacancyService_GetHRVacancies_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *vacancyServiceClient) GetAllExistPositions(ctx context.Context, in *PositionsRequest, opts ...grpc.CallOption) (*PositionsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(PositionsResponse)
@@ -126,8 +139,10 @@ type VacancyServiceServer interface {
 	DeleteVacancy(context.Context, *DeleteVacancyRequest) (*v1.Empty, error)
 	// Получить вакансию
 	GetVacancy(context.Context, *GetVacancyRequest) (*Vacancy, error)
-	// Получить все вакансии
+	// Получить все вакансии с фильтрами
 	GetAllVacancies(context.Context, *GetAllVacanciesRequest) (*VacancyList, error)
+	// Получить вакансии HR с фильтрами
+	GetHRVacancies(context.Context, *GetHRVacanciesRequest) (*VacancyList, error)
 	// получение всех позиций
 	GetAllExistPositions(context.Context, *PositionsRequest) (*PositionsResponse, error)
 	mustEmbedUnimplementedVacancyServiceServer()
@@ -154,6 +169,9 @@ func (UnimplementedVacancyServiceServer) GetVacancy(context.Context, *GetVacancy
 }
 func (UnimplementedVacancyServiceServer) GetAllVacancies(context.Context, *GetAllVacanciesRequest) (*VacancyList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllVacancies not implemented")
+}
+func (UnimplementedVacancyServiceServer) GetHRVacancies(context.Context, *GetHRVacanciesRequest) (*VacancyList, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetHRVacancies not implemented")
 }
 func (UnimplementedVacancyServiceServer) GetAllExistPositions(context.Context, *PositionsRequest) (*PositionsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllExistPositions not implemented")
@@ -269,6 +287,24 @@ func _VacancyService_GetAllVacancies_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _VacancyService_GetHRVacancies_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetHRVacanciesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VacancyServiceServer).GetHRVacancies(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: VacancyService_GetHRVacancies_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VacancyServiceServer).GetHRVacancies(ctx, req.(*GetHRVacanciesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _VacancyService_GetAllExistPositions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(PositionsRequest)
 	if err := dec(in); err != nil {
@@ -313,6 +349,10 @@ var VacancyService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAllVacancies",
 			Handler:    _VacancyService_GetAllVacancies_Handler,
+		},
+		{
+			MethodName: "GetHRVacancies",
+			Handler:    _VacancyService_GetHRVacancies_Handler,
 		},
 		{
 			MethodName: "GetAllExistPositions",

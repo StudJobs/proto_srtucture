@@ -211,6 +211,13 @@ type GetAllVacanciesRequest struct {
 	Pagination     *v1.Pagination         `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
 	CompanyId      string                 `protobuf:"bytes,2,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`                // Опциональный фильтр по компании
 	PositionStatus string                 `protobuf:"bytes,3,opt,name=position_status,json=positionStatus,proto3" json:"position_status,omitempty"` // Опциональный фильтр по статусу позиции
+	WorkFormat     string                 `protobuf:"bytes,4,opt,name=work_format,json=workFormat,proto3" json:"work_format,omitempty"`             // Опциональный фильтр по формату работы
+	Schedule       string                 `protobuf:"bytes,5,opt,name=schedule,proto3" json:"schedule,omitempty"`                                   // Опциональный фильтр по графику работы
+	MinSalary      int32                  `protobuf:"varint,6,opt,name=min_salary,json=minSalary,proto3" json:"min_salary,omitempty"`               // Опциональный фильтр по минимальной ЗП
+	MaxSalary      int32                  `protobuf:"varint,7,opt,name=max_salary,json=maxSalary,proto3" json:"max_salary,omitempty"`               // Опциональный фильтр по максимальной ЗП
+	MinExperience  int32                  `protobuf:"varint,8,opt,name=min_experience,json=minExperience,proto3" json:"min_experience,omitempty"`   // Опциональный фильтр по минимальному опыту
+	MaxExperience  int32                  `protobuf:"varint,9,opt,name=max_experience,json=maxExperience,proto3" json:"max_experience,omitempty"`   // Опциональный фильтр по максимальному опыту
+	SearchTitle    string                 `protobuf:"bytes,10,opt,name=search_title,json=searchTitle,proto3" json:"search_title,omitempty"`         // Опциональный поиск по заголовку
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -266,6 +273,171 @@ func (x *GetAllVacanciesRequest) GetPositionStatus() string {
 	return ""
 }
 
+func (x *GetAllVacanciesRequest) GetWorkFormat() string {
+	if x != nil {
+		return x.WorkFormat
+	}
+	return ""
+}
+
+func (x *GetAllVacanciesRequest) GetSchedule() string {
+	if x != nil {
+		return x.Schedule
+	}
+	return ""
+}
+
+func (x *GetAllVacanciesRequest) GetMinSalary() int32 {
+	if x != nil {
+		return x.MinSalary
+	}
+	return 0
+}
+
+func (x *GetAllVacanciesRequest) GetMaxSalary() int32 {
+	if x != nil {
+		return x.MaxSalary
+	}
+	return 0
+}
+
+func (x *GetAllVacanciesRequest) GetMinExperience() int32 {
+	if x != nil {
+		return x.MinExperience
+	}
+	return 0
+}
+
+func (x *GetAllVacanciesRequest) GetMaxExperience() int32 {
+	if x != nil {
+		return x.MaxExperience
+	}
+	return 0
+}
+
+func (x *GetAllVacanciesRequest) GetSearchTitle() string {
+	if x != nil {
+		return x.SearchTitle
+	}
+	return ""
+}
+
+type GetHRVacanciesRequest struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Pagination     *v1.Pagination         `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	CompanyId      string                 `protobuf:"bytes,2,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`                // Опциональный фильтр по компании
+	PositionStatus string                 `protobuf:"bytes,3,opt,name=position_status,json=positionStatus,proto3" json:"position_status,omitempty"` // Опциональный фильтр по статусу позиции
+	WorkFormat     string                 `protobuf:"bytes,4,opt,name=work_format,json=workFormat,proto3" json:"work_format,omitempty"`             // Опциональный фильтр по формату работы
+	Schedule       string                 `protobuf:"bytes,5,opt,name=schedule,proto3" json:"schedule,omitempty"`                                   // Опциональный фильтр по графику работы
+	MinSalary      int32                  `protobuf:"varint,6,opt,name=min_salary,json=minSalary,proto3" json:"min_salary,omitempty"`               // Опциональный фильтр по минимальной ЗП
+	MaxSalary      int32                  `protobuf:"varint,7,opt,name=max_salary,json=maxSalary,proto3" json:"max_salary,omitempty"`               // Опциональный фильтр по максимальной ЗП
+	MinExperience  int32                  `protobuf:"varint,8,opt,name=min_experience,json=minExperience,proto3" json:"min_experience,omitempty"`   // Опциональный фильтр по минимальному опыту
+	MaxExperience  int32                  `protobuf:"varint,9,opt,name=max_experience,json=maxExperience,proto3" json:"max_experience,omitempty"`   // Опциональный фильтр по максимальному опыту
+	SearchTitle    string                 `protobuf:"bytes,10,opt,name=search_title,json=searchTitle,proto3" json:"search_title,omitempty"`         // Опциональный поиск по заголовку
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *GetHRVacanciesRequest) Reset() {
+	*x = GetHRVacanciesRequest{}
+	mi := &file_proto_vacancy_v1_service_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetHRVacanciesRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetHRVacanciesRequest) ProtoMessage() {}
+
+func (x *GetHRVacanciesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_vacancy_v1_service_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetHRVacanciesRequest.ProtoReflect.Descriptor instead.
+func (*GetHRVacanciesRequest) Descriptor() ([]byte, []int) {
+	return file_proto_vacancy_v1_service_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *GetHRVacanciesRequest) GetPagination() *v1.Pagination {
+	if x != nil {
+		return x.Pagination
+	}
+	return nil
+}
+
+func (x *GetHRVacanciesRequest) GetCompanyId() string {
+	if x != nil {
+		return x.CompanyId
+	}
+	return ""
+}
+
+func (x *GetHRVacanciesRequest) GetPositionStatus() string {
+	if x != nil {
+		return x.PositionStatus
+	}
+	return ""
+}
+
+func (x *GetHRVacanciesRequest) GetWorkFormat() string {
+	if x != nil {
+		return x.WorkFormat
+	}
+	return ""
+}
+
+func (x *GetHRVacanciesRequest) GetSchedule() string {
+	if x != nil {
+		return x.Schedule
+	}
+	return ""
+}
+
+func (x *GetHRVacanciesRequest) GetMinSalary() int32 {
+	if x != nil {
+		return x.MinSalary
+	}
+	return 0
+}
+
+func (x *GetHRVacanciesRequest) GetMaxSalary() int32 {
+	if x != nil {
+		return x.MaxSalary
+	}
+	return 0
+}
+
+func (x *GetHRVacanciesRequest) GetMinExperience() int32 {
+	if x != nil {
+		return x.MinExperience
+	}
+	return 0
+}
+
+func (x *GetHRVacanciesRequest) GetMaxExperience() int32 {
+	if x != nil {
+		return x.MaxExperience
+	}
+	return 0
+}
+
+func (x *GetHRVacanciesRequest) GetSearchTitle() string {
+	if x != nil {
+		return x.SearchTitle
+	}
+	return ""
+}
+
 type PositionsRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	unknownFields protoimpl.UnknownFields
@@ -274,7 +446,7 @@ type PositionsRequest struct {
 
 func (x *PositionsRequest) Reset() {
 	*x = PositionsRequest{}
-	mi := &file_proto_vacancy_v1_service_proto_msgTypes[5]
+	mi := &file_proto_vacancy_v1_service_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -286,7 +458,7 @@ func (x *PositionsRequest) String() string {
 func (*PositionsRequest) ProtoMessage() {}
 
 func (x *PositionsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_vacancy_v1_service_proto_msgTypes[5]
+	mi := &file_proto_vacancy_v1_service_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -299,7 +471,7 @@ func (x *PositionsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PositionsRequest.ProtoReflect.Descriptor instead.
 func (*PositionsRequest) Descriptor() ([]byte, []int) {
-	return file_proto_vacancy_v1_service_proto_rawDescGZIP(), []int{5}
+	return file_proto_vacancy_v1_service_proto_rawDescGZIP(), []int{6}
 }
 
 type PositionsResponse struct {
@@ -311,7 +483,7 @@ type PositionsResponse struct {
 
 func (x *PositionsResponse) Reset() {
 	*x = PositionsResponse{}
-	mi := &file_proto_vacancy_v1_service_proto_msgTypes[6]
+	mi := &file_proto_vacancy_v1_service_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -323,7 +495,7 @@ func (x *PositionsResponse) String() string {
 func (*PositionsResponse) ProtoMessage() {}
 
 func (x *PositionsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_vacancy_v1_service_proto_msgTypes[6]
+	mi := &file_proto_vacancy_v1_service_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -336,7 +508,7 @@ func (x *PositionsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PositionsResponse.ProtoReflect.Descriptor instead.
 func (*PositionsResponse) Descriptor() ([]byte, []int) {
-	return file_proto_vacancy_v1_service_proto_rawDescGZIP(), []int{6}
+	return file_proto_vacancy_v1_service_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *PositionsResponse) GetPosition() []string {
@@ -360,17 +532,46 @@ const file_proto_vacancy_v1_service_proto_rawDesc = "" +
 	"\x14DeleteVacancyRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\"#\n" +
 	"\x11GetVacancyRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"\x97\x01\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"\x83\x03\n" +
 	"\x16GetAllVacanciesRequest\x125\n" +
 	"\n" +
 	"pagination\x18\x01 \x01(\v2\x15.common.v1.PaginationR\n" +
 	"pagination\x12\x1d\n" +
 	"\n" +
 	"company_id\x18\x02 \x01(\tR\tcompanyId\x12'\n" +
-	"\x0fposition_status\x18\x03 \x01(\tR\x0epositionStatus\"\x12\n" +
+	"\x0fposition_status\x18\x03 \x01(\tR\x0epositionStatus\x12\x1f\n" +
+	"\vwork_format\x18\x04 \x01(\tR\n" +
+	"workFormat\x12\x1a\n" +
+	"\bschedule\x18\x05 \x01(\tR\bschedule\x12\x1d\n" +
+	"\n" +
+	"min_salary\x18\x06 \x01(\x05R\tminSalary\x12\x1d\n" +
+	"\n" +
+	"max_salary\x18\a \x01(\x05R\tmaxSalary\x12%\n" +
+	"\x0emin_experience\x18\b \x01(\x05R\rminExperience\x12%\n" +
+	"\x0emax_experience\x18\t \x01(\x05R\rmaxExperience\x12!\n" +
+	"\fsearch_title\x18\n" +
+	" \x01(\tR\vsearchTitle\"\x82\x03\n" +
+	"\x15GetHRVacanciesRequest\x125\n" +
+	"\n" +
+	"pagination\x18\x01 \x01(\v2\x15.common.v1.PaginationR\n" +
+	"pagination\x12\x1d\n" +
+	"\n" +
+	"company_id\x18\x02 \x01(\tR\tcompanyId\x12'\n" +
+	"\x0fposition_status\x18\x03 \x01(\tR\x0epositionStatus\x12\x1f\n" +
+	"\vwork_format\x18\x04 \x01(\tR\n" +
+	"workFormat\x12\x1a\n" +
+	"\bschedule\x18\x05 \x01(\tR\bschedule\x12\x1d\n" +
+	"\n" +
+	"min_salary\x18\x06 \x01(\x05R\tminSalary\x12\x1d\n" +
+	"\n" +
+	"max_salary\x18\a \x01(\x05R\tmaxSalary\x12%\n" +
+	"\x0emin_experience\x18\b \x01(\x05R\rminExperience\x12%\n" +
+	"\x0emax_experience\x18\t \x01(\x05R\rmaxExperience\x12!\n" +
+	"\fsearch_title\x18\n" +
+	" \x01(\tR\vsearchTitle\"\x12\n" +
 	"\x10PositionsRequest\"/\n" +
 	"\x11PositionsResponse\x12\x1a\n" +
-	"\bposition\x18\x01 \x03(\tR\bposition2\xc6\x03\n" +
+	"\bposition\x18\x01 \x03(\tR\bposition2\x94\x04\n" +
 	"\x0eVacancyService\x12@\n" +
 	"\n" +
 	"NewVacancy\x12\x1d.vacancy.v1.NewVacancyRequest\x1a\x13.vacancy.v1.Vacancy\x12F\n" +
@@ -378,7 +579,8 @@ const file_proto_vacancy_v1_service_proto_rawDesc = "" +
 	"\rDeleteVacancy\x12 .vacancy.v1.DeleteVacancyRequest\x1a\x10.common.v1.Empty\x12@\n" +
 	"\n" +
 	"GetVacancy\x12\x1d.vacancy.v1.GetVacancyRequest\x1a\x13.vacancy.v1.Vacancy\x12N\n" +
-	"\x0fGetAllVacancies\x12\".vacancy.v1.GetAllVacanciesRequest\x1a\x17.vacancy.v1.VacancyList\x12S\n" +
+	"\x0fGetAllVacancies\x12\".vacancy.v1.GetAllVacanciesRequest\x1a\x17.vacancy.v1.VacancyList\x12L\n" +
+	"\x0eGetHRVacancies\x12!.vacancy.v1.GetHRVacanciesRequest\x1a\x17.vacancy.v1.VacancyList\x12S\n" +
 	"\x14GetAllExistPositions\x12\x1c.vacancy.v1.PositionsRequest\x1a\x1d.vacancy.v1.PositionsResponseB7Z5github.com/StudJobs/proto_srtucture/gen/go/vacancy/v1b\x06proto3"
 
 var (
@@ -393,41 +595,45 @@ func file_proto_vacancy_v1_service_proto_rawDescGZIP() []byte {
 	return file_proto_vacancy_v1_service_proto_rawDescData
 }
 
-var file_proto_vacancy_v1_service_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
+var file_proto_vacancy_v1_service_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_proto_vacancy_v1_service_proto_goTypes = []any{
 	(*NewVacancyRequest)(nil),      // 0: vacancy.v1.NewVacancyRequest
 	(*UpdateVacancyRequest)(nil),   // 1: vacancy.v1.UpdateVacancyRequest
 	(*DeleteVacancyRequest)(nil),   // 2: vacancy.v1.DeleteVacancyRequest
 	(*GetVacancyRequest)(nil),      // 3: vacancy.v1.GetVacancyRequest
 	(*GetAllVacanciesRequest)(nil), // 4: vacancy.v1.GetAllVacanciesRequest
-	(*PositionsRequest)(nil),       // 5: vacancy.v1.PositionsRequest
-	(*PositionsResponse)(nil),      // 6: vacancy.v1.PositionsResponse
-	(*Vacancy)(nil),                // 7: vacancy.v1.Vacancy
-	(*v1.Pagination)(nil),          // 8: common.v1.Pagination
-	(*v1.Empty)(nil),               // 9: common.v1.Empty
-	(*VacancyList)(nil),            // 10: vacancy.v1.VacancyList
+	(*GetHRVacanciesRequest)(nil),  // 5: vacancy.v1.GetHRVacanciesRequest
+	(*PositionsRequest)(nil),       // 6: vacancy.v1.PositionsRequest
+	(*PositionsResponse)(nil),      // 7: vacancy.v1.PositionsResponse
+	(*Vacancy)(nil),                // 8: vacancy.v1.Vacancy
+	(*v1.Pagination)(nil),          // 9: common.v1.Pagination
+	(*v1.Empty)(nil),               // 10: common.v1.Empty
+	(*VacancyList)(nil),            // 11: vacancy.v1.VacancyList
 }
 var file_proto_vacancy_v1_service_proto_depIdxs = []int32{
-	7,  // 0: vacancy.v1.NewVacancyRequest.vacancy:type_name -> vacancy.v1.Vacancy
-	7,  // 1: vacancy.v1.UpdateVacancyRequest.vacancy:type_name -> vacancy.v1.Vacancy
-	8,  // 2: vacancy.v1.GetAllVacanciesRequest.pagination:type_name -> common.v1.Pagination
-	0,  // 3: vacancy.v1.VacancyService.NewVacancy:input_type -> vacancy.v1.NewVacancyRequest
-	1,  // 4: vacancy.v1.VacancyService.UpdateVacancy:input_type -> vacancy.v1.UpdateVacancyRequest
-	2,  // 5: vacancy.v1.VacancyService.DeleteVacancy:input_type -> vacancy.v1.DeleteVacancyRequest
-	3,  // 6: vacancy.v1.VacancyService.GetVacancy:input_type -> vacancy.v1.GetVacancyRequest
-	4,  // 7: vacancy.v1.VacancyService.GetAllVacancies:input_type -> vacancy.v1.GetAllVacanciesRequest
-	5,  // 8: vacancy.v1.VacancyService.GetAllExistPositions:input_type -> vacancy.v1.PositionsRequest
-	7,  // 9: vacancy.v1.VacancyService.NewVacancy:output_type -> vacancy.v1.Vacancy
-	7,  // 10: vacancy.v1.VacancyService.UpdateVacancy:output_type -> vacancy.v1.Vacancy
-	9,  // 11: vacancy.v1.VacancyService.DeleteVacancy:output_type -> common.v1.Empty
-	7,  // 12: vacancy.v1.VacancyService.GetVacancy:output_type -> vacancy.v1.Vacancy
-	10, // 13: vacancy.v1.VacancyService.GetAllVacancies:output_type -> vacancy.v1.VacancyList
-	6,  // 14: vacancy.v1.VacancyService.GetAllExistPositions:output_type -> vacancy.v1.PositionsResponse
-	9,  // [9:15] is the sub-list for method output_type
-	3,  // [3:9] is the sub-list for method input_type
-	3,  // [3:3] is the sub-list for extension type_name
-	3,  // [3:3] is the sub-list for extension extendee
-	0,  // [0:3] is the sub-list for field type_name
+	8,  // 0: vacancy.v1.NewVacancyRequest.vacancy:type_name -> vacancy.v1.Vacancy
+	8,  // 1: vacancy.v1.UpdateVacancyRequest.vacancy:type_name -> vacancy.v1.Vacancy
+	9,  // 2: vacancy.v1.GetAllVacanciesRequest.pagination:type_name -> common.v1.Pagination
+	9,  // 3: vacancy.v1.GetHRVacanciesRequest.pagination:type_name -> common.v1.Pagination
+	0,  // 4: vacancy.v1.VacancyService.NewVacancy:input_type -> vacancy.v1.NewVacancyRequest
+	1,  // 5: vacancy.v1.VacancyService.UpdateVacancy:input_type -> vacancy.v1.UpdateVacancyRequest
+	2,  // 6: vacancy.v1.VacancyService.DeleteVacancy:input_type -> vacancy.v1.DeleteVacancyRequest
+	3,  // 7: vacancy.v1.VacancyService.GetVacancy:input_type -> vacancy.v1.GetVacancyRequest
+	4,  // 8: vacancy.v1.VacancyService.GetAllVacancies:input_type -> vacancy.v1.GetAllVacanciesRequest
+	5,  // 9: vacancy.v1.VacancyService.GetHRVacancies:input_type -> vacancy.v1.GetHRVacanciesRequest
+	6,  // 10: vacancy.v1.VacancyService.GetAllExistPositions:input_type -> vacancy.v1.PositionsRequest
+	8,  // 11: vacancy.v1.VacancyService.NewVacancy:output_type -> vacancy.v1.Vacancy
+	8,  // 12: vacancy.v1.VacancyService.UpdateVacancy:output_type -> vacancy.v1.Vacancy
+	10, // 13: vacancy.v1.VacancyService.DeleteVacancy:output_type -> common.v1.Empty
+	8,  // 14: vacancy.v1.VacancyService.GetVacancy:output_type -> vacancy.v1.Vacancy
+	11, // 15: vacancy.v1.VacancyService.GetAllVacancies:output_type -> vacancy.v1.VacancyList
+	11, // 16: vacancy.v1.VacancyService.GetHRVacancies:output_type -> vacancy.v1.VacancyList
+	7,  // 17: vacancy.v1.VacancyService.GetAllExistPositions:output_type -> vacancy.v1.PositionsResponse
+	11, // [11:18] is the sub-list for method output_type
+	4,  // [4:11] is the sub-list for method input_type
+	4,  // [4:4] is the sub-list for extension type_name
+	4,  // [4:4] is the sub-list for extension extendee
+	0,  // [0:4] is the sub-list for field type_name
 }
 
 func init() { file_proto_vacancy_v1_service_proto_init() }
@@ -442,7 +648,7 @@ func file_proto_vacancy_v1_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_vacancy_v1_service_proto_rawDesc), len(file_proto_vacancy_v1_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   7,
+			NumMessages:   8,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

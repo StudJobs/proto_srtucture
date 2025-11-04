@@ -21,8 +21,11 @@ service VacancyService {
   // Получить вакансию
   rpc GetVacancy(GetVacancyRequest) returns (Vacancy);
 
-  // Получить все вакансии
+  // Получить все вакансии с фильтрами
   rpc GetAllVacancies(GetAllVacanciesRequest) returns (VacancyList);
+
+  // Получить вакансии HR с фильтрами
+  rpc GetHRVacancies(GetHRVacanciesRequest) returns (VacancyList);
 
   // получение всех позиций
   rpc GetAllExistPositions(PositionsRequest) returns (PositionsResponse);
@@ -49,6 +52,26 @@ message GetAllVacanciesRequest {
   common.v1.Pagination pagination = 1;
   string company_id = 2; // Опциональный фильтр по компании
   string position_status = 3; // Опциональный фильтр по статусу позиции
+  string work_format = 4; // Опциональный фильтр по формату работы
+  string schedule = 5; // Опциональный фильтр по графику работы
+  int32 min_salary = 6; // Опциональный фильтр по минимальной ЗП
+  int32 max_salary = 7; // Опциональный фильтр по максимальной ЗП
+  int32 min_experience = 8; // Опциональный фильтр по минимальному опыту
+  int32 max_experience = 9; // Опциональный фильтр по максимальному опыту
+  string search_title = 10; // Опциональный поиск по заголовку
+}
+
+message GetHRVacanciesRequest {
+  common.v1.Pagination pagination = 1;
+  string company_id = 2; // Опциональный фильтр по компании
+  string position_status = 3; // Опциональный фильтр по статусу позиции
+  string work_format = 4; // Опциональный фильтр по формату работы
+  string schedule = 5; // Опциональный фильтр по графику работы
+  int32 min_salary = 6; // Опциональный фильтр по минимальной ЗП
+  int32 max_salary = 7; // Опциональный фильтр по максимальной ЗП
+  int32 min_experience = 8; // Опциональный фильтр по минимальному опыту
+  int32 max_experience = 9; // Опциональный фильтр по максимальному опыту
+  string search_title = 10; // Опциональный поиск по заголовку
 }
 
 message PositionsRequest {}
