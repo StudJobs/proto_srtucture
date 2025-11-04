@@ -15,7 +15,7 @@ service AchievementService {
   rpc GetAchievementDownloadUrl(GetAchievementRequest) returns (AchievementUrl);
 
   // Получить URL для загрузки файла достижения (presigned URL)
-  rpc GetAchievementUploadUrl(GetAchievementUploadRequest) returns (GetAchievementUploadResponse);
+  rpc GetAchievementUploadUrl(GetAchievementUploadRequest) returns (UploadUrlResponse);
 
   // Добавить метаданные достижения после успешной загрузки в S3
   rpc AddAchievementMeta(AddAchievementMetaRequest) returns (common.v1.Empty);
@@ -46,17 +46,10 @@ message GetAchievementUploadRequest {
   int64 file_size = 5;         // Размер файла в байтах (для валидации)
 }
 
-// Ответ с URL для загрузки
-message GetAchievementUploadResponse {
-  string upload_url = 1;       // Presigned URL для загрузки
-  string s3_key = 2;           // S3 ключ файла (нужен для AddAchievementMeta)
-  int64 expires_at = 3;        // Время истечения срока действия URL
-}
-
 // Запрос на добавление метаданных достижения
 message AddAchievementMetaRequest {
   AchievementMeta meta = 1;    // Метаданные достижения
-  string s3_key = 2;           // S3 ключ из GetAchievementUploadResponse
+  string s3_key = 2;           // S3 ключ из UploadUrlResponse
 }
 
 // Запрос на удаление достижения

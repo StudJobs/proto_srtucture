@@ -26,3 +26,10 @@ message AchievementUrl {
   string url = 1;           // Presigned URL для загрузки/скачивания
   int64 expires_at = 2;     // Время истечения срока действия URL (Unix timestamp)
 }
+
+// Ответ с URL для загрузки
+message UploadUrlResponse {
+  string upload_url = 1;    // Presigned URL для загрузки
+  string s3_key = 2;        // S3 ключ файла (нужен для AddAchievementMeta)
+  int64 expires_at = 3;     // Время истечения срока действия URL
+}

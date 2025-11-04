@@ -204,6 +204,67 @@ func (x *AchievementUrl) GetExpiresAt() int64 {
 	return 0
 }
 
+// Ответ с URL для загрузки
+type UploadUrlResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UploadUrl     string                 `protobuf:"bytes,1,opt,name=upload_url,json=uploadUrl,proto3" json:"upload_url,omitempty"`  // Presigned URL для загрузки
+	S3Key         string                 `protobuf:"bytes,2,opt,name=s3_key,json=s3Key,proto3" json:"s3_key,omitempty"`              // S3 ключ файла (нужен для AddAchievementMeta)
+	ExpiresAt     int64                  `protobuf:"varint,3,opt,name=expires_at,json=expiresAt,proto3" json:"expires_at,omitempty"` // Время истечения срока действия URL
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UploadUrlResponse) Reset() {
+	*x = UploadUrlResponse{}
+	mi := &file_proto_achievement_v1_types_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UploadUrlResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UploadUrlResponse) ProtoMessage() {}
+
+func (x *UploadUrlResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_achievement_v1_types_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UploadUrlResponse.ProtoReflect.Descriptor instead.
+func (*UploadUrlResponse) Descriptor() ([]byte, []int) {
+	return file_proto_achievement_v1_types_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *UploadUrlResponse) GetUploadUrl() string {
+	if x != nil {
+		return x.UploadUrl
+	}
+	return ""
+}
+
+func (x *UploadUrlResponse) GetS3Key() string {
+	if x != nil {
+		return x.S3Key
+	}
+	return ""
+}
+
+func (x *UploadUrlResponse) GetExpiresAt() int64 {
+	if x != nil {
+		return x.ExpiresAt
+	}
+	return 0
+}
+
 var File_proto_achievement_v1_types_proto protoreflect.FileDescriptor
 
 const file_proto_achievement_v1_types_proto_rawDesc = "" +
@@ -222,7 +283,13 @@ const file_proto_achievement_v1_types_proto_rawDesc = "" +
 	"\x0eAchievementUrl\x12\x10\n" +
 	"\x03url\x18\x01 \x01(\tR\x03url\x12\x1d\n" +
 	"\n" +
-	"expires_at\x18\x02 \x01(\x03R\texpiresAtB;Z9github.com/StudJobs/proto_srtucture/gen/go/achievement/v1b\x06proto3"
+	"expires_at\x18\x02 \x01(\x03R\texpiresAt\"h\n" +
+	"\x11UploadUrlResponse\x12\x1d\n" +
+	"\n" +
+	"upload_url\x18\x01 \x01(\tR\tuploadUrl\x12\x15\n" +
+	"\x06s3_key\x18\x02 \x01(\tR\x05s3Key\x12\x1d\n" +
+	"\n" +
+	"expires_at\x18\x03 \x01(\x03R\texpiresAtB;Z9github.com/StudJobs/proto_srtucture/gen/go/achievement/v1b\x06proto3"
 
 var (
 	file_proto_achievement_v1_types_proto_rawDescOnce sync.Once
@@ -236,11 +303,12 @@ func file_proto_achievement_v1_types_proto_rawDescGZIP() []byte {
 	return file_proto_achievement_v1_types_proto_rawDescData
 }
 
-var file_proto_achievement_v1_types_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
+var file_proto_achievement_v1_types_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_proto_achievement_v1_types_proto_goTypes = []any{
-	(*AchievementMeta)(nil), // 0: achievement.v1.AchievementMeta
-	(*AchievementList)(nil), // 1: achievement.v1.AchievementList
-	(*AchievementUrl)(nil),  // 2: achievement.v1.AchievementUrl
+	(*AchievementMeta)(nil),   // 0: achievement.v1.AchievementMeta
+	(*AchievementList)(nil),   // 1: achievement.v1.AchievementList
+	(*AchievementUrl)(nil),    // 2: achievement.v1.AchievementUrl
+	(*UploadUrlResponse)(nil), // 3: achievement.v1.UploadUrlResponse
 }
 var file_proto_achievement_v1_types_proto_depIdxs = []int32{
 	0, // 0: achievement.v1.AchievementList.achievements:type_name -> achievement.v1.AchievementMeta
@@ -262,7 +330,7 @@ func file_proto_achievement_v1_types_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_achievement_v1_types_proto_rawDesc), len(file_proto_achievement_v1_types_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   3,
+			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

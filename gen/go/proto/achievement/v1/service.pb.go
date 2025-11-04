@@ -197,79 +197,18 @@ func (x *GetAchievementUploadRequest) GetFileSize() int64 {
 	return 0
 }
 
-// Ответ с URL для загрузки
-type GetAchievementUploadResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	UploadUrl     string                 `protobuf:"bytes,1,opt,name=upload_url,json=uploadUrl,proto3" json:"upload_url,omitempty"`  // Presigned URL для загрузки
-	S3Key         string                 `protobuf:"bytes,2,opt,name=s3_key,json=s3Key,proto3" json:"s3_key,omitempty"`              // S3 ключ файла (нужен для AddAchievementMeta)
-	ExpiresAt     int64                  `protobuf:"varint,3,opt,name=expires_at,json=expiresAt,proto3" json:"expires_at,omitempty"` // Время истечения срока действия URL
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *GetAchievementUploadResponse) Reset() {
-	*x = GetAchievementUploadResponse{}
-	mi := &file_proto_achievement_v1_service_proto_msgTypes[3]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *GetAchievementUploadResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GetAchievementUploadResponse) ProtoMessage() {}
-
-func (x *GetAchievementUploadResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_achievement_v1_service_proto_msgTypes[3]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GetAchievementUploadResponse.ProtoReflect.Descriptor instead.
-func (*GetAchievementUploadResponse) Descriptor() ([]byte, []int) {
-	return file_proto_achievement_v1_service_proto_rawDescGZIP(), []int{3}
-}
-
-func (x *GetAchievementUploadResponse) GetUploadUrl() string {
-	if x != nil {
-		return x.UploadUrl
-	}
-	return ""
-}
-
-func (x *GetAchievementUploadResponse) GetS3Key() string {
-	if x != nil {
-		return x.S3Key
-	}
-	return ""
-}
-
-func (x *GetAchievementUploadResponse) GetExpiresAt() int64 {
-	if x != nil {
-		return x.ExpiresAt
-	}
-	return 0
-}
-
 // Запрос на добавление метаданных достижения
 type AddAchievementMetaRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Meta          *AchievementMeta       `protobuf:"bytes,1,opt,name=meta,proto3" json:"meta,omitempty"`                // Метаданные достижения
-	S3Key         string                 `protobuf:"bytes,2,opt,name=s3_key,json=s3Key,proto3" json:"s3_key,omitempty"` // S3 ключ из GetAchievementUploadResponse
+	S3Key         string                 `protobuf:"bytes,2,opt,name=s3_key,json=s3Key,proto3" json:"s3_key,omitempty"` // S3 ключ из UploadUrlResponse
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *AddAchievementMetaRequest) Reset() {
 	*x = AddAchievementMetaRequest{}
-	mi := &file_proto_achievement_v1_service_proto_msgTypes[4]
+	mi := &file_proto_achievement_v1_service_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -281,7 +220,7 @@ func (x *AddAchievementMetaRequest) String() string {
 func (*AddAchievementMetaRequest) ProtoMessage() {}
 
 func (x *AddAchievementMetaRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_achievement_v1_service_proto_msgTypes[4]
+	mi := &file_proto_achievement_v1_service_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -294,7 +233,7 @@ func (x *AddAchievementMetaRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddAchievementMetaRequest.ProtoReflect.Descriptor instead.
 func (*AddAchievementMetaRequest) Descriptor() ([]byte, []int) {
-	return file_proto_achievement_v1_service_proto_rawDescGZIP(), []int{4}
+	return file_proto_achievement_v1_service_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *AddAchievementMetaRequest) GetMeta() *AchievementMeta {
@@ -322,7 +261,7 @@ type DeleteAchievementRequest struct {
 
 func (x *DeleteAchievementRequest) Reset() {
 	*x = DeleteAchievementRequest{}
-	mi := &file_proto_achievement_v1_service_proto_msgTypes[5]
+	mi := &file_proto_achievement_v1_service_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -334,7 +273,7 @@ func (x *DeleteAchievementRequest) String() string {
 func (*DeleteAchievementRequest) ProtoMessage() {}
 
 func (x *DeleteAchievementRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_achievement_v1_service_proto_msgTypes[5]
+	mi := &file_proto_achievement_v1_service_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -347,7 +286,7 @@ func (x *DeleteAchievementRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteAchievementRequest.ProtoReflect.Descriptor instead.
 func (*DeleteAchievementRequest) Descriptor() ([]byte, []int) {
-	return file_proto_achievement_v1_service_proto_rawDescGZIP(), []int{5}
+	return file_proto_achievement_v1_service_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *DeleteAchievementRequest) GetUserUuid() string {
@@ -379,23 +318,17 @@ const file_proto_achievement_v1_service_proto_rawDesc = "" +
 	"\x10achievement_name\x18\x02 \x01(\tR\x0fachievementName\x12\x1b\n" +
 	"\tfile_name\x18\x03 \x01(\tR\bfileName\x12\x1b\n" +
 	"\tfile_type\x18\x04 \x01(\tR\bfileType\x12\x1b\n" +
-	"\tfile_size\x18\x05 \x01(\x03R\bfileSize\"s\n" +
-	"\x1cGetAchievementUploadResponse\x12\x1d\n" +
-	"\n" +
-	"upload_url\x18\x01 \x01(\tR\tuploadUrl\x12\x15\n" +
-	"\x06s3_key\x18\x02 \x01(\tR\x05s3Key\x12\x1d\n" +
-	"\n" +
-	"expires_at\x18\x03 \x01(\x03R\texpiresAt\"g\n" +
+	"\tfile_size\x18\x05 \x01(\x03R\bfileSize\"g\n" +
 	"\x19AddAchievementMetaRequest\x123\n" +
 	"\x04meta\x18\x01 \x01(\v2\x1f.achievement.v1.AchievementMetaR\x04meta\x12\x15\n" +
 	"\x06s3_key\x18\x02 \x01(\tR\x05s3Key\"b\n" +
 	"\x18DeleteAchievementRequest\x12\x1b\n" +
 	"\tuser_uuid\x18\x01 \x01(\tR\buserUuid\x12)\n" +
-	"\x10achievement_name\x18\x02 \x01(\tR\x0fachievementName2\xf4\x03\n" +
+	"\x10achievement_name\x18\x02 \x01(\tR\x0fachievementName2\xe9\x03\n" +
 	"\x12AchievementService\x12`\n" +
 	"\x12GetAllAchievements\x12).achievement.v1.GetAllAchievementsRequest\x1a\x1f.achievement.v1.AchievementList\x12b\n" +
-	"\x19GetAchievementDownloadUrl\x12%.achievement.v1.GetAchievementRequest\x1a\x1e.achievement.v1.AchievementUrl\x12t\n" +
-	"\x17GetAchievementUploadUrl\x12+.achievement.v1.GetAchievementUploadRequest\x1a,.achievement.v1.GetAchievementUploadResponse\x12Q\n" +
+	"\x19GetAchievementDownloadUrl\x12%.achievement.v1.GetAchievementRequest\x1a\x1e.achievement.v1.AchievementUrl\x12i\n" +
+	"\x17GetAchievementUploadUrl\x12+.achievement.v1.GetAchievementUploadRequest\x1a!.achievement.v1.UploadUrlResponse\x12Q\n" +
 	"\x12AddAchievementMeta\x12).achievement.v1.AddAchievementMetaRequest\x1a\x10.common.v1.Empty\x12O\n" +
 	"\x11DeleteAchievement\x12(.achievement.v1.DeleteAchievementRequest\x1a\x10.common.v1.EmptyB;Z9github.com/StudJobs/proto_srtucture/gen/go/achievement/v1b\x06proto3"
 
@@ -411,29 +344,29 @@ func file_proto_achievement_v1_service_proto_rawDescGZIP() []byte {
 	return file_proto_achievement_v1_service_proto_rawDescData
 }
 
-var file_proto_achievement_v1_service_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_proto_achievement_v1_service_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_proto_achievement_v1_service_proto_goTypes = []any{
-	(*GetAllAchievementsRequest)(nil),    // 0: achievement.v1.GetAllAchievementsRequest
-	(*GetAchievementRequest)(nil),        // 1: achievement.v1.GetAchievementRequest
-	(*GetAchievementUploadRequest)(nil),  // 2: achievement.v1.GetAchievementUploadRequest
-	(*GetAchievementUploadResponse)(nil), // 3: achievement.v1.GetAchievementUploadResponse
-	(*AddAchievementMetaRequest)(nil),    // 4: achievement.v1.AddAchievementMetaRequest
-	(*DeleteAchievementRequest)(nil),     // 5: achievement.v1.DeleteAchievementRequest
-	(*AchievementMeta)(nil),              // 6: achievement.v1.AchievementMeta
-	(*AchievementList)(nil),              // 7: achievement.v1.AchievementList
-	(*AchievementUrl)(nil),               // 8: achievement.v1.AchievementUrl
-	(*v1.Empty)(nil),                     // 9: common.v1.Empty
+	(*GetAllAchievementsRequest)(nil),   // 0: achievement.v1.GetAllAchievementsRequest
+	(*GetAchievementRequest)(nil),       // 1: achievement.v1.GetAchievementRequest
+	(*GetAchievementUploadRequest)(nil), // 2: achievement.v1.GetAchievementUploadRequest
+	(*AddAchievementMetaRequest)(nil),   // 3: achievement.v1.AddAchievementMetaRequest
+	(*DeleteAchievementRequest)(nil),    // 4: achievement.v1.DeleteAchievementRequest
+	(*AchievementMeta)(nil),             // 5: achievement.v1.AchievementMeta
+	(*AchievementList)(nil),             // 6: achievement.v1.AchievementList
+	(*AchievementUrl)(nil),              // 7: achievement.v1.AchievementUrl
+	(*UploadUrlResponse)(nil),           // 8: achievement.v1.UploadUrlResponse
+	(*v1.Empty)(nil),                    // 9: common.v1.Empty
 }
 var file_proto_achievement_v1_service_proto_depIdxs = []int32{
-	6, // 0: achievement.v1.AddAchievementMetaRequest.meta:type_name -> achievement.v1.AchievementMeta
+	5, // 0: achievement.v1.AddAchievementMetaRequest.meta:type_name -> achievement.v1.AchievementMeta
 	0, // 1: achievement.v1.AchievementService.GetAllAchievements:input_type -> achievement.v1.GetAllAchievementsRequest
 	1, // 2: achievement.v1.AchievementService.GetAchievementDownloadUrl:input_type -> achievement.v1.GetAchievementRequest
 	2, // 3: achievement.v1.AchievementService.GetAchievementUploadUrl:input_type -> achievement.v1.GetAchievementUploadRequest
-	4, // 4: achievement.v1.AchievementService.AddAchievementMeta:input_type -> achievement.v1.AddAchievementMetaRequest
-	5, // 5: achievement.v1.AchievementService.DeleteAchievement:input_type -> achievement.v1.DeleteAchievementRequest
-	7, // 6: achievement.v1.AchievementService.GetAllAchievements:output_type -> achievement.v1.AchievementList
-	8, // 7: achievement.v1.AchievementService.GetAchievementDownloadUrl:output_type -> achievement.v1.AchievementUrl
-	3, // 8: achievement.v1.AchievementService.GetAchievementUploadUrl:output_type -> achievement.v1.GetAchievementUploadResponse
+	3, // 4: achievement.v1.AchievementService.AddAchievementMeta:input_type -> achievement.v1.AddAchievementMetaRequest
+	4, // 5: achievement.v1.AchievementService.DeleteAchievement:input_type -> achievement.v1.DeleteAchievementRequest
+	6, // 6: achievement.v1.AchievementService.GetAllAchievements:output_type -> achievement.v1.AchievementList
+	7, // 7: achievement.v1.AchievementService.GetAchievementDownloadUrl:output_type -> achievement.v1.AchievementUrl
+	8, // 8: achievement.v1.AchievementService.GetAchievementUploadUrl:output_type -> achievement.v1.UploadUrlResponse
 	9, // 9: achievement.v1.AchievementService.AddAchievementMeta:output_type -> common.v1.Empty
 	9, // 10: achievement.v1.AchievementService.DeleteAchievement:output_type -> common.v1.Empty
 	6, // [6:11] is the sub-list for method output_type
@@ -455,7 +388,7 @@ func file_proto_achievement_v1_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_achievement_v1_service_proto_rawDesc), len(file_proto_achievement_v1_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   6,
+			NumMessages:   5,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
