@@ -36,7 +36,7 @@ type AchievementServiceClient interface {
 	// Получить URL для скачивания достижения (просмотра)
 	GetAchievementDownloadUrl(ctx context.Context, in *GetAchievementRequest, opts ...grpc.CallOption) (*AchievementUrl, error)
 	// Получить URL для загрузки файла достижения (presigned URL)
-	GetAchievementUploadUrl(ctx context.Context, in *GetAchievementUploadRequest, opts ...grpc.CallOption) (*AchievementUrl, error)
+	GetAchievementUploadUrl(ctx context.Context, in *GetAchievementUploadRequest, opts ...grpc.CallOption) (*GetAchievementUploadResponse, error)
 	// Добавить метаданные достижения после успешной загрузки в S3
 	AddAchievementMeta(ctx context.Context, in *AddAchievementMetaRequest, opts ...grpc.CallOption) (*v1.Empty, error)
 	// Удалить достижение (метаданные + файл из S3)
@@ -71,9 +71,9 @@ func (c *achievementServiceClient) GetAchievementDownloadUrl(ctx context.Context
 	return out, nil
 }
 
-func (c *achievementServiceClient) GetAchievementUploadUrl(ctx context.Context, in *GetAchievementUploadRequest, opts ...grpc.CallOption) (*AchievementUrl, error) {
+func (c *achievementServiceClient) GetAchievementUploadUrl(ctx context.Context, in *GetAchievementUploadRequest, opts ...grpc.CallOption) (*GetAchievementUploadResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AchievementUrl)
+	out := new(GetAchievementUploadResponse)
 	err := c.cc.Invoke(ctx, AchievementService_GetAchievementUploadUrl_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -110,7 +110,7 @@ type AchievementServiceServer interface {
 	// Получить URL для скачивания достижения (просмотра)
 	GetAchievementDownloadUrl(context.Context, *GetAchievementRequest) (*AchievementUrl, error)
 	// Получить URL для загрузки файла достижения (presigned URL)
-	GetAchievementUploadUrl(context.Context, *GetAchievementUploadRequest) (*AchievementUrl, error)
+	GetAchievementUploadUrl(context.Context, *GetAchievementUploadRequest) (*GetAchievementUploadResponse, error)
 	// Добавить метаданные достижения после успешной загрузки в S3
 	AddAchievementMeta(context.Context, *AddAchievementMetaRequest) (*v1.Empty, error)
 	// Удалить достижение (метаданные + файл из S3)
@@ -131,7 +131,7 @@ func (UnimplementedAchievementServiceServer) GetAllAchievements(context.Context,
 func (UnimplementedAchievementServiceServer) GetAchievementDownloadUrl(context.Context, *GetAchievementRequest) (*AchievementUrl, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAchievementDownloadUrl not implemented")
 }
-func (UnimplementedAchievementServiceServer) GetAchievementUploadUrl(context.Context, *GetAchievementUploadRequest) (*AchievementUrl, error) {
+func (UnimplementedAchievementServiceServer) GetAchievementUploadUrl(context.Context, *GetAchievementUploadRequest) (*GetAchievementUploadResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAchievementUploadUrl not implemented")
 }
 func (UnimplementedAchievementServiceServer) AddAchievementMeta(context.Context, *AddAchievementMetaRequest) (*v1.Empty, error) {
