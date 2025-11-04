@@ -13,10 +13,11 @@ message Profile {
   string last_name = 3;
   int32 age = 4; // 17-100
   string tg = 5; // Telegram
-  string resume_id = 6; // UUID
-  string email = 7;
-  string description = 8; // max 512 chars
-  string profession_category = 9; // Просто строка с названием категории
+  string resume_id = 6; // UUID достижения с резюме
+  string avatar_id = 7; // UUID достижения с аватаром
+  string email = 8;
+  string description = 9; // max 512 chars
+  string profession_category = 10; // Просто строка с названием категории
 }
 
 // Список профилей с пагинацией

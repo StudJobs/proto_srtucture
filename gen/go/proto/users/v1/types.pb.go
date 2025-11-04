@@ -30,10 +30,11 @@ type Profile struct {
 	LastName           string                 `protobuf:"bytes,3,opt,name=last_name,json=lastName,proto3" json:"last_name,omitempty"`
 	Age                int32                  `protobuf:"varint,4,opt,name=age,proto3" json:"age,omitempty"`                          // 17-100
 	Tg                 string                 `protobuf:"bytes,5,opt,name=tg,proto3" json:"tg,omitempty"`                             // Telegram
-	ResumeId           string                 `protobuf:"bytes,6,opt,name=resume_id,json=resumeId,proto3" json:"resume_id,omitempty"` // UUID
-	Email              string                 `protobuf:"bytes,7,opt,name=email,proto3" json:"email,omitempty"`
-	Description        string                 `protobuf:"bytes,8,opt,name=description,proto3" json:"description,omitempty"`                                         // max 512 chars
-	ProfessionCategory string                 `protobuf:"bytes,9,opt,name=profession_category,json=professionCategory,proto3" json:"profession_category,omitempty"` // Просто строка с названием категории
+	ResumeId           string                 `protobuf:"bytes,6,opt,name=resume_id,json=resumeId,proto3" json:"resume_id,omitempty"` // UUID достижения с резюме
+	AvatarId           string                 `protobuf:"bytes,7,opt,name=avatar_id,json=avatarId,proto3" json:"avatar_id,omitempty"` // UUID достижения с аватаром
+	Email              string                 `protobuf:"bytes,8,opt,name=email,proto3" json:"email,omitempty"`
+	Description        string                 `protobuf:"bytes,9,opt,name=description,proto3" json:"description,omitempty"`                                          // max 512 chars
+	ProfessionCategory string                 `protobuf:"bytes,10,opt,name=profession_category,json=professionCategory,proto3" json:"profession_category,omitempty"` // Просто строка с названием категории
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
@@ -106,6 +107,13 @@ func (x *Profile) GetTg() string {
 func (x *Profile) GetResumeId() string {
 	if x != nil {
 		return x.ResumeId
+	}
+	return ""
+}
+
+func (x *Profile) GetAvatarId() string {
+	if x != nil {
+		return x.AvatarId
 	}
 	return ""
 }
@@ -188,7 +196,7 @@ var File_proto_users_v1_types_proto protoreflect.FileDescriptor
 
 const file_proto_users_v1_types_proto_rawDesc = "" +
 	"\n" +
-	"\x1aproto/users/v1/types.proto\x12\busers.v1\x1a\x1bproto/common/v1/types.proto\"\xfd\x01\n" +
+	"\x1aproto/users/v1/types.proto\x12\busers.v1\x1a\x1bproto/common/v1/types.proto\"\x9a\x02\n" +
 	"\aProfile\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1d\n" +
 	"\n" +
@@ -196,10 +204,12 @@ const file_proto_users_v1_types_proto_rawDesc = "" +
 	"\tlast_name\x18\x03 \x01(\tR\blastName\x12\x10\n" +
 	"\x03age\x18\x04 \x01(\x05R\x03age\x12\x0e\n" +
 	"\x02tg\x18\x05 \x01(\tR\x02tg\x12\x1b\n" +
-	"\tresume_id\x18\x06 \x01(\tR\bresumeId\x12\x14\n" +
-	"\x05email\x18\a \x01(\tR\x05email\x12 \n" +
-	"\vdescription\x18\b \x01(\tR\vdescription\x12/\n" +
-	"\x13profession_category\x18\t \x01(\tR\x12professionCategory\"{\n" +
+	"\tresume_id\x18\x06 \x01(\tR\bresumeId\x12\x1b\n" +
+	"\tavatar_id\x18\a \x01(\tR\bavatarId\x12\x14\n" +
+	"\x05email\x18\b \x01(\tR\x05email\x12 \n" +
+	"\vdescription\x18\t \x01(\tR\vdescription\x12/\n" +
+	"\x13profession_category\x18\n" +
+	" \x01(\tR\x12professionCategory\"{\n" +
 	"\vProfileList\x12-\n" +
 	"\bprofiles\x18\x01 \x03(\v2\x11.users.v1.ProfileR\bprofiles\x12=\n" +
 	"\n" +
