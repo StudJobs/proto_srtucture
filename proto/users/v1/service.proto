@@ -44,5 +44,5 @@ message GetProfileRequest {
 message GetAllProfilesRequest {
   common.v1.Pagination pagination = 1;
   string profession_category = 2; // Опциональный фильтр по категории
-  bool is_hr = 3;
+  string role = 3;
 }

@@ -210,7 +210,7 @@ type GetAllProfilesRequest struct {
 	state              protoimpl.MessageState `protogen:"open.v1"`
 	Pagination         *v1.Pagination         `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
 	ProfessionCategory string                 `protobuf:"bytes,2,opt,name=profession_category,json=professionCategory,proto3" json:"profession_category,omitempty"` // Опциональный фильтр по категории
-	IsHr               bool                   `protobuf:"varint,3,opt,name=is_hr,json=isHr,proto3" json:"is_hr,omitempty"`
+	Role               string                 `protobuf:"bytes,3,opt,name=role,proto3" json:"role,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
@@ -259,11 +259,11 @@ func (x *GetAllProfilesRequest) GetProfessionCategory() string {
 	return ""
 }
 
-func (x *GetAllProfilesRequest) GetIsHr() bool {
+func (x *GetAllProfilesRequest) GetRole() string {
 	if x != nil {
-		return x.IsHr
+		return x.Role
 	}
-	return false
+	return ""
 }
 
 var File_proto_users_v1_service_proto protoreflect.FileDescriptor
@@ -279,13 +279,13 @@ const file_proto_users_v1_service_proto_rawDesc = "" +
 	"\x14DeleteProfileRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\"#\n" +
 	"\x11GetProfileRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"\x94\x01\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"\x93\x01\n" +
 	"\x15GetAllProfilesRequest\x125\n" +
 	"\n" +
 	"pagination\x18\x01 \x01(\v2\x15.common.v1.PaginationR\n" +
 	"pagination\x12/\n" +
-	"\x13profession_category\x18\x02 \x01(\tR\x12professionCategory\x12\x13\n" +
-	"\x05is_hr\x18\x03 \x01(\bR\x04isHr2\xdb\x02\n" +
+	"\x13profession_category\x18\x02 \x01(\tR\x12professionCategory\x12\x12\n" +
+	"\x04role\x18\x03 \x01(\tR\x04role2\xdb\x02\n" +
 	"\fUsersService\x12<\n" +
 	"\n" +
 	"NewProfile\x12\x1b.users.v1.NewProfileRequest\x1a\x11.users.v1.Profile\x12B\n" +
