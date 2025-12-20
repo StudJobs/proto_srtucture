@@ -35,6 +35,7 @@ type Profile struct {
 	Email              string                 `protobuf:"bytes,8,opt,name=email,proto3" json:"email,omitempty"`
 	Description        string                 `protobuf:"bytes,9,opt,name=description,proto3" json:"description,omitempty"`                                          // max 512 chars
 	ProfessionCategory string                 `protobuf:"bytes,10,opt,name=profession_category,json=professionCategory,proto3" json:"profession_category,omitempty"` // Просто строка с названием категории
+	Role               string                 `protobuf:"bytes,11,opt,name=role,proto3" json:"role,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
@@ -139,6 +140,13 @@ func (x *Profile) GetProfessionCategory() string {
 	return ""
 }
 
+func (x *Profile) GetRole() string {
+	if x != nil {
+		return x.Role
+	}
+	return ""
+}
+
 // Список профилей с пагинацией
 type ProfileList struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -196,7 +204,7 @@ var File_proto_users_v1_types_proto protoreflect.FileDescriptor
 
 const file_proto_users_v1_types_proto_rawDesc = "" +
 	"\n" +
-	"\x1aproto/users/v1/types.proto\x12\busers.v1\x1a\x1bproto/common/v1/types.proto\"\x9a\x02\n" +
+	"\x1aproto/users/v1/types.proto\x12\busers.v1\x1a\x1bproto/common/v1/types.proto\"\xae\x02\n" +
 	"\aProfile\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1d\n" +
 	"\n" +
@@ -209,7 +217,8 @@ const file_proto_users_v1_types_proto_rawDesc = "" +
 	"\x05email\x18\b \x01(\tR\x05email\x12 \n" +
 	"\vdescription\x18\t \x01(\tR\vdescription\x12/\n" +
 	"\x13profession_category\x18\n" +
-	" \x01(\tR\x12professionCategory\"{\n" +
+	" \x01(\tR\x12professionCategory\x12\x12\n" +
+	"\x04role\x18\v \x01(\tR\x04role\"{\n" +
 	"\vProfileList\x12-\n" +
 	"\bprofiles\x18\x01 \x03(\v2\x11.users.v1.ProfileR\bprofiles\x12=\n" +
 	"\n" +

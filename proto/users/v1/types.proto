@@ -18,6 +18,7 @@ message Profile {
   string email = 8;
   string description = 9; // max 512 chars
   string profession_category = 10; // Просто строка с названием категории
+  string role = 11;
 }
 
 // Список профилей с пагинацией
