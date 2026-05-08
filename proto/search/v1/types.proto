@@ -6,6 +6,7 @@ option go_package = "github.com/StudJobs/proto_srtucture/gen/go/proto/search/v1"
 
 import "proto/users/v1/types.proto";
 import "proto/vacancy/v1/types.proto";
+import "proto/microtask/v1/types.proto";
 import "proto/common/v1/types.proto";
 
 // Запрос на поиск студентов по тегам и тексту
@@ -36,6 +37,22 @@ message SearchVacanciesRequest {
   common.v1.Pagination pagination = 6;
 }
 
+// Запрос на поиск микрозадач по тегам, тексту и фильтрам.
+message SearchMicroTasksRequest {
+  // Свободный текст (по title, description)
+  string query = 1;
+  // Slug-и нужных навыков (AND)
+  repeated string skill_slugs = 2;
+  // Минимальная награда (в рублях). 0 — без ограничения.
+  int32 reward_min = 3;
+  // Опциональный фильтр по статусу (0 = любой)
+  microtask.v1.MicroTaskStatus status = 4;
+  // Опциональный фильтр по компании
+  string company_id = 5;
+  // Пагинация
+  common.v1.Pagination pagination = 6;
+}
+
 // Запрос на индексацию / удаление документа
 message IndexProfileRequest {
   users.v1.Profile profile = 1;
@@ -43,6 +60,10 @@ message IndexProfileRequest {
 
 message IndexVacancyRequest {
   vacancy.v1.Vacancy vacancy = 1;
+}
+
+message IndexMicroTaskRequest {
+  microtask.v1.MicroTask task = 1;
 }
 
 message DeleteDocumentRequest {
@@ -58,4 +79,5 @@ message ReindexRequest {
 message ReindexResponse {
   int32 indexed_profiles = 1;
   int32 indexed_vacancies = 2;
+  int32 indexed_microtasks = 3;
 }

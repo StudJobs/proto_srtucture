@@ -7,7 +7,8 @@
 package v1
 
 import (
-	v12 "github.com/StudJobs/proto_srtucture/gen/go/proto/common/v1"
+	v13 "github.com/StudJobs/proto_srtucture/gen/go/proto/common/v1"
+	v12 "github.com/StudJobs/proto_srtucture/gen/go/proto/microtask/v1"
 	v1 "github.com/StudJobs/proto_srtucture/gen/go/proto/users/v1"
 	v11 "github.com/StudJobs/proto_srtucture/gen/go/proto/vacancy/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -27,48 +28,60 @@ var File_proto_search_v1_service_proto protoreflect.FileDescriptor
 
 const file_proto_search_v1_service_proto_rawDesc = "" +
 	"\n" +
-	"\x1dproto/search/v1/service.proto\x12\tsearch.v1\x1a\x1bproto/search/v1/types.proto\x1a\x1aproto/users/v1/types.proto\x1a\x1cproto/vacancy/v1/types.proto\x1a\x1bproto/common/v1/types.proto2\xf9\x03\n" +
+	"\x1dproto/search/v1/service.proto\x12\tsearch.v1\x1a\x1bproto/search/v1/types.proto\x1a\x1aproto/users/v1/types.proto\x1a\x1cproto/vacancy/v1/types.proto\x1a\x1eproto/microtask/v1/types.proto\x1a\x1bproto/common/v1/types.proto2\xdb\x05\n" +
 	"\rSearchService\x12I\n" +
 	"\x0eSearchProfiles\x12 .search.v1.SearchProfilesRequest\x1a\x15.users.v1.ProfileList\x12M\n" +
-	"\x0fSearchVacancies\x12!.search.v1.SearchVacanciesRequest\x1a\x17.vacancy.v1.VacancyList\x12@\n" +
+	"\x0fSearchVacancies\x12!.search.v1.SearchVacanciesRequest\x1a\x17.vacancy.v1.VacancyList\x12S\n" +
+	"\x10SearchMicroTasks\x12\".search.v1.SearchMicroTasksRequest\x1a\x1b.microtask.v1.MicroTaskList\x12@\n" +
 	"\fIndexProfile\x12\x1e.search.v1.IndexProfileRequest\x1a\x10.common.v1.Empty\x12@\n" +
-	"\fIndexVacancy\x12\x1e.search.v1.IndexVacancyRequest\x1a\x10.common.v1.Empty\x12C\n" +
+	"\fIndexVacancy\x12\x1e.search.v1.IndexVacancyRequest\x1a\x10.common.v1.Empty\x12D\n" +
+	"\x0eIndexMicroTask\x12 .search.v1.IndexMicroTaskRequest\x1a\x10.common.v1.Empty\x12C\n" +
 	"\rDeleteProfile\x12 .search.v1.DeleteDocumentRequest\x1a\x10.common.v1.Empty\x12C\n" +
-	"\rDeleteVacancy\x12 .search.v1.DeleteDocumentRequest\x1a\x10.common.v1.Empty\x12@\n" +
+	"\rDeleteVacancy\x12 .search.v1.DeleteDocumentRequest\x1a\x10.common.v1.Empty\x12E\n" +
+	"\x0fDeleteMicroTask\x12 .search.v1.DeleteDocumentRequest\x1a\x10.common.v1.Empty\x12@\n" +
 	"\aReindex\x12\x19.search.v1.ReindexRequest\x1a\x1a.search.v1.ReindexResponseB<Z:github.com/StudJobs/proto_srtucture/gen/go/proto/search/v1b\x06proto3"
 
 var file_proto_search_v1_service_proto_goTypes = []any{
-	(*SearchProfilesRequest)(nil),  // 0: search.v1.SearchProfilesRequest
-	(*SearchVacanciesRequest)(nil), // 1: search.v1.SearchVacanciesRequest
-	(*IndexProfileRequest)(nil),    // 2: search.v1.IndexProfileRequest
-	(*IndexVacancyRequest)(nil),    // 3: search.v1.IndexVacancyRequest
-	(*DeleteDocumentRequest)(nil),  // 4: search.v1.DeleteDocumentRequest
-	(*ReindexRequest)(nil),         // 5: search.v1.ReindexRequest
-	(*v1.ProfileList)(nil),         // 6: users.v1.ProfileList
-	(*v11.VacancyList)(nil),        // 7: vacancy.v1.VacancyList
-	(*v12.Empty)(nil),              // 8: common.v1.Empty
-	(*ReindexResponse)(nil),        // 9: search.v1.ReindexResponse
+	(*SearchProfilesRequest)(nil),   // 0: search.v1.SearchProfilesRequest
+	(*SearchVacanciesRequest)(nil),  // 1: search.v1.SearchVacanciesRequest
+	(*SearchMicroTasksRequest)(nil), // 2: search.v1.SearchMicroTasksRequest
+	(*IndexProfileRequest)(nil),     // 3: search.v1.IndexProfileRequest
+	(*IndexVacancyRequest)(nil),     // 4: search.v1.IndexVacancyRequest
+	(*IndexMicroTaskRequest)(nil),   // 5: search.v1.IndexMicroTaskRequest
+	(*DeleteDocumentRequest)(nil),   // 6: search.v1.DeleteDocumentRequest
+	(*ReindexRequest)(nil),          // 7: search.v1.ReindexRequest
+	(*v1.ProfileList)(nil),          // 8: users.v1.ProfileList
+	(*v11.VacancyList)(nil),         // 9: vacancy.v1.VacancyList
+	(*v12.MicroTaskList)(nil),       // 10: microtask.v1.MicroTaskList
+	(*v13.Empty)(nil),               // 11: common.v1.Empty
+	(*ReindexResponse)(nil),         // 12: search.v1.ReindexResponse
 }
 var file_proto_search_v1_service_proto_depIdxs = []int32{
-	0, // 0: search.v1.SearchService.SearchProfiles:input_type -> search.v1.SearchProfilesRequest
-	1, // 1: search.v1.SearchService.SearchVacancies:input_type -> search.v1.SearchVacanciesRequest
-	2, // 2: search.v1.SearchService.IndexProfile:input_type -> search.v1.IndexProfileRequest
-	3, // 3: search.v1.SearchService.IndexVacancy:input_type -> search.v1.IndexVacancyRequest
-	4, // 4: search.v1.SearchService.DeleteProfile:input_type -> search.v1.DeleteDocumentRequest
-	4, // 5: search.v1.SearchService.DeleteVacancy:input_type -> search.v1.DeleteDocumentRequest
-	5, // 6: search.v1.SearchService.Reindex:input_type -> search.v1.ReindexRequest
-	6, // 7: search.v1.SearchService.SearchProfiles:output_type -> users.v1.ProfileList
-	7, // 8: search.v1.SearchService.SearchVacancies:output_type -> vacancy.v1.VacancyList
-	8, // 9: search.v1.SearchService.IndexProfile:output_type -> common.v1.Empty
-	8, // 10: search.v1.SearchService.IndexVacancy:output_type -> common.v1.Empty
-	8, // 11: search.v1.SearchService.DeleteProfile:output_type -> common.v1.Empty
-	8, // 12: search.v1.SearchService.DeleteVacancy:output_type -> common.v1.Empty
-	9, // 13: search.v1.SearchService.Reindex:output_type -> search.v1.ReindexResponse
-	7, // [7:14] is the sub-list for method output_type
-	0, // [0:7] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	0,  // 0: search.v1.SearchService.SearchProfiles:input_type -> search.v1.SearchProfilesRequest
+	1,  // 1: search.v1.SearchService.SearchVacancies:input_type -> search.v1.SearchVacanciesRequest
+	2,  // 2: search.v1.SearchService.SearchMicroTasks:input_type -> search.v1.SearchMicroTasksRequest
+	3,  // 3: search.v1.SearchService.IndexProfile:input_type -> search.v1.IndexProfileRequest
+	4,  // 4: search.v1.SearchService.IndexVacancy:input_type -> search.v1.IndexVacancyRequest
+	5,  // 5: search.v1.SearchService.IndexMicroTask:input_type -> search.v1.IndexMicroTaskRequest
+	6,  // 6: search.v1.SearchService.DeleteProfile:input_type -> search.v1.DeleteDocumentRequest
+	6,  // 7: search.v1.SearchService.DeleteVacancy:input_type -> search.v1.DeleteDocumentRequest
+	6,  // 8: search.v1.SearchService.DeleteMicroTask:input_type -> search.v1.DeleteDocumentRequest
+	7,  // 9: search.v1.SearchService.Reindex:input_type -> search.v1.ReindexRequest
+	8,  // 10: search.v1.SearchService.SearchProfiles:output_type -> users.v1.ProfileList
+	9,  // 11: search.v1.SearchService.SearchVacancies:output_type -> vacancy.v1.VacancyList
+	10, // 12: search.v1.SearchService.SearchMicroTasks:output_type -> microtask.v1.MicroTaskList
+	11, // 13: search.v1.SearchService.IndexProfile:output_type -> common.v1.Empty
+	11, // 14: search.v1.SearchService.IndexVacancy:output_type -> common.v1.Empty
+	11, // 15: search.v1.SearchService.IndexMicroTask:output_type -> common.v1.Empty
+	11, // 16: search.v1.SearchService.DeleteProfile:output_type -> common.v1.Empty
+	11, // 17: search.v1.SearchService.DeleteVacancy:output_type -> common.v1.Empty
+	11, // 18: search.v1.SearchService.DeleteMicroTask:output_type -> common.v1.Empty
+	12, // 19: search.v1.SearchService.Reindex:output_type -> search.v1.ReindexResponse
+	10, // [10:20] is the sub-list for method output_type
+	0,  // [0:10] is the sub-list for method input_type
+	0,  // [0:0] is the sub-list for extension type_name
+	0,  // [0:0] is the sub-list for extension extendee
+	0,  // [0:0] is the sub-list for field type_name
 }
 
 func init() { file_proto_search_v1_service_proto_init() }

@@ -8,7 +8,8 @@ package v1
 
 import (
 	context "context"
-	v12 "github.com/StudJobs/proto_srtucture/gen/go/proto/common/v1"
+	v13 "github.com/StudJobs/proto_srtucture/gen/go/proto/common/v1"
+	v12 "github.com/StudJobs/proto_srtucture/gen/go/proto/microtask/v1"
 	v1 "github.com/StudJobs/proto_srtucture/gen/go/proto/users/v1"
 	v11 "github.com/StudJobs/proto_srtucture/gen/go/proto/vacancy/v1"
 	grpc "google.golang.org/grpc"
@@ -22,13 +23,16 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	SearchService_SearchProfiles_FullMethodName  = "/search.v1.SearchService/SearchProfiles"
-	SearchService_SearchVacancies_FullMethodName = "/search.v1.SearchService/SearchVacancies"
-	SearchService_IndexProfile_FullMethodName    = "/search.v1.SearchService/IndexProfile"
-	SearchService_IndexVacancy_FullMethodName    = "/search.v1.SearchService/IndexVacancy"
-	SearchService_DeleteProfile_FullMethodName   = "/search.v1.SearchService/DeleteProfile"
-	SearchService_DeleteVacancy_FullMethodName   = "/search.v1.SearchService/DeleteVacancy"
-	SearchService_Reindex_FullMethodName         = "/search.v1.SearchService/Reindex"
+	SearchService_SearchProfiles_FullMethodName   = "/search.v1.SearchService/SearchProfiles"
+	SearchService_SearchVacancies_FullMethodName  = "/search.v1.SearchService/SearchVacancies"
+	SearchService_SearchMicroTasks_FullMethodName = "/search.v1.SearchService/SearchMicroTasks"
+	SearchService_IndexProfile_FullMethodName     = "/search.v1.SearchService/IndexProfile"
+	SearchService_IndexVacancy_FullMethodName     = "/search.v1.SearchService/IndexVacancy"
+	SearchService_IndexMicroTask_FullMethodName   = "/search.v1.SearchService/IndexMicroTask"
+	SearchService_DeleteProfile_FullMethodName    = "/search.v1.SearchService/DeleteProfile"
+	SearchService_DeleteVacancy_FullMethodName    = "/search.v1.SearchService/DeleteVacancy"
+	SearchService_DeleteMicroTask_FullMethodName  = "/search.v1.SearchService/DeleteMicroTask"
+	SearchService_Reindex_FullMethodName          = "/search.v1.SearchService/Reindex"
 )
 
 // SearchServiceClient is the client API for SearchService service.
@@ -43,14 +47,20 @@ type SearchServiceClient interface {
 	SearchProfiles(ctx context.Context, in *SearchProfilesRequest, opts ...grpc.CallOption) (*v1.ProfileList, error)
 	// Поиск вакансий по тегам, тексту и фильтрам. Замена GET /vacancy SQL-фильтра.
 	SearchVacancies(ctx context.Context, in *SearchVacanciesRequest, opts ...grpc.CallOption) (*v11.VacancyList, error)
+	// Поиск микрозадач по тегам, тексту, награде, статусу. Замена GET /tasks SQL-фильтра.
+	SearchMicroTasks(ctx context.Context, in *SearchMicroTasksRequest, opts ...grpc.CallOption) (*v12.MicroTaskList, error)
 	// Индексация профиля (вызывается из Users.UpdateProfile / CreateProfile)
-	IndexProfile(ctx context.Context, in *IndexProfileRequest, opts ...grpc.CallOption) (*v12.Empty, error)
+	IndexProfile(ctx context.Context, in *IndexProfileRequest, opts ...grpc.CallOption) (*v13.Empty, error)
 	// Индексация вакансии (вызывается из Vacancy.CreateVacancy / UpdateVacancy)
-	IndexVacancy(ctx context.Context, in *IndexVacancyRequest, opts ...grpc.CallOption) (*v12.Empty, error)
+	IndexVacancy(ctx context.Context, in *IndexVacancyRequest, opts ...grpc.CallOption) (*v13.Empty, error)
+	// Индексация микрозадачи (вызывается из MicroTasks.Create / Update / Apply / Review)
+	IndexMicroTask(ctx context.Context, in *IndexMicroTaskRequest, opts ...grpc.CallOption) (*v13.Empty, error)
 	// Удаление документа из индекса profiles
-	DeleteProfile(ctx context.Context, in *DeleteDocumentRequest, opts ...grpc.CallOption) (*v12.Empty, error)
+	DeleteProfile(ctx context.Context, in *DeleteDocumentRequest, opts ...grpc.CallOption) (*v13.Empty, error)
 	// Удаление документа из индекса vacancies
-	DeleteVacancy(ctx context.Context, in *DeleteDocumentRequest, opts ...grpc.CallOption) (*v12.Empty, error)
+	DeleteVacancy(ctx context.Context, in *DeleteDocumentRequest, opts ...grpc.CallOption) (*v13.Empty, error)
+	// Удаление документа из индекса microtasks
+	DeleteMicroTask(ctx context.Context, in *DeleteDocumentRequest, opts ...grpc.CallOption) (*v13.Empty, error)
 	// Холодная переиндексация — вычитывает PG и переливает в ES.
 	// Запускается командой make reindex после миграций или для первого старта.
 	Reindex(ctx context.Context, in *ReindexRequest, opts ...grpc.CallOption) (*ReindexResponse, error)
@@ -84,9 +94,19 @@ func (c *searchServiceClient) SearchVacancies(ctx context.Context, in *SearchVac
 	return out, nil
 }
 
-func (c *searchServiceClient) IndexProfile(ctx context.Context, in *IndexProfileRequest, opts ...grpc.CallOption) (*v12.Empty, error) {
+func (c *searchServiceClient) SearchMicroTasks(ctx context.Context, in *SearchMicroTasksRequest, opts ...grpc.CallOption) (*v12.MicroTaskList, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(v12.Empty)
+	out := new(v12.MicroTaskList)
+	err := c.cc.Invoke(ctx, SearchService_SearchMicroTasks_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *searchServiceClient) IndexProfile(ctx context.Context, in *IndexProfileRequest, opts ...grpc.CallOption) (*v13.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(v13.Empty)
 	err := c.cc.Invoke(ctx, SearchService_IndexProfile_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -94,9 +114,9 @@ func (c *searchServiceClient) IndexProfile(ctx context.Context, in *IndexProfile
 	return out, nil
 }
 
-func (c *searchServiceClient) IndexVacancy(ctx context.Context, in *IndexVacancyRequest, opts ...grpc.CallOption) (*v12.Empty, error) {
+func (c *searchServiceClient) IndexVacancy(ctx context.Context, in *IndexVacancyRequest, opts ...grpc.CallOption) (*v13.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(v12.Empty)
+	out := new(v13.Empty)
 	err := c.cc.Invoke(ctx, SearchService_IndexVacancy_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -104,9 +124,19 @@ func (c *searchServiceClient) IndexVacancy(ctx context.Context, in *IndexVacancy
 	return out, nil
 }
 
-func (c *searchServiceClient) DeleteProfile(ctx context.Context, in *DeleteDocumentRequest, opts ...grpc.CallOption) (*v12.Empty, error) {
+func (c *searchServiceClient) IndexMicroTask(ctx context.Context, in *IndexMicroTaskRequest, opts ...grpc.CallOption) (*v13.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(v12.Empty)
+	out := new(v13.Empty)
+	err := c.cc.Invoke(ctx, SearchService_IndexMicroTask_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *searchServiceClient) DeleteProfile(ctx context.Context, in *DeleteDocumentRequest, opts ...grpc.CallOption) (*v13.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(v13.Empty)
 	err := c.cc.Invoke(ctx, SearchService_DeleteProfile_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -114,10 +144,20 @@ func (c *searchServiceClient) DeleteProfile(ctx context.Context, in *DeleteDocum
 	return out, nil
 }
 
-func (c *searchServiceClient) DeleteVacancy(ctx context.Context, in *DeleteDocumentRequest, opts ...grpc.CallOption) (*v12.Empty, error) {
+func (c *searchServiceClient) DeleteVacancy(ctx context.Context, in *DeleteDocumentRequest, opts ...grpc.CallOption) (*v13.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(v12.Empty)
+	out := new(v13.Empty)
 	err := c.cc.Invoke(ctx, SearchService_DeleteVacancy_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *searchServiceClient) DeleteMicroTask(ctx context.Context, in *DeleteDocumentRequest, opts ...grpc.CallOption) (*v13.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(v13.Empty)
+	err := c.cc.Invoke(ctx, SearchService_DeleteMicroTask_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -146,14 +186,20 @@ type SearchServiceServer interface {
 	SearchProfiles(context.Context, *SearchProfilesRequest) (*v1.ProfileList, error)
 	// Поиск вакансий по тегам, тексту и фильтрам. Замена GET /vacancy SQL-фильтра.
 	SearchVacancies(context.Context, *SearchVacanciesRequest) (*v11.VacancyList, error)
+	// Поиск микрозадач по тегам, тексту, награде, статусу. Замена GET /tasks SQL-фильтра.
+	SearchMicroTasks(context.Context, *SearchMicroTasksRequest) (*v12.MicroTaskList, error)
 	// Индексация профиля (вызывается из Users.UpdateProfile / CreateProfile)
-	IndexProfile(context.Context, *IndexProfileRequest) (*v12.Empty, error)
+	IndexProfile(context.Context, *IndexProfileRequest) (*v13.Empty, error)
 	// Индексация вакансии (вызывается из Vacancy.CreateVacancy / UpdateVacancy)
-	IndexVacancy(context.Context, *IndexVacancyRequest) (*v12.Empty, error)
+	IndexVacancy(context.Context, *IndexVacancyRequest) (*v13.Empty, error)
+	// Индексация микрозадачи (вызывается из MicroTasks.Create / Update / Apply / Review)
+	IndexMicroTask(context.Context, *IndexMicroTaskRequest) (*v13.Empty, error)
 	// Удаление документа из индекса profiles
-	DeleteProfile(context.Context, *DeleteDocumentRequest) (*v12.Empty, error)
+	DeleteProfile(context.Context, *DeleteDocumentRequest) (*v13.Empty, error)
 	// Удаление документа из индекса vacancies
-	DeleteVacancy(context.Context, *DeleteDocumentRequest) (*v12.Empty, error)
+	DeleteVacancy(context.Context, *DeleteDocumentRequest) (*v13.Empty, error)
+	// Удаление документа из индекса microtasks
+	DeleteMicroTask(context.Context, *DeleteDocumentRequest) (*v13.Empty, error)
 	// Холодная переиндексация — вычитывает PG и переливает в ES.
 	// Запускается командой make reindex после миграций или для первого старта.
 	Reindex(context.Context, *ReindexRequest) (*ReindexResponse, error)
@@ -173,17 +219,26 @@ func (UnimplementedSearchServiceServer) SearchProfiles(context.Context, *SearchP
 func (UnimplementedSearchServiceServer) SearchVacancies(context.Context, *SearchVacanciesRequest) (*v11.VacancyList, error) {
 	return nil, status.Error(codes.Unimplemented, "method SearchVacancies not implemented")
 }
-func (UnimplementedSearchServiceServer) IndexProfile(context.Context, *IndexProfileRequest) (*v12.Empty, error) {
+func (UnimplementedSearchServiceServer) SearchMicroTasks(context.Context, *SearchMicroTasksRequest) (*v12.MicroTaskList, error) {
+	return nil, status.Error(codes.Unimplemented, "method SearchMicroTasks not implemented")
+}
+func (UnimplementedSearchServiceServer) IndexProfile(context.Context, *IndexProfileRequest) (*v13.Empty, error) {
 	return nil, status.Error(codes.Unimplemented, "method IndexProfile not implemented")
 }
-func (UnimplementedSearchServiceServer) IndexVacancy(context.Context, *IndexVacancyRequest) (*v12.Empty, error) {
+func (UnimplementedSearchServiceServer) IndexVacancy(context.Context, *IndexVacancyRequest) (*v13.Empty, error) {
 	return nil, status.Error(codes.Unimplemented, "method IndexVacancy not implemented")
 }
-func (UnimplementedSearchServiceServer) DeleteProfile(context.Context, *DeleteDocumentRequest) (*v12.Empty, error) {
+func (UnimplementedSearchServiceServer) IndexMicroTask(context.Context, *IndexMicroTaskRequest) (*v13.Empty, error) {
+	return nil, status.Error(codes.Unimplemented, "method IndexMicroTask not implemented")
+}
+func (UnimplementedSearchServiceServer) DeleteProfile(context.Context, *DeleteDocumentRequest) (*v13.Empty, error) {
 	return nil, status.Error(codes.Unimplemented, "method DeleteProfile not implemented")
 }
-func (UnimplementedSearchServiceServer) DeleteVacancy(context.Context, *DeleteDocumentRequest) (*v12.Empty, error) {
+func (UnimplementedSearchServiceServer) DeleteVacancy(context.Context, *DeleteDocumentRequest) (*v13.Empty, error) {
 	return nil, status.Error(codes.Unimplemented, "method DeleteVacancy not implemented")
+}
+func (UnimplementedSearchServiceServer) DeleteMicroTask(context.Context, *DeleteDocumentRequest) (*v13.Empty, error) {
+	return nil, status.Error(codes.Unimplemented, "method DeleteMicroTask not implemented")
 }
 func (UnimplementedSearchServiceServer) Reindex(context.Context, *ReindexRequest) (*ReindexResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method Reindex not implemented")
@@ -245,6 +300,24 @@ func _SearchService_SearchVacancies_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SearchService_SearchMicroTasks_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SearchMicroTasksRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SearchServiceServer).SearchMicroTasks(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SearchService_SearchMicroTasks_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SearchServiceServer).SearchMicroTasks(ctx, req.(*SearchMicroTasksRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _SearchService_IndexProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(IndexProfileRequest)
 	if err := dec(in); err != nil {
@@ -277,6 +350,24 @@ func _SearchService_IndexVacancy_Handler(srv interface{}, ctx context.Context, d
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(SearchServiceServer).IndexVacancy(ctx, req.(*IndexVacancyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SearchService_IndexMicroTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IndexMicroTaskRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SearchServiceServer).IndexMicroTask(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SearchService_IndexMicroTask_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SearchServiceServer).IndexMicroTask(ctx, req.(*IndexMicroTaskRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -317,6 +408,24 @@ func _SearchService_DeleteVacancy_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SearchService_DeleteMicroTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteDocumentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SearchServiceServer).DeleteMicroTask(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SearchService_DeleteMicroTask_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SearchServiceServer).DeleteMicroTask(ctx, req.(*DeleteDocumentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _SearchService_Reindex_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ReindexRequest)
 	if err := dec(in); err != nil {
@@ -351,6 +460,10 @@ var SearchService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _SearchService_SearchVacancies_Handler,
 		},
 		{
+			MethodName: "SearchMicroTasks",
+			Handler:    _SearchService_SearchMicroTasks_Handler,
+		},
+		{
 			MethodName: "IndexProfile",
 			Handler:    _SearchService_IndexProfile_Handler,
 		},
@@ -359,12 +472,20 @@ var SearchService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _SearchService_IndexVacancy_Handler,
 		},
 		{
+			MethodName: "IndexMicroTask",
+			Handler:    _SearchService_IndexMicroTask_Handler,
+		},
+		{
 			MethodName: "DeleteProfile",
 			Handler:    _SearchService_DeleteProfile_Handler,
 		},
 		{
 			MethodName: "DeleteVacancy",
 			Handler:    _SearchService_DeleteVacancy_Handler,
+		},
+		{
+			MethodName: "DeleteMicroTask",
+			Handler:    _SearchService_DeleteMicroTask_Handler,
 		},
 		{
 			MethodName: "Reindex",

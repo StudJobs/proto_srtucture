@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+package microtask.v1;
+
+option go_package = "github.com/StudJobs/proto_srtucture/gen/go/proto/microtask/v1";
+
+import "proto/common/v1/types.proto";
+
+// Жизненный цикл микрозадачи на стороне HR/компании.
+enum MicroTaskStatus {
+  MICROTASK_STATUS_UNSPECIFIED = 0;
+  MICROTASK_STATUS_OPEN = 1;        // Опубликована, доступна для apply студентами
+  MICROTASK_STATUS_ASSIGNED = 2;    // Кто-то из студентов взял задачу
+  MICROTASK_STATUS_COMPLETED = 3;   // HR принял solution
+  MICROTASK_STATUS_CANCELLED = 4;   // HR закрыл задачу или истёк deadline
+}
+
+// Жизненный цикл submission'а от студента.
+enum SubmissionStatus {
+  SUBMISSION_STATUS_UNSPECIFIED = 0;
+  SUBMISSION_STATUS_PENDING = 1;    // Студент отправил, ждёт ревью HR
+  SUBMISSION_STATUS_APPROVED = 2;   // HR принял
+  SUBMISSION_STATUS_REJECTED = 3;   // HR отклонил
+}
+
+message MicroTask {
+  string id = 1;
+  string company_id = 2;            // UUID компании-владельца задачи
+  string title = 3;
+  string description = 4;           // Многострочное описание задачи
+  int32 reward = 5;                 // Награда в рублях (опционально, может быть 0)
+  string deadline = 6;              // ISO-дата дедлайна
+  repeated string skill_slugs = 7;  // Slug-и нужных для решения навыков
+  MicroTaskStatus status = 8;
+  string assigned_to = 9;           // UUID студента, который взял задачу (если ASSIGNED+)
+  string created_at = 10;
+  string updated_at = 11;
+}
+
+message MicroTaskList {
+  repeated MicroTask tasks = 1;
+  common.v1.PaginationResponse pagination = 2;
+}
+
+message Submission {
+  string id = 1;
+  string microtask_id = 2;
+  string student_id = 3;
+  string solution_url = 4;          // Ссылка на репо/файл с решением
+  string comment = 5;               // Комментарий студента (опционально)
+  SubmissionStatus status = 6;
+  string review_comment = 7;        // Комментарий HR при approve/reject
+  string submitted_at = 8;
+  string reviewed_at = 9;
+}
+
+message SubmissionList {
+  repeated Submission submissions = 1;
+  common.v1.PaginationResponse pagination = 2;
+}

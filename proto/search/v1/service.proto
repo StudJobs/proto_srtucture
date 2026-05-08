@@ -7,6 +7,7 @@ option go_package = "github.com/StudJobs/proto_srtucture/gen/go/proto/search/v1"
 import "proto/search/v1/types.proto";
 import "proto/users/v1/types.proto";
 import "proto/vacancy/v1/types.proto";
+import "proto/microtask/v1/types.proto";
 import "proto/common/v1/types.proto";
 
 // SearchService — фасад над Elasticsearch.
@@ -19,17 +20,26 @@ service SearchService {
   // Поиск вакансий по тегам, тексту и фильтрам. Замена GET /vacancy SQL-фильтра.
   rpc SearchVacancies(SearchVacanciesRequest) returns (vacancy.v1.VacancyList);
 
+  // Поиск микрозадач по тегам, тексту, награде, статусу. Замена GET /tasks SQL-фильтра.
+  rpc SearchMicroTasks(SearchMicroTasksRequest) returns (microtask.v1.MicroTaskList);
+
   // Индексация профиля (вызывается из Users.UpdateProfile / CreateProfile)
   rpc IndexProfile(IndexProfileRequest) returns (common.v1.Empty);
 
   // Индексация вакансии (вызывается из Vacancy.CreateVacancy / UpdateVacancy)
   rpc IndexVacancy(IndexVacancyRequest) returns (common.v1.Empty);
 
+  // Индексация микрозадачи (вызывается из MicroTasks.Create / Update / Apply / Review)
+  rpc IndexMicroTask(IndexMicroTaskRequest) returns (common.v1.Empty);
+
   // Удаление документа из индекса profiles
   rpc DeleteProfile(DeleteDocumentRequest) returns (common.v1.Empty);
 
   // Удаление документа из индекса vacancies
   rpc DeleteVacancy(DeleteDocumentRequest) returns (common.v1.Empty);
+
+  // Удаление документа из индекса microtasks
+  rpc DeleteMicroTask(DeleteDocumentRequest) returns (common.v1.Empty);
 
   // Холодная переиндексация — вычитывает PG и переливает в ES.
   // Запускается командой make reindex после миграций или для первого старта.

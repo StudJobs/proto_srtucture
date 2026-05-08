@@ -8,8 +8,9 @@ package v1
 
 import (
 	v1 "github.com/StudJobs/proto_srtucture/gen/go/proto/common/v1"
-	v11 "github.com/StudJobs/proto_srtucture/gen/go/proto/users/v1"
-	v12 "github.com/StudJobs/proto_srtucture/gen/go/proto/vacancy/v1"
+	v11 "github.com/StudJobs/proto_srtucture/gen/go/proto/microtask/v1"
+	v12 "github.com/StudJobs/proto_srtucture/gen/go/proto/users/v1"
+	v13 "github.com/StudJobs/proto_srtucture/gen/go/proto/vacancy/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -188,17 +189,108 @@ func (x *SearchVacanciesRequest) GetPagination() *v1.Pagination {
 	return nil
 }
 
+// Запрос на поиск микрозадач по тегам, тексту и фильтрам.
+type SearchMicroTasksRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Свободный текст (по title, description)
+	Query string `protobuf:"bytes,1,opt,name=query,proto3" json:"query,omitempty"`
+	// Slug-и нужных навыков (AND)
+	SkillSlugs []string `protobuf:"bytes,2,rep,name=skill_slugs,json=skillSlugs,proto3" json:"skill_slugs,omitempty"`
+	// Минимальная награда (в рублях). 0 — без ограничения.
+	RewardMin int32 `protobuf:"varint,3,opt,name=reward_min,json=rewardMin,proto3" json:"reward_min,omitempty"`
+	// Опциональный фильтр по статусу (0 = любой)
+	Status v11.MicroTaskStatus `protobuf:"varint,4,opt,name=status,proto3,enum=microtask.v1.MicroTaskStatus" json:"status,omitempty"`
+	// Опциональный фильтр по компании
+	CompanyId string `protobuf:"bytes,5,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	// Пагинация
+	Pagination    *v1.Pagination `protobuf:"bytes,6,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SearchMicroTasksRequest) Reset() {
+	*x = SearchMicroTasksRequest{}
+	mi := &file_proto_search_v1_types_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SearchMicroTasksRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SearchMicroTasksRequest) ProtoMessage() {}
+
+func (x *SearchMicroTasksRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_search_v1_types_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SearchMicroTasksRequest.ProtoReflect.Descriptor instead.
+func (*SearchMicroTasksRequest) Descriptor() ([]byte, []int) {
+	return file_proto_search_v1_types_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *SearchMicroTasksRequest) GetQuery() string {
+	if x != nil {
+		return x.Query
+	}
+	return ""
+}
+
+func (x *SearchMicroTasksRequest) GetSkillSlugs() []string {
+	if x != nil {
+		return x.SkillSlugs
+	}
+	return nil
+}
+
+func (x *SearchMicroTasksRequest) GetRewardMin() int32 {
+	if x != nil {
+		return x.RewardMin
+	}
+	return 0
+}
+
+func (x *SearchMicroTasksRequest) GetStatus() v11.MicroTaskStatus {
+	if x != nil {
+		return x.Status
+	}
+	return v11.MicroTaskStatus(0)
+}
+
+func (x *SearchMicroTasksRequest) GetCompanyId() string {
+	if x != nil {
+		return x.CompanyId
+	}
+	return ""
+}
+
+func (x *SearchMicroTasksRequest) GetPagination() *v1.Pagination {
+	if x != nil {
+		return x.Pagination
+	}
+	return nil
+}
+
 // Запрос на индексацию / удаление документа
 type IndexProfileRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Profile       *v11.Profile           `protobuf:"bytes,1,opt,name=profile,proto3" json:"profile,omitempty"`
+	Profile       *v12.Profile           `protobuf:"bytes,1,opt,name=profile,proto3" json:"profile,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *IndexProfileRequest) Reset() {
 	*x = IndexProfileRequest{}
-	mi := &file_proto_search_v1_types_proto_msgTypes[2]
+	mi := &file_proto_search_v1_types_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -210,7 +302,7 @@ func (x *IndexProfileRequest) String() string {
 func (*IndexProfileRequest) ProtoMessage() {}
 
 func (x *IndexProfileRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_search_v1_types_proto_msgTypes[2]
+	mi := &file_proto_search_v1_types_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -223,10 +315,10 @@ func (x *IndexProfileRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use IndexProfileRequest.ProtoReflect.Descriptor instead.
 func (*IndexProfileRequest) Descriptor() ([]byte, []int) {
-	return file_proto_search_v1_types_proto_rawDescGZIP(), []int{2}
+	return file_proto_search_v1_types_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *IndexProfileRequest) GetProfile() *v11.Profile {
+func (x *IndexProfileRequest) GetProfile() *v12.Profile {
 	if x != nil {
 		return x.Profile
 	}
@@ -235,14 +327,14 @@ func (x *IndexProfileRequest) GetProfile() *v11.Profile {
 
 type IndexVacancyRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Vacancy       *v12.Vacancy           `protobuf:"bytes,1,opt,name=vacancy,proto3" json:"vacancy,omitempty"`
+	Vacancy       *v13.Vacancy           `protobuf:"bytes,1,opt,name=vacancy,proto3" json:"vacancy,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *IndexVacancyRequest) Reset() {
 	*x = IndexVacancyRequest{}
-	mi := &file_proto_search_v1_types_proto_msgTypes[3]
+	mi := &file_proto_search_v1_types_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -254,7 +346,7 @@ func (x *IndexVacancyRequest) String() string {
 func (*IndexVacancyRequest) ProtoMessage() {}
 
 func (x *IndexVacancyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_search_v1_types_proto_msgTypes[3]
+	mi := &file_proto_search_v1_types_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -267,12 +359,56 @@ func (x *IndexVacancyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use IndexVacancyRequest.ProtoReflect.Descriptor instead.
 func (*IndexVacancyRequest) Descriptor() ([]byte, []int) {
-	return file_proto_search_v1_types_proto_rawDescGZIP(), []int{3}
+	return file_proto_search_v1_types_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *IndexVacancyRequest) GetVacancy() *v12.Vacancy {
+func (x *IndexVacancyRequest) GetVacancy() *v13.Vacancy {
 	if x != nil {
 		return x.Vacancy
+	}
+	return nil
+}
+
+type IndexMicroTaskRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Task          *v11.MicroTask         `protobuf:"bytes,1,opt,name=task,proto3" json:"task,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *IndexMicroTaskRequest) Reset() {
+	*x = IndexMicroTaskRequest{}
+	mi := &file_proto_search_v1_types_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *IndexMicroTaskRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*IndexMicroTaskRequest) ProtoMessage() {}
+
+func (x *IndexMicroTaskRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_search_v1_types_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use IndexMicroTaskRequest.ProtoReflect.Descriptor instead.
+func (*IndexMicroTaskRequest) Descriptor() ([]byte, []int) {
+	return file_proto_search_v1_types_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *IndexMicroTaskRequest) GetTask() *v11.MicroTask {
+	if x != nil {
+		return x.Task
 	}
 	return nil
 }
@@ -286,7 +422,7 @@ type DeleteDocumentRequest struct {
 
 func (x *DeleteDocumentRequest) Reset() {
 	*x = DeleteDocumentRequest{}
-	mi := &file_proto_search_v1_types_proto_msgTypes[4]
+	mi := &file_proto_search_v1_types_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -298,7 +434,7 @@ func (x *DeleteDocumentRequest) String() string {
 func (*DeleteDocumentRequest) ProtoMessage() {}
 
 func (x *DeleteDocumentRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_search_v1_types_proto_msgTypes[4]
+	mi := &file_proto_search_v1_types_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -311,7 +447,7 @@ func (x *DeleteDocumentRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteDocumentRequest.ProtoReflect.Descriptor instead.
 func (*DeleteDocumentRequest) Descriptor() ([]byte, []int) {
-	return file_proto_search_v1_types_proto_rawDescGZIP(), []int{4}
+	return file_proto_search_v1_types_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *DeleteDocumentRequest) GetId() string {
@@ -332,7 +468,7 @@ type ReindexRequest struct {
 
 func (x *ReindexRequest) Reset() {
 	*x = ReindexRequest{}
-	mi := &file_proto_search_v1_types_proto_msgTypes[5]
+	mi := &file_proto_search_v1_types_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -344,7 +480,7 @@ func (x *ReindexRequest) String() string {
 func (*ReindexRequest) ProtoMessage() {}
 
 func (x *ReindexRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_search_v1_types_proto_msgTypes[5]
+	mi := &file_proto_search_v1_types_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -357,7 +493,7 @@ func (x *ReindexRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReindexRequest.ProtoReflect.Descriptor instead.
 func (*ReindexRequest) Descriptor() ([]byte, []int) {
-	return file_proto_search_v1_types_proto_rawDescGZIP(), []int{5}
+	return file_proto_search_v1_types_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *ReindexRequest) GetRecreateIndices() bool {
@@ -368,16 +504,17 @@ func (x *ReindexRequest) GetRecreateIndices() bool {
 }
 
 type ReindexResponse struct {
-	state            protoimpl.MessageState `protogen:"open.v1"`
-	IndexedProfiles  int32                  `protobuf:"varint,1,opt,name=indexed_profiles,json=indexedProfiles,proto3" json:"indexed_profiles,omitempty"`
-	IndexedVacancies int32                  `protobuf:"varint,2,opt,name=indexed_vacancies,json=indexedVacancies,proto3" json:"indexed_vacancies,omitempty"`
-	unknownFields    protoimpl.UnknownFields
-	sizeCache        protoimpl.SizeCache
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	IndexedProfiles   int32                  `protobuf:"varint,1,opt,name=indexed_profiles,json=indexedProfiles,proto3" json:"indexed_profiles,omitempty"`
+	IndexedVacancies  int32                  `protobuf:"varint,2,opt,name=indexed_vacancies,json=indexedVacancies,proto3" json:"indexed_vacancies,omitempty"`
+	IndexedMicrotasks int32                  `protobuf:"varint,3,opt,name=indexed_microtasks,json=indexedMicrotasks,proto3" json:"indexed_microtasks,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
 }
 
 func (x *ReindexResponse) Reset() {
 	*x = ReindexResponse{}
-	mi := &file_proto_search_v1_types_proto_msgTypes[6]
+	mi := &file_proto_search_v1_types_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -389,7 +526,7 @@ func (x *ReindexResponse) String() string {
 func (*ReindexResponse) ProtoMessage() {}
 
 func (x *ReindexResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_search_v1_types_proto_msgTypes[6]
+	mi := &file_proto_search_v1_types_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -402,7 +539,7 @@ func (x *ReindexResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReindexResponse.ProtoReflect.Descriptor instead.
 func (*ReindexResponse) Descriptor() ([]byte, []int) {
-	return file_proto_search_v1_types_proto_rawDescGZIP(), []int{6}
+	return file_proto_search_v1_types_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *ReindexResponse) GetIndexedProfiles() int32 {
@@ -419,11 +556,18 @@ func (x *ReindexResponse) GetIndexedVacancies() int32 {
 	return 0
 }
 
+func (x *ReindexResponse) GetIndexedMicrotasks() int32 {
+	if x != nil {
+		return x.IndexedMicrotasks
+	}
+	return 0
+}
+
 var File_proto_search_v1_types_proto protoreflect.FileDescriptor
 
 const file_proto_search_v1_types_proto_rawDesc = "" +
 	"\n" +
-	"\x1bproto/search/v1/types.proto\x12\tsearch.v1\x1a\x1aproto/users/v1/types.proto\x1a\x1cproto/vacancy/v1/types.proto\x1a\x1bproto/common/v1/types.proto\"\xb6\x01\n" +
+	"\x1bproto/search/v1/types.proto\x12\tsearch.v1\x1a\x1aproto/users/v1/types.proto\x1a\x1cproto/vacancy/v1/types.proto\x1a\x1eproto/microtask/v1/types.proto\x1a\x1bproto/common/v1/types.proto\"\xb6\x01\n" +
 	"\x15SearchProfilesRequest\x12\x14\n" +
 	"\x05query\x18\x01 \x01(\tR\x05query\x12\x1f\n" +
 	"\vskill_slugs\x18\x02 \x03(\tR\n" +
@@ -443,18 +587,33 @@ const file_proto_search_v1_types_proto_rawDesc = "" +
 	"company_id\x18\x05 \x01(\tR\tcompanyId\x125\n" +
 	"\n" +
 	"pagination\x18\x06 \x01(\v2\x15.common.v1.PaginationR\n" +
+	"pagination\"\xfc\x01\n" +
+	"\x17SearchMicroTasksRequest\x12\x14\n" +
+	"\x05query\x18\x01 \x01(\tR\x05query\x12\x1f\n" +
+	"\vskill_slugs\x18\x02 \x03(\tR\n" +
+	"skillSlugs\x12\x1d\n" +
+	"\n" +
+	"reward_min\x18\x03 \x01(\x05R\trewardMin\x125\n" +
+	"\x06status\x18\x04 \x01(\x0e2\x1d.microtask.v1.MicroTaskStatusR\x06status\x12\x1d\n" +
+	"\n" +
+	"company_id\x18\x05 \x01(\tR\tcompanyId\x125\n" +
+	"\n" +
+	"pagination\x18\x06 \x01(\v2\x15.common.v1.PaginationR\n" +
 	"pagination\"B\n" +
 	"\x13IndexProfileRequest\x12+\n" +
 	"\aprofile\x18\x01 \x01(\v2\x11.users.v1.ProfileR\aprofile\"D\n" +
 	"\x13IndexVacancyRequest\x12-\n" +
-	"\avacancy\x18\x01 \x01(\v2\x13.vacancy.v1.VacancyR\avacancy\"'\n" +
+	"\avacancy\x18\x01 \x01(\v2\x13.vacancy.v1.VacancyR\avacancy\"D\n" +
+	"\x15IndexMicroTaskRequest\x12+\n" +
+	"\x04task\x18\x01 \x01(\v2\x17.microtask.v1.MicroTaskR\x04task\"'\n" +
 	"\x15DeleteDocumentRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\";\n" +
 	"\x0eReindexRequest\x12)\n" +
-	"\x10recreate_indices\x18\x01 \x01(\bR\x0frecreateIndices\"i\n" +
+	"\x10recreate_indices\x18\x01 \x01(\bR\x0frecreateIndices\"\x98\x01\n" +
 	"\x0fReindexResponse\x12)\n" +
 	"\x10indexed_profiles\x18\x01 \x01(\x05R\x0findexedProfiles\x12+\n" +
-	"\x11indexed_vacancies\x18\x02 \x01(\x05R\x10indexedVacanciesB<Z:github.com/StudJobs/proto_srtucture/gen/go/proto/search/v1b\x06proto3"
+	"\x11indexed_vacancies\x18\x02 \x01(\x05R\x10indexedVacancies\x12-\n" +
+	"\x12indexed_microtasks\x18\x03 \x01(\x05R\x11indexedMicrotasksB<Z:github.com/StudJobs/proto_srtucture/gen/go/proto/search/v1b\x06proto3"
 
 var (
 	file_proto_search_v1_types_proto_rawDescOnce sync.Once
@@ -468,29 +627,36 @@ func file_proto_search_v1_types_proto_rawDescGZIP() []byte {
 	return file_proto_search_v1_types_proto_rawDescData
 }
 
-var file_proto_search_v1_types_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
+var file_proto_search_v1_types_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
 var file_proto_search_v1_types_proto_goTypes = []any{
-	(*SearchProfilesRequest)(nil),  // 0: search.v1.SearchProfilesRequest
-	(*SearchVacanciesRequest)(nil), // 1: search.v1.SearchVacanciesRequest
-	(*IndexProfileRequest)(nil),    // 2: search.v1.IndexProfileRequest
-	(*IndexVacancyRequest)(nil),    // 3: search.v1.IndexVacancyRequest
-	(*DeleteDocumentRequest)(nil),  // 4: search.v1.DeleteDocumentRequest
-	(*ReindexRequest)(nil),         // 5: search.v1.ReindexRequest
-	(*ReindexResponse)(nil),        // 6: search.v1.ReindexResponse
-	(*v1.Pagination)(nil),          // 7: common.v1.Pagination
-	(*v11.Profile)(nil),            // 8: users.v1.Profile
-	(*v12.Vacancy)(nil),            // 9: vacancy.v1.Vacancy
+	(*SearchProfilesRequest)(nil),   // 0: search.v1.SearchProfilesRequest
+	(*SearchVacanciesRequest)(nil),  // 1: search.v1.SearchVacanciesRequest
+	(*SearchMicroTasksRequest)(nil), // 2: search.v1.SearchMicroTasksRequest
+	(*IndexProfileRequest)(nil),     // 3: search.v1.IndexProfileRequest
+	(*IndexVacancyRequest)(nil),     // 4: search.v1.IndexVacancyRequest
+	(*IndexMicroTaskRequest)(nil),   // 5: search.v1.IndexMicroTaskRequest
+	(*DeleteDocumentRequest)(nil),   // 6: search.v1.DeleteDocumentRequest
+	(*ReindexRequest)(nil),          // 7: search.v1.ReindexRequest
+	(*ReindexResponse)(nil),         // 8: search.v1.ReindexResponse
+	(*v1.Pagination)(nil),           // 9: common.v1.Pagination
+	(v11.MicroTaskStatus)(0),        // 10: microtask.v1.MicroTaskStatus
+	(*v12.Profile)(nil),             // 11: users.v1.Profile
+	(*v13.Vacancy)(nil),             // 12: vacancy.v1.Vacancy
+	(*v11.MicroTask)(nil),           // 13: microtask.v1.MicroTask
 }
 var file_proto_search_v1_types_proto_depIdxs = []int32{
-	7, // 0: search.v1.SearchProfilesRequest.pagination:type_name -> common.v1.Pagination
-	7, // 1: search.v1.SearchVacanciesRequest.pagination:type_name -> common.v1.Pagination
-	8, // 2: search.v1.IndexProfileRequest.profile:type_name -> users.v1.Profile
-	9, // 3: search.v1.IndexVacancyRequest.vacancy:type_name -> vacancy.v1.Vacancy
-	4, // [4:4] is the sub-list for method output_type
-	4, // [4:4] is the sub-list for method input_type
-	4, // [4:4] is the sub-list for extension type_name
-	4, // [4:4] is the sub-list for extension extendee
-	0, // [0:4] is the sub-list for field type_name
+	9,  // 0: search.v1.SearchProfilesRequest.pagination:type_name -> common.v1.Pagination
+	9,  // 1: search.v1.SearchVacanciesRequest.pagination:type_name -> common.v1.Pagination
+	10, // 2: search.v1.SearchMicroTasksRequest.status:type_name -> microtask.v1.MicroTaskStatus
+	9,  // 3: search.v1.SearchMicroTasksRequest.pagination:type_name -> common.v1.Pagination
+	11, // 4: search.v1.IndexProfileRequest.profile:type_name -> users.v1.Profile
+	12, // 5: search.v1.IndexVacancyRequest.vacancy:type_name -> vacancy.v1.Vacancy
+	13, // 6: search.v1.IndexMicroTaskRequest.task:type_name -> microtask.v1.MicroTask
+	7,  // [7:7] is the sub-list for method output_type
+	7,  // [7:7] is the sub-list for method input_type
+	7,  // [7:7] is the sub-list for extension type_name
+	7,  // [7:7] is the sub-list for extension extendee
+	0,  // [0:7] is the sub-list for field type_name
 }
 
 func init() { file_proto_search_v1_types_proto_init() }
@@ -504,7 +670,7 @@ func file_proto_search_v1_types_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_search_v1_types_proto_rawDesc), len(file_proto_search_v1_types_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   7,
+			NumMessages:   9,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

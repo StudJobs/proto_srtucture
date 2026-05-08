@@ -1,0 +1,98 @@
+syntax = "proto3";
+
+package microtask.v1;
+
+option go_package = "github.com/StudJobs/proto_srtucture/gen/go/proto/microtask/v1";
+
+import "proto/microtask/v1/types.proto";
+import "proto/common/v1/types.proto";
+
+service MicroTaskService {
+  // HR-операции с задачами
+
+  // Создать новую задачу. status выставляется в OPEN автоматически.
+  rpc Create(CreateMicroTaskRequest) returns (MicroTask);
+
+  // Изменить задачу (только владелец-компания).
+  rpc Update(UpdateMicroTaskRequest) returns (MicroTask);
+
+  // Удалить (soft) задачу.
+  rpc Delete(DeleteMicroTaskRequest) returns (common.v1.Empty);
+
+  // Получить одну задачу по id.
+  rpc Get(GetMicroTaskRequest) returns (MicroTask);
+
+  // Список всех открытых/в работе задач (для студенческой доски /tasks).
+  rpc List(ListMicroTasksRequest) returns (MicroTaskList);
+
+  // Список задач, принадлежащих компании HR (для /hr/tasks).
+  rpc ListByCompany(ListByCompanyRequest) returns (MicroTaskList);
+
+  // Студенческие операции
+
+  // Студент берёт задачу: status переходит OPEN → ASSIGNED, assigned_to = student_id.
+  rpc Apply(ApplyRequest) returns (MicroTask);
+
+  // Студент отправляет решение. Создаёт Submission в PENDING.
+  rpc Submit(SubmitRequest) returns (Submission);
+
+  // Список submission'ов конкретной задачи (для HR-ревью) или конкретного студента.
+  rpc ListSubmissions(ListSubmissionsRequest) returns (SubmissionList);
+
+  // HR апрувит/реджектит submission. При APPROVE задача переходит в COMPLETED,
+  // и (в F5) автоматически создаётся achievement в портфолио студента.
+  rpc Review(ReviewRequest) returns (Submission);
+}
+
+message CreateMicroTaskRequest {
+  MicroTask task = 1;
+}
+
+message UpdateMicroTaskRequest {
+  string id = 1;
+  MicroTask task = 2;
+}
+
+message DeleteMicroTaskRequest {
+  string id = 1;
+}
+
+message GetMicroTaskRequest {
+  string id = 1;
+}
+
+message ListMicroTasksRequest {
+  common.v1.Pagination pagination = 1;
+  MicroTaskStatus status = 2;          // Опциональный фильтр (UNSPECIFIED = все)
+  repeated string skill_slugs = 3;     // Опциональный AND-фильтр по навыкам (для прямой выдачи без ES)
+}
+
+message ListByCompanyRequest {
+  string company_id = 1;
+  common.v1.Pagination pagination = 2;
+}
+
+message ApplyRequest {
+  string microtask_id = 1;
+  string student_id = 2;
+}
+
+message SubmitRequest {
+  string microtask_id = 1;
+  string student_id = 2;
+  string solution_url = 3;
+  string comment = 4;
+}
+
+message ListSubmissionsRequest {
+  // Фильтрация по одному из полей. Если оба пусты — InvalidArgument.
+  string microtask_id = 1;
+  string student_id = 2;
+  common.v1.Pagination pagination = 3;
+}
+
+message ReviewRequest {
+  string submission_id = 1;
+  SubmissionStatus status = 2;     // APPROVED | REJECTED
+  string review_comment = 3;
+}
