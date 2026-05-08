@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package search.v1;
+
+option go_package = "github.com/StudJobs/proto_srtucture/gen/go/proto/search/v1";
+
+import "proto/search/v1/types.proto";
+import "proto/users/v1/types.proto";
+import "proto/vacancy/v1/types.proto";
+import "proto/common/v1/types.proto";
+
+// SearchService — фасад над Elasticsearch.
+// Поисковые RPC вызывает API-Gateway вместо прежних SQL-фильтров в Users/Vacancy.
+// Index/Delete RPC вызывают Users и Vacancy после успешной коммита в БД (синхронная индексация).
+service SearchService {
+  // Поиск студентов по тегам и тексту. Замена GET /users SQL-фильтра.
+  rpc SearchProfiles(SearchProfilesRequest) returns (users.v1.ProfileList);
+
+  // Поиск вакансий по тегам, тексту и фильтрам. Замена GET /vacancy SQL-фильтра.
+  rpc SearchVacancies(SearchVacanciesRequest) returns (vacancy.v1.VacancyList);
+
+  // Индексация профиля (вызывается из Users.UpdateProfile / CreateProfile)
+  rpc IndexProfile(IndexProfileRequest) returns (common.v1.Empty);
+
+  // Индексация вакансии (вызывается из Vacancy.CreateVacancy / UpdateVacancy)
+  rpc IndexVacancy(IndexVacancyRequest) returns (common.v1.Empty);
+
+  // Удаление документа из индекса profiles
+  rpc DeleteProfile(DeleteDocumentRequest) returns (common.v1.Empty);
+
+  // Удаление документа из индекса vacancies
+  rpc DeleteVacancy(DeleteDocumentRequest) returns (common.v1.Empty);
+
+  // Холодная переиндексация — вычитывает PG и переливает в ES.
+  // Запускается командой make reindex после миграций или для первого старта.
+  rpc Reindex(ReindexRequest) returns (ReindexResponse);
+}

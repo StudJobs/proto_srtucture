@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package search.v1;
+
+option go_package = "github.com/StudJobs/proto_srtucture/gen/go/proto/search/v1";
+
+import "proto/users/v1/types.proto";
+import "proto/vacancy/v1/types.proto";
+import "proto/common/v1/types.proto";
+
+// Запрос на поиск студентов по тегам и тексту
+message SearchProfilesRequest {
+  // Свободный текст (по first_name, last_name, profession_category, education_institution, description)
+  string query = 1;
+  // Slug-и навыков (AND-семантика: профиль должен содержать все запрошенные)
+  repeated string skill_slugs = 2;
+  // Опциональный фильтр по категории профессии
+  string profession_category = 3;
+  // Пагинация
+  common.v1.Pagination pagination = 4;
+}
+
+// Запрос на поиск вакансий по тегам, тексту и числовым диапазонам
+message SearchVacanciesRequest {
+  // Свободный текст (по title, position_status)
+  string query = 1;
+  // Slug-и требуемых навыков (AND)
+  repeated string skill_slugs = 2;
+  // Минимальная зарплата (включительно). 0 — без ограничения.
+  int32 salary_min = 3;
+  // Максимальный требуемый опыт в годах (≤). 0 — без ограничения.
+  int32 experience_max = 4;
+  // Опционально: ограничение по компании
+  string company_id = 5;
+  // Пагинация
+  common.v1.Pagination pagination = 6;
+}
+
+// Запрос на индексацию / удаление документа
+message IndexProfileRequest {
+  users.v1.Profile profile = 1;
+}
+
+message IndexVacancyRequest {
+  vacancy.v1.Vacancy vacancy = 1;
+}
+
+message DeleteDocumentRequest {
+  string id = 1;
+}
+
+// Запрос на полную переиндексацию (вызывается из make reindex)
+message ReindexRequest {
+  // если true — пересоздать индексы (drop + recreate с mapping)
+  bool recreate_indices = 1;
+}
+
+message ReindexResponse {
+  int32 indexed_profiles = 1;
+  int32 indexed_vacancies = 2;
+}
