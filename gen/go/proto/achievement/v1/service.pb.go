@@ -303,6 +303,181 @@ func (x *DeleteAchievementRequest) GetAchievementName() string {
 	return ""
 }
 
+// Запрос на отправку достижения на экспертную проверку
+type SubmitForReviewRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserUuid      string                 `protobuf:"bytes,1,opt,name=user_uuid,json=userUuid,proto3" json:"user_uuid,omitempty"`                 // UUID студента (владельца)
+	AchievementId int64                  `protobuf:"varint,2,opt,name=achievement_id,json=achievementId,proto3" json:"achievement_id,omitempty"` // Числовой ID достижения
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SubmitForReviewRequest) Reset() {
+	*x = SubmitForReviewRequest{}
+	mi := &file_proto_achievement_v1_service_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SubmitForReviewRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SubmitForReviewRequest) ProtoMessage() {}
+
+func (x *SubmitForReviewRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_achievement_v1_service_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SubmitForReviewRequest.ProtoReflect.Descriptor instead.
+func (*SubmitForReviewRequest) Descriptor() ([]byte, []int) {
+	return file_proto_achievement_v1_service_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *SubmitForReviewRequest) GetUserUuid() string {
+	if x != nil {
+		return x.UserUuid
+	}
+	return ""
+}
+
+func (x *SubmitForReviewRequest) GetAchievementId() int64 {
+	if x != nil {
+		return x.AchievementId
+	}
+	return 0
+}
+
+// Запрос очереди эксперта (только PENDING)
+type GetExpertQueueRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Page          int32                  `protobuf:"varint,1,opt,name=page,proto3" json:"page,omitempty"`   // Страница (1-based)
+	Limit         int32                  `protobuf:"varint,2,opt,name=limit,proto3" json:"limit,omitempty"` // Размер страницы (>=1)
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetExpertQueueRequest) Reset() {
+	*x = GetExpertQueueRequest{}
+	mi := &file_proto_achievement_v1_service_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetExpertQueueRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetExpertQueueRequest) ProtoMessage() {}
+
+func (x *GetExpertQueueRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_achievement_v1_service_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetExpertQueueRequest.ProtoReflect.Descriptor instead.
+func (*GetExpertQueueRequest) Descriptor() ([]byte, []int) {
+	return file_proto_achievement_v1_service_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *GetExpertQueueRequest) GetPage() int32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *GetExpertQueueRequest) GetLimit() int32 {
+	if x != nil {
+		return x.Limit
+	}
+	return 0
+}
+
+// Запрос на ревью эксперта
+type ReviewAchievementRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	AchievementId int64                  `protobuf:"varint,1,opt,name=achievement_id,json=achievementId,proto3" json:"achievement_id,omitempty"`         // Числовой ID достижения
+	ReviewerUuid  string                 `protobuf:"bytes,2,opt,name=reviewer_uuid,json=reviewerUuid,proto3" json:"reviewer_uuid,omitempty"`             // UUID эксперта
+	Decision      VerificationStatus     `protobuf:"varint,3,opt,name=decision,proto3,enum=achievement.v1.VerificationStatus" json:"decision,omitempty"` // Решение: APPROVED или REJECTED
+	Comment       string                 `protobuf:"bytes,4,opt,name=comment,proto3" json:"comment,omitempty"`                                           // Комментарий (особенно для REJECTED)
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ReviewAchievementRequest) Reset() {
+	*x = ReviewAchievementRequest{}
+	mi := &file_proto_achievement_v1_service_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ReviewAchievementRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ReviewAchievementRequest) ProtoMessage() {}
+
+func (x *ReviewAchievementRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_achievement_v1_service_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ReviewAchievementRequest.ProtoReflect.Descriptor instead.
+func (*ReviewAchievementRequest) Descriptor() ([]byte, []int) {
+	return file_proto_achievement_v1_service_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *ReviewAchievementRequest) GetAchievementId() int64 {
+	if x != nil {
+		return x.AchievementId
+	}
+	return 0
+}
+
+func (x *ReviewAchievementRequest) GetReviewerUuid() string {
+	if x != nil {
+		return x.ReviewerUuid
+	}
+	return ""
+}
+
+func (x *ReviewAchievementRequest) GetDecision() VerificationStatus {
+	if x != nil {
+		return x.Decision
+	}
+	return VerificationStatus_VERIFICATION_STATUS_UNSPECIFIED
+}
+
+func (x *ReviewAchievementRequest) GetComment() string {
+	if x != nil {
+		return x.Comment
+	}
+	return ""
+}
+
 var File_proto_achievement_v1_service_proto protoreflect.FileDescriptor
 
 const file_proto_achievement_v1_service_proto_rawDesc = "" +
@@ -324,13 +499,27 @@ const file_proto_achievement_v1_service_proto_rawDesc = "" +
 	"\x06s3_key\x18\x02 \x01(\tR\x05s3Key\"b\n" +
 	"\x18DeleteAchievementRequest\x12\x1b\n" +
 	"\tuser_uuid\x18\x01 \x01(\tR\buserUuid\x12)\n" +
-	"\x10achievement_name\x18\x02 \x01(\tR\x0fachievementName2\xe9\x03\n" +
+	"\x10achievement_name\x18\x02 \x01(\tR\x0fachievementName\"\\\n" +
+	"\x16SubmitForReviewRequest\x12\x1b\n" +
+	"\tuser_uuid\x18\x01 \x01(\tR\buserUuid\x12%\n" +
+	"\x0eachievement_id\x18\x02 \x01(\x03R\rachievementId\"A\n" +
+	"\x15GetExpertQueueRequest\x12\x12\n" +
+	"\x04page\x18\x01 \x01(\x05R\x04page\x12\x14\n" +
+	"\x05limit\x18\x02 \x01(\x05R\x05limit\"\xc0\x01\n" +
+	"\x18ReviewAchievementRequest\x12%\n" +
+	"\x0eachievement_id\x18\x01 \x01(\x03R\rachievementId\x12#\n" +
+	"\rreviewer_uuid\x18\x02 \x01(\tR\freviewerUuid\x12>\n" +
+	"\bdecision\x18\x03 \x01(\x0e2\".achievement.v1.VerificationStatusR\bdecision\x12\x18\n" +
+	"\acomment\x18\x04 \x01(\tR\acomment2\xe1\x05\n" +
 	"\x12AchievementService\x12`\n" +
 	"\x12GetAllAchievements\x12).achievement.v1.GetAllAchievementsRequest\x1a\x1f.achievement.v1.AchievementList\x12b\n" +
 	"\x19GetAchievementDownloadUrl\x12%.achievement.v1.GetAchievementRequest\x1a\x1e.achievement.v1.AchievementUrl\x12i\n" +
 	"\x17GetAchievementUploadUrl\x12+.achievement.v1.GetAchievementUploadRequest\x1a!.achievement.v1.UploadUrlResponse\x12Q\n" +
 	"\x12AddAchievementMeta\x12).achievement.v1.AddAchievementMetaRequest\x1a\x10.common.v1.Empty\x12O\n" +
-	"\x11DeleteAchievement\x12(.achievement.v1.DeleteAchievementRequest\x1a\x10.common.v1.EmptyBAZ?github.com/StudJobs/proto_srtucture/gen/go/proto/achievement/v1b\x06proto3"
+	"\x11DeleteAchievement\x12(.achievement.v1.DeleteAchievementRequest\x1a\x10.common.v1.Empty\x12K\n" +
+	"\x0fSubmitForReview\x12&.achievement.v1.SubmitForReviewRequest\x1a\x10.common.v1.Empty\x12X\n" +
+	"\x0eGetExpertQueue\x12%.achievement.v1.GetExpertQueueRequest\x1a\x1f.achievement.v1.AchievementList\x12O\n" +
+	"\x11ReviewAchievement\x12(.achievement.v1.ReviewAchievementRequest\x1a\x10.common.v1.EmptyBAZ?github.com/StudJobs/proto_srtucture/gen/go/proto/achievement/v1b\x06proto3"
 
 var (
 	file_proto_achievement_v1_service_proto_rawDescOnce sync.Once
@@ -344,36 +533,47 @@ func file_proto_achievement_v1_service_proto_rawDescGZIP() []byte {
 	return file_proto_achievement_v1_service_proto_rawDescData
 }
 
-var file_proto_achievement_v1_service_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_proto_achievement_v1_service_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_proto_achievement_v1_service_proto_goTypes = []any{
 	(*GetAllAchievementsRequest)(nil),   // 0: achievement.v1.GetAllAchievementsRequest
 	(*GetAchievementRequest)(nil),       // 1: achievement.v1.GetAchievementRequest
 	(*GetAchievementUploadRequest)(nil), // 2: achievement.v1.GetAchievementUploadRequest
 	(*AddAchievementMetaRequest)(nil),   // 3: achievement.v1.AddAchievementMetaRequest
 	(*DeleteAchievementRequest)(nil),    // 4: achievement.v1.DeleteAchievementRequest
-	(*AchievementMeta)(nil),             // 5: achievement.v1.AchievementMeta
-	(*AchievementList)(nil),             // 6: achievement.v1.AchievementList
-	(*AchievementUrl)(nil),              // 7: achievement.v1.AchievementUrl
-	(*UploadUrlResponse)(nil),           // 8: achievement.v1.UploadUrlResponse
-	(*v1.Empty)(nil),                    // 9: common.v1.Empty
+	(*SubmitForReviewRequest)(nil),      // 5: achievement.v1.SubmitForReviewRequest
+	(*GetExpertQueueRequest)(nil),       // 6: achievement.v1.GetExpertQueueRequest
+	(*ReviewAchievementRequest)(nil),    // 7: achievement.v1.ReviewAchievementRequest
+	(*AchievementMeta)(nil),             // 8: achievement.v1.AchievementMeta
+	(VerificationStatus)(0),             // 9: achievement.v1.VerificationStatus
+	(*AchievementList)(nil),             // 10: achievement.v1.AchievementList
+	(*AchievementUrl)(nil),              // 11: achievement.v1.AchievementUrl
+	(*UploadUrlResponse)(nil),           // 12: achievement.v1.UploadUrlResponse
+	(*v1.Empty)(nil),                    // 13: common.v1.Empty
 }
 var file_proto_achievement_v1_service_proto_depIdxs = []int32{
-	5, // 0: achievement.v1.AddAchievementMetaRequest.meta:type_name -> achievement.v1.AchievementMeta
-	0, // 1: achievement.v1.AchievementService.GetAllAchievements:input_type -> achievement.v1.GetAllAchievementsRequest
-	1, // 2: achievement.v1.AchievementService.GetAchievementDownloadUrl:input_type -> achievement.v1.GetAchievementRequest
-	2, // 3: achievement.v1.AchievementService.GetAchievementUploadUrl:input_type -> achievement.v1.GetAchievementUploadRequest
-	3, // 4: achievement.v1.AchievementService.AddAchievementMeta:input_type -> achievement.v1.AddAchievementMetaRequest
-	4, // 5: achievement.v1.AchievementService.DeleteAchievement:input_type -> achievement.v1.DeleteAchievementRequest
-	6, // 6: achievement.v1.AchievementService.GetAllAchievements:output_type -> achievement.v1.AchievementList
-	7, // 7: achievement.v1.AchievementService.GetAchievementDownloadUrl:output_type -> achievement.v1.AchievementUrl
-	8, // 8: achievement.v1.AchievementService.GetAchievementUploadUrl:output_type -> achievement.v1.UploadUrlResponse
-	9, // 9: achievement.v1.AchievementService.AddAchievementMeta:output_type -> common.v1.Empty
-	9, // 10: achievement.v1.AchievementService.DeleteAchievement:output_type -> common.v1.Empty
-	6, // [6:11] is the sub-list for method output_type
-	1, // [1:6] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	8,  // 0: achievement.v1.AddAchievementMetaRequest.meta:type_name -> achievement.v1.AchievementMeta
+	9,  // 1: achievement.v1.ReviewAchievementRequest.decision:type_name -> achievement.v1.VerificationStatus
+	0,  // 2: achievement.v1.AchievementService.GetAllAchievements:input_type -> achievement.v1.GetAllAchievementsRequest
+	1,  // 3: achievement.v1.AchievementService.GetAchievementDownloadUrl:input_type -> achievement.v1.GetAchievementRequest
+	2,  // 4: achievement.v1.AchievementService.GetAchievementUploadUrl:input_type -> achievement.v1.GetAchievementUploadRequest
+	3,  // 5: achievement.v1.AchievementService.AddAchievementMeta:input_type -> achievement.v1.AddAchievementMetaRequest
+	4,  // 6: achievement.v1.AchievementService.DeleteAchievement:input_type -> achievement.v1.DeleteAchievementRequest
+	5,  // 7: achievement.v1.AchievementService.SubmitForReview:input_type -> achievement.v1.SubmitForReviewRequest
+	6,  // 8: achievement.v1.AchievementService.GetExpertQueue:input_type -> achievement.v1.GetExpertQueueRequest
+	7,  // 9: achievement.v1.AchievementService.ReviewAchievement:input_type -> achievement.v1.ReviewAchievementRequest
+	10, // 10: achievement.v1.AchievementService.GetAllAchievements:output_type -> achievement.v1.AchievementList
+	11, // 11: achievement.v1.AchievementService.GetAchievementDownloadUrl:output_type -> achievement.v1.AchievementUrl
+	12, // 12: achievement.v1.AchievementService.GetAchievementUploadUrl:output_type -> achievement.v1.UploadUrlResponse
+	13, // 13: achievement.v1.AchievementService.AddAchievementMeta:output_type -> common.v1.Empty
+	13, // 14: achievement.v1.AchievementService.DeleteAchievement:output_type -> common.v1.Empty
+	13, // 15: achievement.v1.AchievementService.SubmitForReview:output_type -> common.v1.Empty
+	10, // 16: achievement.v1.AchievementService.GetExpertQueue:output_type -> achievement.v1.AchievementList
+	13, // 17: achievement.v1.AchievementService.ReviewAchievement:output_type -> common.v1.Empty
+	10, // [10:18] is the sub-list for method output_type
+	2,  // [2:10] is the sub-list for method input_type
+	2,  // [2:2] is the sub-list for extension type_name
+	2,  // [2:2] is the sub-list for extension extendee
+	0,  // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_proto_achievement_v1_service_proto_init() }
@@ -388,7 +588,7 @@ func file_proto_achievement_v1_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_achievement_v1_service_proto_rawDesc), len(file_proto_achievement_v1_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   5,
+			NumMessages:   8,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

@@ -17,6 +17,15 @@ enum AchievementType {
   ACHIEVEMENT_TYPE_OTHER = 6;        // Иное
 }
 
+// Статус экспертной верификации портфолио
+enum VerificationStatus {
+  VERIFICATION_STATUS_UNSPECIFIED = 0;
+  VERIFICATION_STATUS_DRAFT = 1;     // Черновик (только что загружено, не отправлено на ревью)
+  VERIFICATION_STATUS_PENDING = 2;   // Ожидает экспертной проверки
+  VERIFICATION_STATUS_APPROVED = 3;  // Подтверждено экспертом
+  VERIFICATION_STATUS_REJECTED = 4;  // Отклонено экспертом
+}
+
 // Метаданные достижения
 message AchievementMeta {
   string name = 1;           // Уникальное имя достижения (в рамках пользователя)
@@ -26,6 +35,13 @@ message AchievementMeta {
   int64 file_size = 5;       // Размер файла в байтах
   string created_at = 6;     // Дата создания в формате RFC3339
   AchievementType type = 7;  // Тип ачивки (пет-проект / курсовая / хакатон / курс / итог микрозадачи)
+
+  // Поля экспертной верификации
+  int64 id = 8;                                   // Числовой ID записи (для ревью эксперта)
+  VerificationStatus verification_status = 9;     // Текущий статус верификации
+  string reviewed_by = 10;                        // UUID эксперта, провёл ревью (пусто если ещё не ревьюилось)
+  string reviewed_at = 11;                        // Время ревью в RFC3339 (пусто если не ревьюилось)
+  string review_comment = 12;                     // Комментарий эксперта (опционально)
 }
 
 // Список метаданных достижений

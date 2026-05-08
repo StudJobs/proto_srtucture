@@ -25,6 +25,9 @@ const (
 	AchievementService_GetAchievementUploadUrl_FullMethodName   = "/achievement.v1.AchievementService/GetAchievementUploadUrl"
 	AchievementService_AddAchievementMeta_FullMethodName        = "/achievement.v1.AchievementService/AddAchievementMeta"
 	AchievementService_DeleteAchievement_FullMethodName         = "/achievement.v1.AchievementService/DeleteAchievement"
+	AchievementService_SubmitForReview_FullMethodName           = "/achievement.v1.AchievementService/SubmitForReview"
+	AchievementService_GetExpertQueue_FullMethodName            = "/achievement.v1.AchievementService/GetExpertQueue"
+	AchievementService_ReviewAchievement_FullMethodName         = "/achievement.v1.AchievementService/ReviewAchievement"
 )
 
 // AchievementServiceClient is the client API for AchievementService service.
@@ -41,6 +44,12 @@ type AchievementServiceClient interface {
 	AddAchievementMeta(ctx context.Context, in *AddAchievementMetaRequest, opts ...grpc.CallOption) (*v1.Empty, error)
 	// Удалить достижение (метаданные + файл из S3)
 	DeleteAchievement(ctx context.Context, in *DeleteAchievementRequest, opts ...grpc.CallOption) (*v1.Empty, error)
+	// Студент отправляет своё достижение на ревью (DRAFT -> PENDING)
+	SubmitForReview(ctx context.Context, in *SubmitForReviewRequest, opts ...grpc.CallOption) (*v1.Empty, error)
+	// Эксперт получает очередь достижений в статусе PENDING
+	GetExpertQueue(ctx context.Context, in *GetExpertQueueRequest, opts ...grpc.CallOption) (*AchievementList, error)
+	// Эксперт принимает решение: APPROVED или REJECTED + комментарий
+	ReviewAchievement(ctx context.Context, in *ReviewAchievementRequest, opts ...grpc.CallOption) (*v1.Empty, error)
 }
 
 type achievementServiceClient struct {
@@ -101,6 +110,36 @@ func (c *achievementServiceClient) DeleteAchievement(ctx context.Context, in *De
 	return out, nil
 }
 
+func (c *achievementServiceClient) SubmitForReview(ctx context.Context, in *SubmitForReviewRequest, opts ...grpc.CallOption) (*v1.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(v1.Empty)
+	err := c.cc.Invoke(ctx, AchievementService_SubmitForReview_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *achievementServiceClient) GetExpertQueue(ctx context.Context, in *GetExpertQueueRequest, opts ...grpc.CallOption) (*AchievementList, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AchievementList)
+	err := c.cc.Invoke(ctx, AchievementService_GetExpertQueue_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *achievementServiceClient) ReviewAchievement(ctx context.Context, in *ReviewAchievementRequest, opts ...grpc.CallOption) (*v1.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(v1.Empty)
+	err := c.cc.Invoke(ctx, AchievementService_ReviewAchievement_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AchievementServiceServer is the server API for AchievementService service.
 // All implementations must embed UnimplementedAchievementServiceServer
 // for forward compatibility.
@@ -115,6 +154,12 @@ type AchievementServiceServer interface {
 	AddAchievementMeta(context.Context, *AddAchievementMetaRequest) (*v1.Empty, error)
 	// Удалить достижение (метаданные + файл из S3)
 	DeleteAchievement(context.Context, *DeleteAchievementRequest) (*v1.Empty, error)
+	// Студент отправляет своё достижение на ревью (DRAFT -> PENDING)
+	SubmitForReview(context.Context, *SubmitForReviewRequest) (*v1.Empty, error)
+	// Эксперт получает очередь достижений в статусе PENDING
+	GetExpertQueue(context.Context, *GetExpertQueueRequest) (*AchievementList, error)
+	// Эксперт принимает решение: APPROVED или REJECTED + комментарий
+	ReviewAchievement(context.Context, *ReviewAchievementRequest) (*v1.Empty, error)
 	mustEmbedUnimplementedAchievementServiceServer()
 }
 
@@ -139,6 +184,15 @@ func (UnimplementedAchievementServiceServer) AddAchievementMeta(context.Context,
 }
 func (UnimplementedAchievementServiceServer) DeleteAchievement(context.Context, *DeleteAchievementRequest) (*v1.Empty, error) {
 	return nil, status.Error(codes.Unimplemented, "method DeleteAchievement not implemented")
+}
+func (UnimplementedAchievementServiceServer) SubmitForReview(context.Context, *SubmitForReviewRequest) (*v1.Empty, error) {
+	return nil, status.Error(codes.Unimplemented, "method SubmitForReview not implemented")
+}
+func (UnimplementedAchievementServiceServer) GetExpertQueue(context.Context, *GetExpertQueueRequest) (*AchievementList, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetExpertQueue not implemented")
+}
+func (UnimplementedAchievementServiceServer) ReviewAchievement(context.Context, *ReviewAchievementRequest) (*v1.Empty, error) {
+	return nil, status.Error(codes.Unimplemented, "method ReviewAchievement not implemented")
 }
 func (UnimplementedAchievementServiceServer) mustEmbedUnimplementedAchievementServiceServer() {}
 func (UnimplementedAchievementServiceServer) testEmbeddedByValue()                            {}
@@ -251,6 +305,60 @@ func _AchievementService_DeleteAchievement_Handler(srv interface{}, ctx context.
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AchievementService_SubmitForReview_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SubmitForReviewRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AchievementServiceServer).SubmitForReview(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AchievementService_SubmitForReview_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AchievementServiceServer).SubmitForReview(ctx, req.(*SubmitForReviewRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AchievementService_GetExpertQueue_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetExpertQueueRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AchievementServiceServer).GetExpertQueue(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AchievementService_GetExpertQueue_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AchievementServiceServer).GetExpertQueue(ctx, req.(*GetExpertQueueRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AchievementService_ReviewAchievement_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ReviewAchievementRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AchievementServiceServer).ReviewAchievement(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AchievementService_ReviewAchievement_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AchievementServiceServer).ReviewAchievement(ctx, req.(*ReviewAchievementRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AchievementService_ServiceDesc is the grpc.ServiceDesc for AchievementService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -277,6 +385,18 @@ var AchievementService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteAchievement",
 			Handler:    _AchievementService_DeleteAchievement_Handler,
+		},
+		{
+			MethodName: "SubmitForReview",
+			Handler:    _AchievementService_SubmitForReview_Handler,
+		},
+		{
+			MethodName: "GetExpertQueue",
+			Handler:    _AchievementService_GetExpertQueue_Handler,
+		},
+		{
+			MethodName: "ReviewAchievement",
+			Handler:    _AchievementService_ReviewAchievement_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

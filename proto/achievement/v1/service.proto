@@ -22,6 +22,15 @@ service AchievementService {
 
   // Удалить достижение (метаданные + файл из S3)
   rpc DeleteAchievement(DeleteAchievementRequest) returns (common.v1.Empty);
+
+  // Студент отправляет своё достижение на ревью (DRAFT -> PENDING)
+  rpc SubmitForReview(SubmitForReviewRequest) returns (common.v1.Empty);
+
+  // Эксперт получает очередь достижений в статусе PENDING
+  rpc GetExpertQueue(GetExpertQueueRequest) returns (AchievementList);
+
+  // Эксперт принимает решение: APPROVED или REJECTED + комментарий
+  rpc ReviewAchievement(ReviewAchievementRequest) returns (common.v1.Empty);
 }
 
 // ============ REQUEST/RESPONSE MESSAGES ============
@@ -56,4 +65,24 @@ message AddAchievementMetaRequest {
 message DeleteAchievementRequest {
   string user_uuid = 1;        // UUID пользователя
   string achievement_name = 2; // Имя удаляемого достижения
+}
+
+// Запрос на отправку достижения на экспертную проверку
+message SubmitForReviewRequest {
+  string user_uuid = 1;        // UUID студента (владельца)
+  int64 achievement_id = 2;    // Числовой ID достижения
+}
+
+// Запрос очереди эксперта (только PENDING)
+message GetExpertQueueRequest {
+  int32 page = 1;              // Страница (1-based)
+  int32 limit = 2;             // Размер страницы (>=1)
+}
+
+// Запрос на ревью эксперта
+message ReviewAchievementRequest {
+  int64 achievement_id = 1;    // Числовой ID достижения
+  string reviewer_uuid = 2;    // UUID эксперта
+  VerificationStatus decision = 3; // Решение: APPROVED или REJECTED
+  string comment = 4;          // Комментарий (особенно для REJECTED)
 }

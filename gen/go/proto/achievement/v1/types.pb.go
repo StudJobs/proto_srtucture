@@ -83,18 +83,80 @@ func (AchievementType) EnumDescriptor() ([]byte, []int) {
 	return file_proto_achievement_v1_types_proto_rawDescGZIP(), []int{0}
 }
 
+// Статус экспертной верификации портфолио
+type VerificationStatus int32
+
+const (
+	VerificationStatus_VERIFICATION_STATUS_UNSPECIFIED VerificationStatus = 0
+	VerificationStatus_VERIFICATION_STATUS_DRAFT       VerificationStatus = 1 // Черновик (только что загружено, не отправлено на ревью)
+	VerificationStatus_VERIFICATION_STATUS_PENDING     VerificationStatus = 2 // Ожидает экспертной проверки
+	VerificationStatus_VERIFICATION_STATUS_APPROVED    VerificationStatus = 3 // Подтверждено экспертом
+	VerificationStatus_VERIFICATION_STATUS_REJECTED    VerificationStatus = 4 // Отклонено экспертом
+)
+
+// Enum value maps for VerificationStatus.
+var (
+	VerificationStatus_name = map[int32]string{
+		0: "VERIFICATION_STATUS_UNSPECIFIED",
+		1: "VERIFICATION_STATUS_DRAFT",
+		2: "VERIFICATION_STATUS_PENDING",
+		3: "VERIFICATION_STATUS_APPROVED",
+		4: "VERIFICATION_STATUS_REJECTED",
+	}
+	VerificationStatus_value = map[string]int32{
+		"VERIFICATION_STATUS_UNSPECIFIED": 0,
+		"VERIFICATION_STATUS_DRAFT":       1,
+		"VERIFICATION_STATUS_PENDING":     2,
+		"VERIFICATION_STATUS_APPROVED":    3,
+		"VERIFICATION_STATUS_REJECTED":    4,
+	}
+)
+
+func (x VerificationStatus) Enum() *VerificationStatus {
+	p := new(VerificationStatus)
+	*p = x
+	return p
+}
+
+func (x VerificationStatus) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (VerificationStatus) Descriptor() protoreflect.EnumDescriptor {
+	return file_proto_achievement_v1_types_proto_enumTypes[1].Descriptor()
+}
+
+func (VerificationStatus) Type() protoreflect.EnumType {
+	return &file_proto_achievement_v1_types_proto_enumTypes[1]
+}
+
+func (x VerificationStatus) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use VerificationStatus.Descriptor instead.
+func (VerificationStatus) EnumDescriptor() ([]byte, []int) {
+	return file_proto_achievement_v1_types_proto_rawDescGZIP(), []int{1}
+}
+
 // Метаданные достижения
 type AchievementMeta struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`                                      // Уникальное имя достижения (в рамках пользователя)
-	UserUuid      string                 `protobuf:"bytes,2,opt,name=user_uuid,json=userUuid,proto3" json:"user_uuid,omitempty"`              // UUID владельца достижения
-	FileName      string                 `protobuf:"bytes,3,opt,name=file_name,json=fileName,proto3" json:"file_name,omitempty"`              // Оригинальное имя файла
-	FileType      string                 `protobuf:"bytes,4,opt,name=file_type,json=fileType,proto3" json:"file_type,omitempty"`              // MIME-тип файла (например, "image/jpeg", "application/pdf")
-	FileSize      int64                  `protobuf:"varint,5,opt,name=file_size,json=fileSize,proto3" json:"file_size,omitempty"`             // Размер файла в байтах
-	CreatedAt     string                 `protobuf:"bytes,6,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`           // Дата создания в формате RFC3339
-	Type          AchievementType        `protobuf:"varint,7,opt,name=type,proto3,enum=achievement.v1.AchievementType" json:"type,omitempty"` // Тип ачивки (пет-проект / курсовая / хакатон / курс / итог микрозадачи)
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state     protoimpl.MessageState `protogen:"open.v1"`
+	Name      string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`                                      // Уникальное имя достижения (в рамках пользователя)
+	UserUuid  string                 `protobuf:"bytes,2,opt,name=user_uuid,json=userUuid,proto3" json:"user_uuid,omitempty"`              // UUID владельца достижения
+	FileName  string                 `protobuf:"bytes,3,opt,name=file_name,json=fileName,proto3" json:"file_name,omitempty"`              // Оригинальное имя файла
+	FileType  string                 `protobuf:"bytes,4,opt,name=file_type,json=fileType,proto3" json:"file_type,omitempty"`              // MIME-тип файла (например, "image/jpeg", "application/pdf")
+	FileSize  int64                  `protobuf:"varint,5,opt,name=file_size,json=fileSize,proto3" json:"file_size,omitempty"`             // Размер файла в байтах
+	CreatedAt string                 `protobuf:"bytes,6,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`           // Дата создания в формате RFC3339
+	Type      AchievementType        `protobuf:"varint,7,opt,name=type,proto3,enum=achievement.v1.AchievementType" json:"type,omitempty"` // Тип ачивки (пет-проект / курсовая / хакатон / курс / итог микрозадачи)
+	// Поля экспертной верификации
+	Id                 int64              `protobuf:"varint,8,opt,name=id,proto3" json:"id,omitempty"`                                                                                                  // Числовой ID записи (для ревью эксперта)
+	VerificationStatus VerificationStatus `protobuf:"varint,9,opt,name=verification_status,json=verificationStatus,proto3,enum=achievement.v1.VerificationStatus" json:"verification_status,omitempty"` // Текущий статус верификации
+	ReviewedBy         string             `protobuf:"bytes,10,opt,name=reviewed_by,json=reviewedBy,proto3" json:"reviewed_by,omitempty"`                                                                // UUID эксперта, провёл ревью (пусто если ещё не ревьюилось)
+	ReviewedAt         string             `protobuf:"bytes,11,opt,name=reviewed_at,json=reviewedAt,proto3" json:"reviewed_at,omitempty"`                                                                // Время ревью в RFC3339 (пусто если не ревьюилось)
+	ReviewComment      string             `protobuf:"bytes,12,opt,name=review_comment,json=reviewComment,proto3" json:"review_comment,omitempty"`                                                       // Комментарий эксперта (опционально)
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
 }
 
 func (x *AchievementMeta) Reset() {
@@ -174,6 +236,41 @@ func (x *AchievementMeta) GetType() AchievementType {
 		return x.Type
 	}
 	return AchievementType_ACHIEVEMENT_TYPE_UNSPECIFIED
+}
+
+func (x *AchievementMeta) GetId() int64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *AchievementMeta) GetVerificationStatus() VerificationStatus {
+	if x != nil {
+		return x.VerificationStatus
+	}
+	return VerificationStatus_VERIFICATION_STATUS_UNSPECIFIED
+}
+
+func (x *AchievementMeta) GetReviewedBy() string {
+	if x != nil {
+		return x.ReviewedBy
+	}
+	return ""
+}
+
+func (x *AchievementMeta) GetReviewedAt() string {
+	if x != nil {
+		return x.ReviewedAt
+	}
+	return ""
+}
+
+func (x *AchievementMeta) GetReviewComment() string {
+	if x != nil {
+		return x.ReviewComment
+	}
+	return ""
 }
 
 // Список метаданных достижений
@@ -339,7 +436,7 @@ var File_proto_achievement_v1_types_proto protoreflect.FileDescriptor
 
 const file_proto_achievement_v1_types_proto_rawDesc = "" +
 	"\n" +
-	" proto/achievement/v1/types.proto\x12\x0eachievement.v1\"\xed\x01\n" +
+	" proto/achievement/v1/types.proto\x12\x0eachievement.v1\"\xbb\x03\n" +
 	"\x0fAchievementMeta\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x1b\n" +
 	"\tuser_uuid\x18\x02 \x01(\tR\buserUuid\x12\x1b\n" +
@@ -348,7 +445,15 @@ const file_proto_achievement_v1_types_proto_rawDesc = "" +
 	"\tfile_size\x18\x05 \x01(\x03R\bfileSize\x12\x1d\n" +
 	"\n" +
 	"created_at\x18\x06 \x01(\tR\tcreatedAt\x123\n" +
-	"\x04type\x18\a \x01(\x0e2\x1f.achievement.v1.AchievementTypeR\x04type\"V\n" +
+	"\x04type\x18\a \x01(\x0e2\x1f.achievement.v1.AchievementTypeR\x04type\x12\x0e\n" +
+	"\x02id\x18\b \x01(\x03R\x02id\x12S\n" +
+	"\x13verification_status\x18\t \x01(\x0e2\".achievement.v1.VerificationStatusR\x12verificationStatus\x12\x1f\n" +
+	"\vreviewed_by\x18\n" +
+	" \x01(\tR\n" +
+	"reviewedBy\x12\x1f\n" +
+	"\vreviewed_at\x18\v \x01(\tR\n" +
+	"reviewedAt\x12%\n" +
+	"\x0ereview_comment\x18\f \x01(\tR\rreviewComment\"V\n" +
 	"\x0fAchievementList\x12C\n" +
 	"\fachievements\x18\x01 \x03(\v2\x1f.achievement.v1.AchievementMetaR\fachievements\"A\n" +
 	"\x0eAchievementUrl\x12\x10\n" +
@@ -368,7 +473,13 @@ const file_proto_achievement_v1_types_proto_rawDesc = "" +
 	"\x1aACHIEVEMENT_TYPE_HACKATHON\x10\x03\x12\x1b\n" +
 	"\x17ACHIEVEMENT_TYPE_COURSE\x10\x04\x12%\n" +
 	"!ACHIEVEMENT_TYPE_MICROTASK_RESULT\x10\x05\x12\x1a\n" +
-	"\x16ACHIEVEMENT_TYPE_OTHER\x10\x06BAZ?github.com/StudJobs/proto_srtucture/gen/go/proto/achievement/v1b\x06proto3"
+	"\x16ACHIEVEMENT_TYPE_OTHER\x10\x06*\xbd\x01\n" +
+	"\x12VerificationStatus\x12#\n" +
+	"\x1fVERIFICATION_STATUS_UNSPECIFIED\x10\x00\x12\x1d\n" +
+	"\x19VERIFICATION_STATUS_DRAFT\x10\x01\x12\x1f\n" +
+	"\x1bVERIFICATION_STATUS_PENDING\x10\x02\x12 \n" +
+	"\x1cVERIFICATION_STATUS_APPROVED\x10\x03\x12 \n" +
+	"\x1cVERIFICATION_STATUS_REJECTED\x10\x04BAZ?github.com/StudJobs/proto_srtucture/gen/go/proto/achievement/v1b\x06proto3"
 
 var (
 	file_proto_achievement_v1_types_proto_rawDescOnce sync.Once
@@ -382,23 +493,25 @@ func file_proto_achievement_v1_types_proto_rawDescGZIP() []byte {
 	return file_proto_achievement_v1_types_proto_rawDescData
 }
 
-var file_proto_achievement_v1_types_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_proto_achievement_v1_types_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
 var file_proto_achievement_v1_types_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_proto_achievement_v1_types_proto_goTypes = []any{
 	(AchievementType)(0),      // 0: achievement.v1.AchievementType
-	(*AchievementMeta)(nil),   // 1: achievement.v1.AchievementMeta
-	(*AchievementList)(nil),   // 2: achievement.v1.AchievementList
-	(*AchievementUrl)(nil),    // 3: achievement.v1.AchievementUrl
-	(*UploadUrlResponse)(nil), // 4: achievement.v1.UploadUrlResponse
+	(VerificationStatus)(0),   // 1: achievement.v1.VerificationStatus
+	(*AchievementMeta)(nil),   // 2: achievement.v1.AchievementMeta
+	(*AchievementList)(nil),   // 3: achievement.v1.AchievementList
+	(*AchievementUrl)(nil),    // 4: achievement.v1.AchievementUrl
+	(*UploadUrlResponse)(nil), // 5: achievement.v1.UploadUrlResponse
 }
 var file_proto_achievement_v1_types_proto_depIdxs = []int32{
 	0, // 0: achievement.v1.AchievementMeta.type:type_name -> achievement.v1.AchievementType
-	1, // 1: achievement.v1.AchievementList.achievements:type_name -> achievement.v1.AchievementMeta
-	2, // [2:2] is the sub-list for method output_type
-	2, // [2:2] is the sub-list for method input_type
-	2, // [2:2] is the sub-list for extension type_name
-	2, // [2:2] is the sub-list for extension extendee
-	0, // [0:2] is the sub-list for field type_name
+	1, // 1: achievement.v1.AchievementMeta.verification_status:type_name -> achievement.v1.VerificationStatus
+	2, // 2: achievement.v1.AchievementList.achievements:type_name -> achievement.v1.AchievementMeta
+	3, // [3:3] is the sub-list for method output_type
+	3, // [3:3] is the sub-list for method input_type
+	3, // [3:3] is the sub-list for extension type_name
+	3, // [3:3] is the sub-list for extension extendee
+	0, // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_proto_achievement_v1_types_proto_init() }
@@ -411,7 +524,7 @@ func file_proto_achievement_v1_types_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_achievement_v1_types_proto_rawDesc), len(file_proto_achievement_v1_types_proto_rawDesc)),
-			NumEnums:      1,
+			NumEnums:      2,
 			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   0,
