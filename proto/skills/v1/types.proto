@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package skills.v1;
+
+option go_package = "github.com/StudJobs/proto_srtucture/gen/go/proto/skills/v1";
+
+// Категория тега компетенций
+enum SkillCategory {
+  SKILL_CATEGORY_UNSPECIFIED = 0;
+  SKILL_CATEGORY_LANGUAGE = 1;     // Языки программирования (Go, Java, Python, ...)
+  SKILL_CATEGORY_FRAMEWORK = 2;    // Фреймворки (React, Spring, Django, ...)
+  SKILL_CATEGORY_DATABASE = 3;     // СУБД (PostgreSQL, Redis, MongoDB, ...)
+  SKILL_CATEGORY_INFRA = 4;        // Инфраструктура (Docker, K8s, Linux, ...)
+  SKILL_CATEGORY_TOOL = 5;         // Инструменты (Git, gRPC, REST, ...)
+  SKILL_CATEGORY_CLOUD = 6;        // Облачные платформы (AWS, GCP, Yandex Cloud, ...)
+  SKILL_CATEGORY_DESIGN = 7;       // Дизайн / UX (Figma, ...)
+  SKILL_CATEGORY_OTHER = 8;        // Прочее
+}
+
+// Тег компетенции
+message Skill {
+  int32 id = 1;                    // Числовой PK справочника
+  string slug = 2;                 // Латинский slug ("go", "react", "postgresql")
+  string name = 3;                 // Отображаемое имя ("Go", "React", "PostgreSQL")
+  SkillCategory category = 4;
+  int32 popularity = 5;            // Кол-во связей со студентами / вакансиями (для сортировки)
+}
+
+// Список тегов
+message SkillList {
+  repeated Skill skills = 1;
+}

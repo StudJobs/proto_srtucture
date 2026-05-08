@@ -28,6 +28,8 @@ message Vacancy {
   string create_at = 9;
   // ID прикрепленного файла
   string attachment_id = 10;
+  // Slug-и навыков, требуемых для вакансии
+  repeated string skill_slugs = 11;
 }
 
 // Список вакансий с пагинацией

@@ -20,6 +20,7 @@ message Profile {
   string profession_category = 10; // Просто строка с названием категории
   string role = 11;
   string education_institution = 12; // Учебное заведение студента
+  repeated string skill_slugs = 13;  // Slug-и навыков из справочника skills
 }
 
 // Список профилей с пагинацией

@@ -44,7 +44,9 @@ type Vacancy struct {
 	// создание компании
 	CreateAt string `protobuf:"bytes,9,opt,name=create_at,json=createAt,proto3" json:"create_at,omitempty"`
 	// ID прикрепленного файла
-	AttachmentId  string `protobuf:"bytes,10,opt,name=attachment_id,json=attachmentId,proto3" json:"attachment_id,omitempty"`
+	AttachmentId string `protobuf:"bytes,10,opt,name=attachment_id,json=attachmentId,proto3" json:"attachment_id,omitempty"`
+	// Slug-и навыков, требуемых для вакансии
+	SkillSlugs    []string `protobuf:"bytes,11,rep,name=skill_slugs,json=skillSlugs,proto3" json:"skill_slugs,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -149,6 +151,13 @@ func (x *Vacancy) GetAttachmentId() string {
 	return ""
 }
 
+func (x *Vacancy) GetSkillSlugs() []string {
+	if x != nil {
+		return x.SkillSlugs
+	}
+	return nil
+}
+
 // Список вакансий с пагинацией
 type VacancyList struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -207,7 +216,7 @@ var File_proto_vacancy_v1_types_proto protoreflect.FileDescriptor
 const file_proto_vacancy_v1_types_proto_rawDesc = "" +
 	"\n" +
 	"\x1cproto/vacancy/v1/types.proto\x12\n" +
-	"vacancy.v1\x1a\x1bproto/common/v1/types.proto\"\xae\x02\n" +
+	"vacancy.v1\x1a\x1bproto/common/v1/types.proto\"\xcf\x02\n" +
 	"\aVacancy\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x14\n" +
 	"\x05title\x18\x02 \x01(\tR\x05title\x12\x1e\n" +
@@ -223,7 +232,9 @@ const file_proto_vacancy_v1_types_proto_rawDesc = "" +
 	"company_id\x18\b \x01(\tR\tcompanyId\x12\x1b\n" +
 	"\tcreate_at\x18\t \x01(\tR\bcreateAt\x12#\n" +
 	"\rattachment_id\x18\n" +
-	" \x01(\tR\fattachmentId\"\x7f\n" +
+	" \x01(\tR\fattachmentId\x12\x1f\n" +
+	"\vskill_slugs\x18\v \x03(\tR\n" +
+	"skillSlugs\"\x7f\n" +
 	"\vVacancyList\x121\n" +
 	"\tvacancies\x18\x01 \x03(\v2\x13.vacancy.v1.VacancyR\tvacancies\x12=\n" +
 	"\n" +

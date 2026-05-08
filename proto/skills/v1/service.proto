@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package skills.v1;
+
+option go_package = "github.com/StudJobs/proto_srtucture/gen/go/proto/skills/v1";
+
+import "proto/skills/v1/types.proto";
+
+// SkillsService — справочник компетенций и поиск/автокомплит
+service SkillsService {
+  // Поиск тегов по подстроке (для автокомплита)
+  rpc Search(SearchSkillsRequest) returns (SkillList);
+
+  // Топ популярных тегов (для подсказок при пустом вводе)
+  rpc Popular(PopularSkillsRequest) returns (SkillList);
+
+  // Получить теги по списку slug-ов (для денормализации в Profile/Vacancy responses)
+  rpc Bulk(BulkSkillsRequest) returns (SkillList);
+}
+
+message SearchSkillsRequest {
+  string query = 1;                // Подстрока имени или slug, регистр игнорируется
+  int32 limit = 2;                 // По умолчанию 20, максимум 100
+  SkillCategory category = 3;      // Опциональный фильтр по категории
+}
+
+message PopularSkillsRequest {
+  int32 limit = 1;                 // По умолчанию 20
+  SkillCategory category = 2;      // Опциональный фильтр по категории
+}
+
+message BulkSkillsRequest {
+  repeated string slugs = 1;
+}
