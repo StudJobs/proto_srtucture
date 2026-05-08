@@ -6,6 +6,17 @@ option go_package = "github.com/StudJobs/proto_srtucture/gen/go/proto/achievemen
 
 // ============ DATA MESSAGES ============
 
+// Тип достижения в портфолио студента
+enum AchievementType {
+  ACHIEVEMENT_TYPE_UNSPECIFIED = 0;  // По умолчанию (неклассифицированное)
+  ACHIEVEMENT_TYPE_PET_PROJECT = 1;  // Пет-проект
+  ACHIEVEMENT_TYPE_COURSEWORK = 2;   // Курсовая работа
+  ACHIEVEMENT_TYPE_HACKATHON = 3;    // Хакатон
+  ACHIEVEMENT_TYPE_COURSE = 4;       // Курс / сертификат
+  ACHIEVEMENT_TYPE_MICROTASK_RESULT = 5; // Результат микрозадачи
+  ACHIEVEMENT_TYPE_OTHER = 6;        // Иное
+}
+
 // Метаданные достижения
 message AchievementMeta {
   string name = 1;           // Уникальное имя достижения (в рамках пользователя)
@@ -14,6 +25,7 @@ message AchievementMeta {
   string file_type = 4;      // MIME-тип файла (например, "image/jpeg", "application/pdf")
   int64 file_size = 5;       // Размер файла в байтах
   string created_at = 6;     // Дата создания в формате RFC3339
+  AchievementType type = 7;  // Тип ачивки (пет-проект / курсовая / хакатон / курс / итог микрозадачи)
 }
 
 // Список метаданных достижений

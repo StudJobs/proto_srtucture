@@ -21,15 +21,78 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// Тип достижения в портфолио студента
+type AchievementType int32
+
+const (
+	AchievementType_ACHIEVEMENT_TYPE_UNSPECIFIED      AchievementType = 0 // По умолчанию (неклассифицированное)
+	AchievementType_ACHIEVEMENT_TYPE_PET_PROJECT      AchievementType = 1 // Пет-проект
+	AchievementType_ACHIEVEMENT_TYPE_COURSEWORK       AchievementType = 2 // Курсовая работа
+	AchievementType_ACHIEVEMENT_TYPE_HACKATHON        AchievementType = 3 // Хакатон
+	AchievementType_ACHIEVEMENT_TYPE_COURSE           AchievementType = 4 // Курс / сертификат
+	AchievementType_ACHIEVEMENT_TYPE_MICROTASK_RESULT AchievementType = 5 // Результат микрозадачи
+	AchievementType_ACHIEVEMENT_TYPE_OTHER            AchievementType = 6 // Иное
+)
+
+// Enum value maps for AchievementType.
+var (
+	AchievementType_name = map[int32]string{
+		0: "ACHIEVEMENT_TYPE_UNSPECIFIED",
+		1: "ACHIEVEMENT_TYPE_PET_PROJECT",
+		2: "ACHIEVEMENT_TYPE_COURSEWORK",
+		3: "ACHIEVEMENT_TYPE_HACKATHON",
+		4: "ACHIEVEMENT_TYPE_COURSE",
+		5: "ACHIEVEMENT_TYPE_MICROTASK_RESULT",
+		6: "ACHIEVEMENT_TYPE_OTHER",
+	}
+	AchievementType_value = map[string]int32{
+		"ACHIEVEMENT_TYPE_UNSPECIFIED":      0,
+		"ACHIEVEMENT_TYPE_PET_PROJECT":      1,
+		"ACHIEVEMENT_TYPE_COURSEWORK":       2,
+		"ACHIEVEMENT_TYPE_HACKATHON":        3,
+		"ACHIEVEMENT_TYPE_COURSE":           4,
+		"ACHIEVEMENT_TYPE_MICROTASK_RESULT": 5,
+		"ACHIEVEMENT_TYPE_OTHER":            6,
+	}
+)
+
+func (x AchievementType) Enum() *AchievementType {
+	p := new(AchievementType)
+	*p = x
+	return p
+}
+
+func (x AchievementType) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (AchievementType) Descriptor() protoreflect.EnumDescriptor {
+	return file_proto_achievement_v1_types_proto_enumTypes[0].Descriptor()
+}
+
+func (AchievementType) Type() protoreflect.EnumType {
+	return &file_proto_achievement_v1_types_proto_enumTypes[0]
+}
+
+func (x AchievementType) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use AchievementType.Descriptor instead.
+func (AchievementType) EnumDescriptor() ([]byte, []int) {
+	return file_proto_achievement_v1_types_proto_rawDescGZIP(), []int{0}
+}
+
 // Метаданные достижения
 type AchievementMeta struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`                            // Уникальное имя достижения (в рамках пользователя)
-	UserUuid      string                 `protobuf:"bytes,2,opt,name=user_uuid,json=userUuid,proto3" json:"user_uuid,omitempty"`    // UUID владельца достижения
-	FileName      string                 `protobuf:"bytes,3,opt,name=file_name,json=fileName,proto3" json:"file_name,omitempty"`    // Оригинальное имя файла
-	FileType      string                 `protobuf:"bytes,4,opt,name=file_type,json=fileType,proto3" json:"file_type,omitempty"`    // MIME-тип файла (например, "image/jpeg", "application/pdf")
-	FileSize      int64                  `protobuf:"varint,5,opt,name=file_size,json=fileSize,proto3" json:"file_size,omitempty"`   // Размер файла в байтах
-	CreatedAt     string                 `protobuf:"bytes,6,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"` // Дата создания в формате RFC3339
+	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`                                      // Уникальное имя достижения (в рамках пользователя)
+	UserUuid      string                 `protobuf:"bytes,2,opt,name=user_uuid,json=userUuid,proto3" json:"user_uuid,omitempty"`              // UUID владельца достижения
+	FileName      string                 `protobuf:"bytes,3,opt,name=file_name,json=fileName,proto3" json:"file_name,omitempty"`              // Оригинальное имя файла
+	FileType      string                 `protobuf:"bytes,4,opt,name=file_type,json=fileType,proto3" json:"file_type,omitempty"`              // MIME-тип файла (например, "image/jpeg", "application/pdf")
+	FileSize      int64                  `protobuf:"varint,5,opt,name=file_size,json=fileSize,proto3" json:"file_size,omitempty"`             // Размер файла в байтах
+	CreatedAt     string                 `protobuf:"bytes,6,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`           // Дата создания в формате RFC3339
+	Type          AchievementType        `protobuf:"varint,7,opt,name=type,proto3,enum=achievement.v1.AchievementType" json:"type,omitempty"` // Тип ачивки (пет-проект / курсовая / хакатон / курс / итог микрозадачи)
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -104,6 +167,13 @@ func (x *AchievementMeta) GetCreatedAt() string {
 		return x.CreatedAt
 	}
 	return ""
+}
+
+func (x *AchievementMeta) GetType() AchievementType {
+	if x != nil {
+		return x.Type
+	}
+	return AchievementType_ACHIEVEMENT_TYPE_UNSPECIFIED
 }
 
 // Список метаданных достижений
@@ -269,7 +339,7 @@ var File_proto_achievement_v1_types_proto protoreflect.FileDescriptor
 
 const file_proto_achievement_v1_types_proto_rawDesc = "" +
 	"\n" +
-	" proto/achievement/v1/types.proto\x12\x0eachievement.v1\"\xb8\x01\n" +
+	" proto/achievement/v1/types.proto\x12\x0eachievement.v1\"\xed\x01\n" +
 	"\x0fAchievementMeta\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x1b\n" +
 	"\tuser_uuid\x18\x02 \x01(\tR\buserUuid\x12\x1b\n" +
@@ -277,7 +347,8 @@ const file_proto_achievement_v1_types_proto_rawDesc = "" +
 	"\tfile_type\x18\x04 \x01(\tR\bfileType\x12\x1b\n" +
 	"\tfile_size\x18\x05 \x01(\x03R\bfileSize\x12\x1d\n" +
 	"\n" +
-	"created_at\x18\x06 \x01(\tR\tcreatedAt\"V\n" +
+	"created_at\x18\x06 \x01(\tR\tcreatedAt\x123\n" +
+	"\x04type\x18\a \x01(\x0e2\x1f.achievement.v1.AchievementTypeR\x04type\"V\n" +
 	"\x0fAchievementList\x12C\n" +
 	"\fachievements\x18\x01 \x03(\v2\x1f.achievement.v1.AchievementMetaR\fachievements\"A\n" +
 	"\x0eAchievementUrl\x12\x10\n" +
@@ -289,7 +360,15 @@ const file_proto_achievement_v1_types_proto_rawDesc = "" +
 	"upload_url\x18\x01 \x01(\tR\tuploadUrl\x12\x15\n" +
 	"\x06s3_key\x18\x02 \x01(\tR\x05s3Key\x12\x1d\n" +
 	"\n" +
-	"expires_at\x18\x03 \x01(\x03R\texpiresAtBAZ?github.com/StudJobs/proto_srtucture/gen/go/proto/achievement/v1b\x06proto3"
+	"expires_at\x18\x03 \x01(\x03R\texpiresAt*\xf6\x01\n" +
+	"\x0fAchievementType\x12 \n" +
+	"\x1cACHIEVEMENT_TYPE_UNSPECIFIED\x10\x00\x12 \n" +
+	"\x1cACHIEVEMENT_TYPE_PET_PROJECT\x10\x01\x12\x1f\n" +
+	"\x1bACHIEVEMENT_TYPE_COURSEWORK\x10\x02\x12\x1e\n" +
+	"\x1aACHIEVEMENT_TYPE_HACKATHON\x10\x03\x12\x1b\n" +
+	"\x17ACHIEVEMENT_TYPE_COURSE\x10\x04\x12%\n" +
+	"!ACHIEVEMENT_TYPE_MICROTASK_RESULT\x10\x05\x12\x1a\n" +
+	"\x16ACHIEVEMENT_TYPE_OTHER\x10\x06BAZ?github.com/StudJobs/proto_srtucture/gen/go/proto/achievement/v1b\x06proto3"
 
 var (
 	file_proto_achievement_v1_types_proto_rawDescOnce sync.Once
@@ -303,20 +382,23 @@ func file_proto_achievement_v1_types_proto_rawDescGZIP() []byte {
 	return file_proto_achievement_v1_types_proto_rawDescData
 }
 
+var file_proto_achievement_v1_types_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_proto_achievement_v1_types_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_proto_achievement_v1_types_proto_goTypes = []any{
-	(*AchievementMeta)(nil),   // 0: achievement.v1.AchievementMeta
-	(*AchievementList)(nil),   // 1: achievement.v1.AchievementList
-	(*AchievementUrl)(nil),    // 2: achievement.v1.AchievementUrl
-	(*UploadUrlResponse)(nil), // 3: achievement.v1.UploadUrlResponse
+	(AchievementType)(0),      // 0: achievement.v1.AchievementType
+	(*AchievementMeta)(nil),   // 1: achievement.v1.AchievementMeta
+	(*AchievementList)(nil),   // 2: achievement.v1.AchievementList
+	(*AchievementUrl)(nil),    // 3: achievement.v1.AchievementUrl
+	(*UploadUrlResponse)(nil), // 4: achievement.v1.UploadUrlResponse
 }
 var file_proto_achievement_v1_types_proto_depIdxs = []int32{
-	0, // 0: achievement.v1.AchievementList.achievements:type_name -> achievement.v1.AchievementMeta
-	1, // [1:1] is the sub-list for method output_type
-	1, // [1:1] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	0, // 0: achievement.v1.AchievementMeta.type:type_name -> achievement.v1.AchievementType
+	1, // 1: achievement.v1.AchievementList.achievements:type_name -> achievement.v1.AchievementMeta
+	2, // [2:2] is the sub-list for method output_type
+	2, // [2:2] is the sub-list for method input_type
+	2, // [2:2] is the sub-list for extension type_name
+	2, // [2:2] is the sub-list for extension extendee
+	0, // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_proto_achievement_v1_types_proto_init() }
@@ -329,13 +411,14 @@ func file_proto_achievement_v1_types_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_achievement_v1_types_proto_rawDesc), len(file_proto_achievement_v1_types_proto_rawDesc)),
-			NumEnums:      0,
+			NumEnums:      1,
 			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_proto_achievement_v1_types_proto_goTypes,
 		DependencyIndexes: file_proto_achievement_v1_types_proto_depIdxs,
+		EnumInfos:         file_proto_achievement_v1_types_proto_enumTypes,
 		MessageInfos:      file_proto_achievement_v1_types_proto_msgTypes,
 	}.Build()
 	File_proto_achievement_v1_types_proto = out.File
