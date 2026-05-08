@@ -19,6 +19,7 @@ message Profile {
   string description = 9; // max 512 chars
   string profession_category = 10; // Просто строка с названием категории
   string role = 11;
+  string education_institution = 12; // Учебное заведение студента
 }
 
 // Список профилей с пагинацией
