@@ -7,7 +7,7 @@
 package v1
 
 import (
-	v1 "github.com/StudJobs/proto_srtucture/gen/go/common/v1"
+	v1 "github.com/StudJobs/proto_srtucture/gen/go/proto/common/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -294,7 +294,7 @@ const file_proto_company_v1_service_proto_rawDesc = "" +
 	"\rDeleteCompany\x12 .company.v1.DeleteCompanyRequest\x1a\x10.common.v1.Empty\x12@\n" +
 	"\n" +
 	"GetCompany\x12\x1d.company.v1.GetCompanyRequest\x1a\x13.company.v1.Company\x12N\n" +
-	"\x0fGetAllCompanies\x12\".company.v1.GetAllCompaniesRequest\x1a\x17.company.v1.CompanyListB7Z5github.com/StudJobs/proto_srtucture/gen/go/company/v1b\x06proto3"
+	"\x0fGetAllCompanies\x12\".company.v1.GetAllCompaniesRequest\x1a\x17.company.v1.CompanyListB=Z;github.com/StudJobs/proto_srtucture/gen/go/proto/company/v1b\x06proto3"
 
 var (
 	file_proto_company_v1_service_proto_rawDescOnce sync.Once

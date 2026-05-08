@@ -7,7 +7,7 @@
 package v1
 
 import (
-	v1 "github.com/StudJobs/proto_srtucture/gen/go/common/v1"
+	v1 "github.com/StudJobs/proto_srtucture/gen/go/proto/common/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -330,7 +330,7 @@ const file_proto_achievement_v1_service_proto_rawDesc = "" +
 	"\x19GetAchievementDownloadUrl\x12%.achievement.v1.GetAchievementRequest\x1a\x1e.achievement.v1.AchievementUrl\x12i\n" +
 	"\x17GetAchievementUploadUrl\x12+.achievement.v1.GetAchievementUploadRequest\x1a!.achievement.v1.UploadUrlResponse\x12Q\n" +
 	"\x12AddAchievementMeta\x12).achievement.v1.AddAchievementMetaRequest\x1a\x10.common.v1.Empty\x12O\n" +
-	"\x11DeleteAchievement\x12(.achievement.v1.DeleteAchievementRequest\x1a\x10.common.v1.EmptyB;Z9github.com/StudJobs/proto_srtucture/gen/go/achievement/v1b\x06proto3"
+	"\x11DeleteAchievement\x12(.achievement.v1.DeleteAchievementRequest\x1a\x10.common.v1.EmptyBAZ?github.com/StudJobs/proto_srtucture/gen/go/proto/achievement/v1b\x06proto3"
 
 var (
 	file_proto_achievement_v1_service_proto_rawDescOnce sync.Once

@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package users.v1;
 
-option go_package = "github.com/StudJobs/proto_srtucture/gen/go/users/v1";
+option go_package = "github.com/StudJobs/proto_srtucture/gen/go/proto/users/v1";
 
 import "proto/users/v1/types.proto";
 import "proto/common/v1/types.proto";

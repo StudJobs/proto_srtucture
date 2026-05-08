@@ -7,7 +7,7 @@
 package v1
 
 import (
-	v1 "github.com/StudJobs/proto_srtucture/gen/go/common/v1"
+	v1 "github.com/StudJobs/proto_srtucture/gen/go/proto/common/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -581,7 +581,7 @@ const file_proto_vacancy_v1_service_proto_rawDesc = "" +
 	"GetVacancy\x12\x1d.vacancy.v1.GetVacancyRequest\x1a\x13.vacancy.v1.Vacancy\x12N\n" +
 	"\x0fGetAllVacancies\x12\".vacancy.v1.GetAllVacanciesRequest\x1a\x17.vacancy.v1.VacancyList\x12L\n" +
 	"\x0eGetHRVacancies\x12!.vacancy.v1.GetHRVacanciesRequest\x1a\x17.vacancy.v1.VacancyList\x12S\n" +
-	"\x14GetAllExistPositions\x12\x1c.vacancy.v1.PositionsRequest\x1a\x1d.vacancy.v1.PositionsResponseB7Z5github.com/StudJobs/proto_srtucture/gen/go/vacancy/v1b\x06proto3"
+	"\x14GetAllExistPositions\x12\x1c.vacancy.v1.PositionsRequest\x1a\x1d.vacancy.v1.PositionsResponseB=Z;github.com/StudJobs/proto_srtucture/gen/go/proto/vacancy/v1b\x06proto3"
 
 var (
 	file_proto_vacancy_v1_service_proto_rawDescOnce sync.Once

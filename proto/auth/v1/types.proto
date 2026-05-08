@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package auth.v1;
 
-option go_package = "github.com/StudJobs/proto_srtucture/gen/go/auth/v1";
+option go_package = "github.com/StudJobs/proto_srtucture/gen/go/proto/auth/v1";
 
 // Роли пользователей
 enum Role {

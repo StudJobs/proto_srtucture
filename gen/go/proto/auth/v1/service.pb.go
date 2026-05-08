@@ -7,7 +7,7 @@
 package v1
 
 import (
-	v1 "github.com/StudJobs/proto_srtucture/gen/go/common/v1"
+	v1 "github.com/StudJobs/proto_srtucture/gen/go/proto/common/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -31,7 +31,7 @@ const file_proto_auth_v1_service_proto_rawDesc = "" +
 	"\x06SignUp\x12\x16.auth.v1.SignUpRequest\x1a\x15.auth.v1.AuthResponse\x12B\n" +
 	"\n" +
 	"ParseToken\x12\x1a.auth.v1.ParseTokenRequest\x1a\x18.auth.v1.TokenValidation\x122\n" +
-	"\x06Delete\x12\x16.auth.v1.DeleteRequest\x1a\x10.common.v1.EmptyB4Z2github.com/StudJobs/proto_srtucture/gen/go/auth/v1b\x06proto3"
+	"\x06Delete\x12\x16.auth.v1.DeleteRequest\x1a\x10.common.v1.EmptyB:Z8github.com/StudJobs/proto_srtucture/gen/go/proto/auth/v1b\x06proto3"
 
 var file_proto_auth_v1_service_proto_goTypes = []any{
 	(*LoginRequest)(nil),      // 0: auth.v1.LoginRequest

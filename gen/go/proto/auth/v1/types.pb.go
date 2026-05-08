@@ -488,7 +488,7 @@ const file_proto_auth_v1_types_proto_rawDesc = "" +
 	"\fROLE_STUDENT\x10\x01\x12\x12\n" +
 	"\x0eROLE_DEVELOPER\x10\x02\x12\x11\n" +
 	"\rROLE_EMPLOYER\x10\x03\x12\x16\n" +
-	"\x12ROLE_COMPANY_OWNER\x10\x04B4Z2github.com/StudJobs/proto_srtucture/gen/go/auth/v1b\x06proto3"
+	"\x12ROLE_COMPANY_OWNER\x10\x04B:Z8github.com/StudJobs/proto_srtucture/gen/go/proto/auth/v1b\x06proto3"
 
 var (
 	file_proto_auth_v1_types_proto_rawDescOnce sync.Once

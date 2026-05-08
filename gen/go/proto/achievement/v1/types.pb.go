@@ -289,7 +289,7 @@ const file_proto_achievement_v1_types_proto_rawDesc = "" +
 	"upload_url\x18\x01 \x01(\tR\tuploadUrl\x12\x15\n" +
 	"\x06s3_key\x18\x02 \x01(\tR\x05s3Key\x12\x1d\n" +
 	"\n" +
-	"expires_at\x18\x03 \x01(\x03R\texpiresAtB;Z9github.com/StudJobs/proto_srtucture/gen/go/achievement/v1b\x06proto3"
+	"expires_at\x18\x03 \x01(\x03R\texpiresAtBAZ?github.com/StudJobs/proto_srtucture/gen/go/proto/achievement/v1b\x06proto3"
 
 var (
 	file_proto_achievement_v1_types_proto_rawDescOnce sync.Once

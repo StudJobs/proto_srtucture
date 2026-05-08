@@ -7,7 +7,7 @@
 package v1
 
 import (
-	v1 "github.com/StudJobs/proto_srtucture/gen/go/common/v1"
+	v1 "github.com/StudJobs/proto_srtucture/gen/go/proto/common/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -228,7 +228,7 @@ const file_proto_vacancy_v1_types_proto_rawDesc = "" +
 	"\tvacancies\x18\x01 \x03(\v2\x13.vacancy.v1.VacancyR\tvacancies\x12=\n" +
 	"\n" +
 	"pagination\x18\x02 \x01(\v2\x1d.common.v1.PaginationResponseR\n" +
-	"paginationB7Z5github.com/StudJobs/proto_srtucture/gen/go/vacancy/v1b\x06proto3"
+	"paginationB=Z;github.com/StudJobs/proto_srtucture/gen/go/proto/vacancy/v1b\x06proto3"
 
 var (
 	file_proto_vacancy_v1_types_proto_rawDescOnce sync.Once
