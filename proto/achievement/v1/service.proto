@@ -31,6 +31,11 @@ service AchievementService {
 
   // Эксперт принимает решение: APPROVED или REJECTED + комментарий
   rpc ReviewAchievement(ReviewAchievementRequest) returns (common.v1.Empty);
+
+  // F5: автоматическое создание ачивки в портфолио после approve микрозадачи.
+  // Создаётся сразу в статусе APPROVED, type=MICROTASK_RESULT.
+  // Идемпотентно по (user_uuid, microtask_id) — повторный вызов при ретрае не дублирует.
+  rpc CreateMicrotaskAchievement(CreateMicrotaskAchievementRequest) returns (common.v1.Empty);
 }
 
 // ============ REQUEST/RESPONSE MESSAGES ============
@@ -85,4 +90,14 @@ message ReviewAchievementRequest {
   string reviewer_uuid = 2;    // UUID эксперта
   VerificationStatus decision = 3; // Решение: APPROVED или REJECTED
   string comment = 4;          // Комментарий (особенно для REJECTED)
+}
+
+// F5: запрос на автосоздание ачивки после approve микрозадачи.
+message CreateMicrotaskAchievementRequest {
+  string user_uuid = 1;        // UUID студента (владельца ачивки)
+  string microtask_id = 2;     // UUID микрозадачи (для дедупликации и трассировки)
+  string microtask_title = 3;  // Заголовок задачи (для имени ачивки)
+  string solution_url = 4;     // Ссылка на решение (попадёт в file_name)
+  string reviewer_uuid = 5;    // UUID HR/компании, который approve'нул (попадёт в reviewed_by)
+  string review_comment = 6;   // Комментарий ревьюера при approve (опционально)
 }

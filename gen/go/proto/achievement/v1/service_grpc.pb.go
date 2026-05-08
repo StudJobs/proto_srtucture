@@ -20,14 +20,15 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AchievementService_GetAllAchievements_FullMethodName        = "/achievement.v1.AchievementService/GetAllAchievements"
-	AchievementService_GetAchievementDownloadUrl_FullMethodName = "/achievement.v1.AchievementService/GetAchievementDownloadUrl"
-	AchievementService_GetAchievementUploadUrl_FullMethodName   = "/achievement.v1.AchievementService/GetAchievementUploadUrl"
-	AchievementService_AddAchievementMeta_FullMethodName        = "/achievement.v1.AchievementService/AddAchievementMeta"
-	AchievementService_DeleteAchievement_FullMethodName         = "/achievement.v1.AchievementService/DeleteAchievement"
-	AchievementService_SubmitForReview_FullMethodName           = "/achievement.v1.AchievementService/SubmitForReview"
-	AchievementService_GetExpertQueue_FullMethodName            = "/achievement.v1.AchievementService/GetExpertQueue"
-	AchievementService_ReviewAchievement_FullMethodName         = "/achievement.v1.AchievementService/ReviewAchievement"
+	AchievementService_GetAllAchievements_FullMethodName         = "/achievement.v1.AchievementService/GetAllAchievements"
+	AchievementService_GetAchievementDownloadUrl_FullMethodName  = "/achievement.v1.AchievementService/GetAchievementDownloadUrl"
+	AchievementService_GetAchievementUploadUrl_FullMethodName    = "/achievement.v1.AchievementService/GetAchievementUploadUrl"
+	AchievementService_AddAchievementMeta_FullMethodName         = "/achievement.v1.AchievementService/AddAchievementMeta"
+	AchievementService_DeleteAchievement_FullMethodName          = "/achievement.v1.AchievementService/DeleteAchievement"
+	AchievementService_SubmitForReview_FullMethodName            = "/achievement.v1.AchievementService/SubmitForReview"
+	AchievementService_GetExpertQueue_FullMethodName             = "/achievement.v1.AchievementService/GetExpertQueue"
+	AchievementService_ReviewAchievement_FullMethodName          = "/achievement.v1.AchievementService/ReviewAchievement"
+	AchievementService_CreateMicrotaskAchievement_FullMethodName = "/achievement.v1.AchievementService/CreateMicrotaskAchievement"
 )
 
 // AchievementServiceClient is the client API for AchievementService service.
@@ -50,6 +51,10 @@ type AchievementServiceClient interface {
 	GetExpertQueue(ctx context.Context, in *GetExpertQueueRequest, opts ...grpc.CallOption) (*AchievementList, error)
 	// Эксперт принимает решение: APPROVED или REJECTED + комментарий
 	ReviewAchievement(ctx context.Context, in *ReviewAchievementRequest, opts ...grpc.CallOption) (*v1.Empty, error)
+	// F5: автоматическое создание ачивки в портфолио после approve микрозадачи.
+	// Создаётся сразу в статусе APPROVED, type=MICROTASK_RESULT.
+	// Идемпотентно по (user_uuid, microtask_id) — повторный вызов при ретрае не дублирует.
+	CreateMicrotaskAchievement(ctx context.Context, in *CreateMicrotaskAchievementRequest, opts ...grpc.CallOption) (*v1.Empty, error)
 }
 
 type achievementServiceClient struct {
@@ -140,6 +145,16 @@ func (c *achievementServiceClient) ReviewAchievement(ctx context.Context, in *Re
 	return out, nil
 }
 
+func (c *achievementServiceClient) CreateMicrotaskAchievement(ctx context.Context, in *CreateMicrotaskAchievementRequest, opts ...grpc.CallOption) (*v1.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(v1.Empty)
+	err := c.cc.Invoke(ctx, AchievementService_CreateMicrotaskAchievement_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AchievementServiceServer is the server API for AchievementService service.
 // All implementations must embed UnimplementedAchievementServiceServer
 // for forward compatibility.
@@ -160,6 +175,10 @@ type AchievementServiceServer interface {
 	GetExpertQueue(context.Context, *GetExpertQueueRequest) (*AchievementList, error)
 	// Эксперт принимает решение: APPROVED или REJECTED + комментарий
 	ReviewAchievement(context.Context, *ReviewAchievementRequest) (*v1.Empty, error)
+	// F5: автоматическое создание ачивки в портфолио после approve микрозадачи.
+	// Создаётся сразу в статусе APPROVED, type=MICROTASK_RESULT.
+	// Идемпотентно по (user_uuid, microtask_id) — повторный вызов при ретрае не дублирует.
+	CreateMicrotaskAchievement(context.Context, *CreateMicrotaskAchievementRequest) (*v1.Empty, error)
 	mustEmbedUnimplementedAchievementServiceServer()
 }
 
@@ -193,6 +212,9 @@ func (UnimplementedAchievementServiceServer) GetExpertQueue(context.Context, *Ge
 }
 func (UnimplementedAchievementServiceServer) ReviewAchievement(context.Context, *ReviewAchievementRequest) (*v1.Empty, error) {
 	return nil, status.Error(codes.Unimplemented, "method ReviewAchievement not implemented")
+}
+func (UnimplementedAchievementServiceServer) CreateMicrotaskAchievement(context.Context, *CreateMicrotaskAchievementRequest) (*v1.Empty, error) {
+	return nil, status.Error(codes.Unimplemented, "method CreateMicrotaskAchievement not implemented")
 }
 func (UnimplementedAchievementServiceServer) mustEmbedUnimplementedAchievementServiceServer() {}
 func (UnimplementedAchievementServiceServer) testEmbeddedByValue()                            {}
@@ -359,6 +381,24 @@ func _AchievementService_ReviewAchievement_Handler(srv interface{}, ctx context.
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AchievementService_CreateMicrotaskAchievement_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateMicrotaskAchievementRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AchievementServiceServer).CreateMicrotaskAchievement(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AchievementService_CreateMicrotaskAchievement_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AchievementServiceServer).CreateMicrotaskAchievement(ctx, req.(*CreateMicrotaskAchievementRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AchievementService_ServiceDesc is the grpc.ServiceDesc for AchievementService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -397,6 +437,10 @@ var AchievementService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ReviewAchievement",
 			Handler:    _AchievementService_ReviewAchievement_Handler,
+		},
+		{
+			MethodName: "CreateMicrotaskAchievement",
+			Handler:    _AchievementService_CreateMicrotaskAchievement_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

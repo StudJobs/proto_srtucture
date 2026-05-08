@@ -478,6 +478,91 @@ func (x *ReviewAchievementRequest) GetComment() string {
 	return ""
 }
 
+// F5: запрос на автосоздание ачивки после approve микрозадачи.
+type CreateMicrotaskAchievementRequest struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	UserUuid       string                 `protobuf:"bytes,1,opt,name=user_uuid,json=userUuid,proto3" json:"user_uuid,omitempty"`                   // UUID студента (владельца ачивки)
+	MicrotaskId    string                 `protobuf:"bytes,2,opt,name=microtask_id,json=microtaskId,proto3" json:"microtask_id,omitempty"`          // UUID микрозадачи (для дедупликации и трассировки)
+	MicrotaskTitle string                 `protobuf:"bytes,3,opt,name=microtask_title,json=microtaskTitle,proto3" json:"microtask_title,omitempty"` // Заголовок задачи (для имени ачивки)
+	SolutionUrl    string                 `protobuf:"bytes,4,opt,name=solution_url,json=solutionUrl,proto3" json:"solution_url,omitempty"`          // Ссылка на решение (попадёт в file_name)
+	ReviewerUuid   string                 `protobuf:"bytes,5,opt,name=reviewer_uuid,json=reviewerUuid,proto3" json:"reviewer_uuid,omitempty"`       // UUID HR/компании, который approve'нул (попадёт в reviewed_by)
+	ReviewComment  string                 `protobuf:"bytes,6,opt,name=review_comment,json=reviewComment,proto3" json:"review_comment,omitempty"`    // Комментарий ревьюера при approve (опционально)
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *CreateMicrotaskAchievementRequest) Reset() {
+	*x = CreateMicrotaskAchievementRequest{}
+	mi := &file_proto_achievement_v1_service_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateMicrotaskAchievementRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateMicrotaskAchievementRequest) ProtoMessage() {}
+
+func (x *CreateMicrotaskAchievementRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_achievement_v1_service_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateMicrotaskAchievementRequest.ProtoReflect.Descriptor instead.
+func (*CreateMicrotaskAchievementRequest) Descriptor() ([]byte, []int) {
+	return file_proto_achievement_v1_service_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *CreateMicrotaskAchievementRequest) GetUserUuid() string {
+	if x != nil {
+		return x.UserUuid
+	}
+	return ""
+}
+
+func (x *CreateMicrotaskAchievementRequest) GetMicrotaskId() string {
+	if x != nil {
+		return x.MicrotaskId
+	}
+	return ""
+}
+
+func (x *CreateMicrotaskAchievementRequest) GetMicrotaskTitle() string {
+	if x != nil {
+		return x.MicrotaskTitle
+	}
+	return ""
+}
+
+func (x *CreateMicrotaskAchievementRequest) GetSolutionUrl() string {
+	if x != nil {
+		return x.SolutionUrl
+	}
+	return ""
+}
+
+func (x *CreateMicrotaskAchievementRequest) GetReviewerUuid() string {
+	if x != nil {
+		return x.ReviewerUuid
+	}
+	return ""
+}
+
+func (x *CreateMicrotaskAchievementRequest) GetReviewComment() string {
+	if x != nil {
+		return x.ReviewComment
+	}
+	return ""
+}
+
 var File_proto_achievement_v1_service_proto protoreflect.FileDescriptor
 
 const file_proto_achievement_v1_service_proto_rawDesc = "" +
@@ -510,7 +595,14 @@ const file_proto_achievement_v1_service_proto_rawDesc = "" +
 	"\x0eachievement_id\x18\x01 \x01(\x03R\rachievementId\x12#\n" +
 	"\rreviewer_uuid\x18\x02 \x01(\tR\freviewerUuid\x12>\n" +
 	"\bdecision\x18\x03 \x01(\x0e2\".achievement.v1.VerificationStatusR\bdecision\x12\x18\n" +
-	"\acomment\x18\x04 \x01(\tR\acomment2\xe1\x05\n" +
+	"\acomment\x18\x04 \x01(\tR\acomment\"\xfb\x01\n" +
+	"!CreateMicrotaskAchievementRequest\x12\x1b\n" +
+	"\tuser_uuid\x18\x01 \x01(\tR\buserUuid\x12!\n" +
+	"\fmicrotask_id\x18\x02 \x01(\tR\vmicrotaskId\x12'\n" +
+	"\x0fmicrotask_title\x18\x03 \x01(\tR\x0emicrotaskTitle\x12!\n" +
+	"\fsolution_url\x18\x04 \x01(\tR\vsolutionUrl\x12#\n" +
+	"\rreviewer_uuid\x18\x05 \x01(\tR\freviewerUuid\x12%\n" +
+	"\x0ereview_comment\x18\x06 \x01(\tR\rreviewComment2\xc4\x06\n" +
 	"\x12AchievementService\x12`\n" +
 	"\x12GetAllAchievements\x12).achievement.v1.GetAllAchievementsRequest\x1a\x1f.achievement.v1.AchievementList\x12b\n" +
 	"\x19GetAchievementDownloadUrl\x12%.achievement.v1.GetAchievementRequest\x1a\x1e.achievement.v1.AchievementUrl\x12i\n" +
@@ -519,7 +611,8 @@ const file_proto_achievement_v1_service_proto_rawDesc = "" +
 	"\x11DeleteAchievement\x12(.achievement.v1.DeleteAchievementRequest\x1a\x10.common.v1.Empty\x12K\n" +
 	"\x0fSubmitForReview\x12&.achievement.v1.SubmitForReviewRequest\x1a\x10.common.v1.Empty\x12X\n" +
 	"\x0eGetExpertQueue\x12%.achievement.v1.GetExpertQueueRequest\x1a\x1f.achievement.v1.AchievementList\x12O\n" +
-	"\x11ReviewAchievement\x12(.achievement.v1.ReviewAchievementRequest\x1a\x10.common.v1.EmptyBAZ?github.com/StudJobs/proto_srtucture/gen/go/proto/achievement/v1b\x06proto3"
+	"\x11ReviewAchievement\x12(.achievement.v1.ReviewAchievementRequest\x1a\x10.common.v1.Empty\x12a\n" +
+	"\x1aCreateMicrotaskAchievement\x121.achievement.v1.CreateMicrotaskAchievementRequest\x1a\x10.common.v1.EmptyBAZ?github.com/StudJobs/proto_srtucture/gen/go/proto/achievement/v1b\x06proto3"
 
 var (
 	file_proto_achievement_v1_service_proto_rawDescOnce sync.Once
@@ -533,26 +626,27 @@ func file_proto_achievement_v1_service_proto_rawDescGZIP() []byte {
 	return file_proto_achievement_v1_service_proto_rawDescData
 }
 
-var file_proto_achievement_v1_service_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
+var file_proto_achievement_v1_service_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
 var file_proto_achievement_v1_service_proto_goTypes = []any{
-	(*GetAllAchievementsRequest)(nil),   // 0: achievement.v1.GetAllAchievementsRequest
-	(*GetAchievementRequest)(nil),       // 1: achievement.v1.GetAchievementRequest
-	(*GetAchievementUploadRequest)(nil), // 2: achievement.v1.GetAchievementUploadRequest
-	(*AddAchievementMetaRequest)(nil),   // 3: achievement.v1.AddAchievementMetaRequest
-	(*DeleteAchievementRequest)(nil),    // 4: achievement.v1.DeleteAchievementRequest
-	(*SubmitForReviewRequest)(nil),      // 5: achievement.v1.SubmitForReviewRequest
-	(*GetExpertQueueRequest)(nil),       // 6: achievement.v1.GetExpertQueueRequest
-	(*ReviewAchievementRequest)(nil),    // 7: achievement.v1.ReviewAchievementRequest
-	(*AchievementMeta)(nil),             // 8: achievement.v1.AchievementMeta
-	(VerificationStatus)(0),             // 9: achievement.v1.VerificationStatus
-	(*AchievementList)(nil),             // 10: achievement.v1.AchievementList
-	(*AchievementUrl)(nil),              // 11: achievement.v1.AchievementUrl
-	(*UploadUrlResponse)(nil),           // 12: achievement.v1.UploadUrlResponse
-	(*v1.Empty)(nil),                    // 13: common.v1.Empty
+	(*GetAllAchievementsRequest)(nil),         // 0: achievement.v1.GetAllAchievementsRequest
+	(*GetAchievementRequest)(nil),             // 1: achievement.v1.GetAchievementRequest
+	(*GetAchievementUploadRequest)(nil),       // 2: achievement.v1.GetAchievementUploadRequest
+	(*AddAchievementMetaRequest)(nil),         // 3: achievement.v1.AddAchievementMetaRequest
+	(*DeleteAchievementRequest)(nil),          // 4: achievement.v1.DeleteAchievementRequest
+	(*SubmitForReviewRequest)(nil),            // 5: achievement.v1.SubmitForReviewRequest
+	(*GetExpertQueueRequest)(nil),             // 6: achievement.v1.GetExpertQueueRequest
+	(*ReviewAchievementRequest)(nil),          // 7: achievement.v1.ReviewAchievementRequest
+	(*CreateMicrotaskAchievementRequest)(nil), // 8: achievement.v1.CreateMicrotaskAchievementRequest
+	(*AchievementMeta)(nil),                   // 9: achievement.v1.AchievementMeta
+	(VerificationStatus)(0),                   // 10: achievement.v1.VerificationStatus
+	(*AchievementList)(nil),                   // 11: achievement.v1.AchievementList
+	(*AchievementUrl)(nil),                    // 12: achievement.v1.AchievementUrl
+	(*UploadUrlResponse)(nil),                 // 13: achievement.v1.UploadUrlResponse
+	(*v1.Empty)(nil),                          // 14: common.v1.Empty
 }
 var file_proto_achievement_v1_service_proto_depIdxs = []int32{
-	8,  // 0: achievement.v1.AddAchievementMetaRequest.meta:type_name -> achievement.v1.AchievementMeta
-	9,  // 1: achievement.v1.ReviewAchievementRequest.decision:type_name -> achievement.v1.VerificationStatus
+	9,  // 0: achievement.v1.AddAchievementMetaRequest.meta:type_name -> achievement.v1.AchievementMeta
+	10, // 1: achievement.v1.ReviewAchievementRequest.decision:type_name -> achievement.v1.VerificationStatus
 	0,  // 2: achievement.v1.AchievementService.GetAllAchievements:input_type -> achievement.v1.GetAllAchievementsRequest
 	1,  // 3: achievement.v1.AchievementService.GetAchievementDownloadUrl:input_type -> achievement.v1.GetAchievementRequest
 	2,  // 4: achievement.v1.AchievementService.GetAchievementUploadUrl:input_type -> achievement.v1.GetAchievementUploadRequest
@@ -561,16 +655,18 @@ var file_proto_achievement_v1_service_proto_depIdxs = []int32{
 	5,  // 7: achievement.v1.AchievementService.SubmitForReview:input_type -> achievement.v1.SubmitForReviewRequest
 	6,  // 8: achievement.v1.AchievementService.GetExpertQueue:input_type -> achievement.v1.GetExpertQueueRequest
 	7,  // 9: achievement.v1.AchievementService.ReviewAchievement:input_type -> achievement.v1.ReviewAchievementRequest
-	10, // 10: achievement.v1.AchievementService.GetAllAchievements:output_type -> achievement.v1.AchievementList
-	11, // 11: achievement.v1.AchievementService.GetAchievementDownloadUrl:output_type -> achievement.v1.AchievementUrl
-	12, // 12: achievement.v1.AchievementService.GetAchievementUploadUrl:output_type -> achievement.v1.UploadUrlResponse
-	13, // 13: achievement.v1.AchievementService.AddAchievementMeta:output_type -> common.v1.Empty
-	13, // 14: achievement.v1.AchievementService.DeleteAchievement:output_type -> common.v1.Empty
-	13, // 15: achievement.v1.AchievementService.SubmitForReview:output_type -> common.v1.Empty
-	10, // 16: achievement.v1.AchievementService.GetExpertQueue:output_type -> achievement.v1.AchievementList
-	13, // 17: achievement.v1.AchievementService.ReviewAchievement:output_type -> common.v1.Empty
-	10, // [10:18] is the sub-list for method output_type
-	2,  // [2:10] is the sub-list for method input_type
+	8,  // 10: achievement.v1.AchievementService.CreateMicrotaskAchievement:input_type -> achievement.v1.CreateMicrotaskAchievementRequest
+	11, // 11: achievement.v1.AchievementService.GetAllAchievements:output_type -> achievement.v1.AchievementList
+	12, // 12: achievement.v1.AchievementService.GetAchievementDownloadUrl:output_type -> achievement.v1.AchievementUrl
+	13, // 13: achievement.v1.AchievementService.GetAchievementUploadUrl:output_type -> achievement.v1.UploadUrlResponse
+	14, // 14: achievement.v1.AchievementService.AddAchievementMeta:output_type -> common.v1.Empty
+	14, // 15: achievement.v1.AchievementService.DeleteAchievement:output_type -> common.v1.Empty
+	14, // 16: achievement.v1.AchievementService.SubmitForReview:output_type -> common.v1.Empty
+	11, // 17: achievement.v1.AchievementService.GetExpertQueue:output_type -> achievement.v1.AchievementList
+	14, // 18: achievement.v1.AchievementService.ReviewAchievement:output_type -> common.v1.Empty
+	14, // 19: achievement.v1.AchievementService.CreateMicrotaskAchievement:output_type -> common.v1.Empty
+	11, // [11:20] is the sub-list for method output_type
+	2,  // [2:11] is the sub-list for method input_type
 	2,  // [2:2] is the sub-list for extension type_name
 	2,  // [2:2] is the sub-list for extension extendee
 	0,  // [0:2] is the sub-list for field type_name
@@ -588,7 +684,7 @@ func file_proto_achievement_v1_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_achievement_v1_service_proto_rawDesc), len(file_proto_achievement_v1_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   8,
+			NumMessages:   9,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
