@@ -36,4 +36,7 @@ message GetAllCompaniesRequest {
   common.v1.Pagination pagination = 1;
   string city = 2;
   string company_type = 3;
+  // query фильтрует компании по подстроке в name/description (ILIKE).
+  // Пустая строка — не фильтровать.
+  string query = 4;
 }

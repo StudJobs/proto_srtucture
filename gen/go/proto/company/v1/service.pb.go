@@ -207,10 +207,13 @@ func (x *GetCompanyRequest) GetId() string {
 }
 
 type GetAllCompaniesRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Pagination    *v1.Pagination         `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
-	City          string                 `protobuf:"bytes,2,opt,name=city,proto3" json:"city,omitempty"`
-	CompanyType   string                 `protobuf:"bytes,3,opt,name=company_type,json=companyType,proto3" json:"company_type,omitempty"`
+	state       protoimpl.MessageState `protogen:"open.v1"`
+	Pagination  *v1.Pagination         `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	City        string                 `protobuf:"bytes,2,opt,name=city,proto3" json:"city,omitempty"`
+	CompanyType string                 `protobuf:"bytes,3,opt,name=company_type,json=companyType,proto3" json:"company_type,omitempty"`
+	// query фильтрует компании по подстроке в name/description (ILIKE).
+	// Пустая строка — не фильтровать.
+	Query         string `protobuf:"bytes,4,opt,name=query,proto3" json:"query,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -266,6 +269,13 @@ func (x *GetAllCompaniesRequest) GetCompanyType() string {
 	return ""
 }
 
+func (x *GetAllCompaniesRequest) GetQuery() string {
+	if x != nil {
+		return x.Query
+	}
+	return ""
+}
+
 var File_proto_company_v1_service_proto protoreflect.FileDescriptor
 
 const file_proto_company_v1_service_proto_rawDesc = "" +
@@ -280,13 +290,14 @@ const file_proto_company_v1_service_proto_rawDesc = "" +
 	"\x14DeleteCompanyRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\"#\n" +
 	"\x11GetCompanyRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"\x86\x01\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"\x9c\x01\n" +
 	"\x16GetAllCompaniesRequest\x125\n" +
 	"\n" +
 	"pagination\x18\x01 \x01(\v2\x15.common.v1.PaginationR\n" +
 	"pagination\x12\x12\n" +
 	"\x04city\x18\x02 \x01(\tR\x04city\x12!\n" +
-	"\fcompany_type\x18\x03 \x01(\tR\vcompanyType2\xf1\x02\n" +
+	"\fcompany_type\x18\x03 \x01(\tR\vcompanyType\x12\x14\n" +
+	"\x05query\x18\x04 \x01(\tR\x05query2\xf1\x02\n" +
 	"\x0eCompanyService\x12@\n" +
 	"\n" +
 	"NewCompany\x12\x1d.company.v1.NewCompanyRequest\x1a\x13.company.v1.Company\x12F\n" +
