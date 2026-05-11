@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package application.v1;
+
+option go_package = "github.com/StudJobs/proto_srtucture/gen/go/proto/application/v1";
+
+import "proto/common/v1/types.proto";
+
+// ApplicationStatus отражает жизненный цикл отклика студента на вакансию.
+enum ApplicationStatus {
+  APPLICATION_STATUS_UNSPECIFIED = 0;
+  APPLICATION_STATUS_PENDING = 1;
+  APPLICATION_STATUS_ACCEPTED = 2;
+  APPLICATION_STATUS_REJECTED = 3;
+}
+
+// Application — единичный отклик студента на вакансию.
+message Application {
+  string id = 1;
+  string vacancy_id = 2;
+  string student_id = 3;
+  // cover_letter — опциональное сопроводительное письмо. Может быть пустым.
+  string cover_letter = 4;
+  ApplicationStatus status = 5;
+  string created_at = 6;
+  string updated_at = 7;
+  // Сводные поля, заполняются только в ответах ListMine/ListForVacancy.
+  // hr_comment — необязательный коммент HR при accept/reject.
+  string hr_comment = 8;
+}
+
+message ApplicationList {
+  repeated Application applications = 1;
+  common.v1.PaginationResponse pagination = 2;
+}

@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package application.v1;
+
+option go_package = "github.com/StudJobs/proto_srtucture/gen/go/proto/application/v1";
+
+import "proto/application/v1/types.proto";
+import "proto/common/v1/types.proto";
+
+// ApplicationService живёт внутри Vacancy-сервиса (gRPC-порт 50054).
+// Отдельный микросервис не плодим: applications — родственная сущность вакансий,
+// FK по vacancy_id, общий БД-инстанс.
+service ApplicationService {
+  // Apply создаёт отклик студента на вакансию. Идемпотентен по (vacancy_id, student_id):
+  // повторный вызов вернёт уже существующий отклик, не создаёт дубликат.
+  rpc Apply(ApplyRequest) returns (Application);
+
+  // Withdraw отзывает отклик (soft-delete). Доступен только автору.
+  rpc Withdraw(WithdrawRequest) returns (common.v1.Empty);
+
+  // ListMine возвращает отклики текущего студента с пагинацией.
+  rpc ListMine(ListMineRequest) returns (ApplicationList);
+
+  // ListForVacancy возвращает отклики на конкретную вакансию (для HR компании-владельца).
+  rpc ListForVacancy(ListForVacancyRequest) returns (ApplicationList);
+
+  // UpdateStatus — HR меняет статус отклика (accept/reject + опциональный коммент).
+  rpc UpdateStatus(UpdateStatusRequest) returns (Application);
+}
+
+message ApplyRequest {
+  string vacancy_id = 1;
+  string student_id = 2;
+  string cover_letter = 3;
+}
+
+message WithdrawRequest {
+  string id = 1;
+  string student_id = 2; // Проверка владельца
+}
+
+message ListMineRequest {
+  string student_id = 1;
+  common.v1.Pagination pagination = 2;
+  // Опциональный фильтр по статусу. 0 (UNSPECIFIED) — без фильтра.
+  ApplicationStatus status = 3;
+}
+
+message ListForVacancyRequest {
+  string vacancy_id = 1;
+  common.v1.Pagination pagination = 2;
+  ApplicationStatus status = 3;
+}
+
+message UpdateStatusRequest {
+  string id = 1;
+  ApplicationStatus status = 2;
+  string hr_comment = 3;
+}
