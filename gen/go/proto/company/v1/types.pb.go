@@ -67,16 +67,21 @@ func (x *CompanyType) GetValue() string {
 }
 
 type Company struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	Description   string                 `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
-	City          string                 `protobuf:"bytes,4,opt,name=city,proto3" json:"city,omitempty"`
-	Site          string                 `protobuf:"bytes,5,opt,name=site,proto3" json:"site,omitempty"`
-	Type          *CompanyType           `protobuf:"bytes,6,opt,name=type,proto3" json:"type,omitempty"`
-	LogoId        string                 `protobuf:"bytes,7,opt,name=logo_id,json=logoId,proto3" json:"logo_id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state       protoimpl.MessageState `protogen:"open.v1"`
+	Id          string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name        string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Description string                 `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
+	City        string                 `protobuf:"bytes,4,opt,name=city,proto3" json:"city,omitempty"`
+	Site        string                 `protobuf:"bytes,5,opt,name=site,proto3" json:"site,omitempty"`
+	Type        *CompanyType           `protobuf:"bytes,6,opt,name=type,proto3" json:"type,omitempty"`
+	LogoId      string                 `protobuf:"bytes,7,opt,name=logo_id,json=logoId,proto3" json:"logo_id,omitempty"`
+	// Политика авточистки: каждые N часов (default 6) фоновый воркер в
+	// Vacancy/MicroTasks soft-удаляет (deleted_at = NOW()) closed/completed
+	// записи компании старше этих дней. 0 = не чистить.
+	CleanupVacanciesAfterDays int32 `protobuf:"varint,8,opt,name=cleanup_vacancies_after_days,json=cleanupVacanciesAfterDays,proto3" json:"cleanup_vacancies_after_days,omitempty"` // closed-вакансии старше N дней
+	CleanupTasksAfterDays     int32 `protobuf:"varint,9,opt,name=cleanup_tasks_after_days,json=cleanupTasksAfterDays,proto3" json:"cleanup_tasks_after_days,omitempty"`             // completed-микрозадачи старше N дней
+	unknownFields             protoimpl.UnknownFields
+	sizeCache                 protoimpl.SizeCache
 }
 
 func (x *Company) Reset() {
@@ -158,6 +163,20 @@ func (x *Company) GetLogoId() string {
 	return ""
 }
 
+func (x *Company) GetCleanupVacanciesAfterDays() int32 {
+	if x != nil {
+		return x.CleanupVacanciesAfterDays
+	}
+	return 0
+}
+
+func (x *Company) GetCleanupTasksAfterDays() int32 {
+	if x != nil {
+		return x.CleanupTasksAfterDays
+	}
+	return 0
+}
+
 type CompanyList struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Companies     []*Company             `protobuf:"bytes,1,rep,name=companies,proto3" json:"companies,omitempty"`
@@ -217,7 +236,7 @@ const file_proto_company_v1_types_proto_rawDesc = "" +
 	"\x1cproto/company/v1/types.proto\x12\n" +
 	"company.v1\x1a\x1bproto/common/v1/types.proto\"#\n" +
 	"\vCompanyType\x12\x14\n" +
-	"\x05value\x18\x01 \x01(\tR\x05value\"\xbd\x01\n" +
+	"\x05value\x18\x01 \x01(\tR\x05value\"\xb7\x02\n" +
 	"\aCompany\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12 \n" +
@@ -225,7 +244,9 @@ const file_proto_company_v1_types_proto_rawDesc = "" +
 	"\x04city\x18\x04 \x01(\tR\x04city\x12\x12\n" +
 	"\x04site\x18\x05 \x01(\tR\x04site\x12+\n" +
 	"\x04type\x18\x06 \x01(\v2\x17.company.v1.CompanyTypeR\x04type\x12\x17\n" +
-	"\alogo_id\x18\a \x01(\tR\x06logoId\"\x7f\n" +
+	"\alogo_id\x18\a \x01(\tR\x06logoId\x12?\n" +
+	"\x1ccleanup_vacancies_after_days\x18\b \x01(\x05R\x19cleanupVacanciesAfterDays\x127\n" +
+	"\x18cleanup_tasks_after_days\x18\t \x01(\x05R\x15cleanupTasksAfterDays\"\x7f\n" +
 	"\vCompanyList\x121\n" +
 	"\tcompanies\x18\x01 \x03(\v2\x13.company.v1.CompanyR\tcompanies\x12=\n" +
 	"\n" +

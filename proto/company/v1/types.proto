@@ -18,6 +18,12 @@ message Company {
   string site = 5;
   CompanyType type = 6;
   string logo_id = 7;
+
+  // Политика авточистки: каждые N часов (default 6) фоновый воркер в
+  // Vacancy/MicroTasks soft-удаляет (deleted_at = NOW()) closed/completed
+  // записи компании старше этих дней. 0 = не чистить.
+  int32 cleanup_vacancies_after_days = 8;  // closed-вакансии старше N дней
+  int32 cleanup_tasks_after_days = 9;      // completed-микрозадачи старше N дней
 }
 
 message CompanyList {
