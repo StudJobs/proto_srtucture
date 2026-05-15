@@ -155,8 +155,12 @@ type AchievementMeta struct {
 	ReviewedBy         string             `protobuf:"bytes,10,opt,name=reviewed_by,json=reviewedBy,proto3" json:"reviewed_by,omitempty"`                                                                // UUID эксперта, провёл ревью (пусто если ещё не ревьюилось)
 	ReviewedAt         string             `protobuf:"bytes,11,opt,name=reviewed_at,json=reviewedAt,proto3" json:"reviewed_at,omitempty"`                                                                // Время ревью в RFC3339 (пусто если не ревьюилось)
 	ReviewComment      string             `protobuf:"bytes,12,opt,name=review_comment,json=reviewComment,proto3" json:"review_comment,omitempty"`                                                       // Комментарий эксперта (опционально)
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
+	// Дополнительные материалы от студента (ссылки на репозиторий / демо /
+	// презентацию / скриншоты). Эксперт видит это поле в очереди проверки.
+	ExternalUrl   string `protobuf:"bytes,13,opt,name=external_url,json=externalUrl,proto3" json:"external_url,omitempty"` // Опциональная URL-ссылка
+	Description   string `protobuf:"bytes,14,opt,name=description,proto3" json:"description,omitempty"`                    // Описание / контекст работы (max 1024 chars)
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *AchievementMeta) Reset() {
@@ -269,6 +273,20 @@ func (x *AchievementMeta) GetReviewedAt() string {
 func (x *AchievementMeta) GetReviewComment() string {
 	if x != nil {
 		return x.ReviewComment
+	}
+	return ""
+}
+
+func (x *AchievementMeta) GetExternalUrl() string {
+	if x != nil {
+		return x.ExternalUrl
+	}
+	return ""
+}
+
+func (x *AchievementMeta) GetDescription() string {
+	if x != nil {
+		return x.Description
 	}
 	return ""
 }
@@ -436,7 +454,7 @@ var File_proto_achievement_v1_types_proto protoreflect.FileDescriptor
 
 const file_proto_achievement_v1_types_proto_rawDesc = "" +
 	"\n" +
-	" proto/achievement/v1/types.proto\x12\x0eachievement.v1\"\xbb\x03\n" +
+	" proto/achievement/v1/types.proto\x12\x0eachievement.v1\"\x80\x04\n" +
 	"\x0fAchievementMeta\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x1b\n" +
 	"\tuser_uuid\x18\x02 \x01(\tR\buserUuid\x12\x1b\n" +
@@ -453,7 +471,9 @@ const file_proto_achievement_v1_types_proto_rawDesc = "" +
 	"reviewedBy\x12\x1f\n" +
 	"\vreviewed_at\x18\v \x01(\tR\n" +
 	"reviewedAt\x12%\n" +
-	"\x0ereview_comment\x18\f \x01(\tR\rreviewComment\"V\n" +
+	"\x0ereview_comment\x18\f \x01(\tR\rreviewComment\x12!\n" +
+	"\fexternal_url\x18\r \x01(\tR\vexternalUrl\x12 \n" +
+	"\vdescription\x18\x0e \x01(\tR\vdescription\"V\n" +
 	"\x0fAchievementList\x12C\n" +
 	"\fachievements\x18\x01 \x03(\v2\x1f.achievement.v1.AchievementMetaR\fachievements\"A\n" +
 	"\x0eAchievementUrl\x12\x10\n" +
