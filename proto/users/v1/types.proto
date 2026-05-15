@@ -21,6 +21,7 @@ message Profile {
   string role = 11;
   string education_institution = 12; // Учебное заведение студента
   repeated string skill_slugs = 13;  // Slug-и навыков из справочника skills
+  string github = 14;                // Профиль на GitHub (полный URL или username)
 }
 
 // Список профилей с пагинацией
