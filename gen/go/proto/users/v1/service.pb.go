@@ -318,6 +318,324 @@ func (x *AddVerifiedSkillsRequest) GetSkillSlugs() []string {
 	return nil
 }
 
+type GetExpertiseTestRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SkillSlug     string                 `protobuf:"bytes,1,opt,name=skill_slug,json=skillSlug,proto3" json:"skill_slug,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetExpertiseTestRequest) Reset() {
+	*x = GetExpertiseTestRequest{}
+	mi := &file_proto_users_v1_service_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetExpertiseTestRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetExpertiseTestRequest) ProtoMessage() {}
+
+func (x *GetExpertiseTestRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_users_v1_service_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetExpertiseTestRequest.ProtoReflect.Descriptor instead.
+func (*GetExpertiseTestRequest) Descriptor() ([]byte, []int) {
+	return file_proto_users_v1_service_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *GetExpertiseTestRequest) GetSkillSlug() string {
+	if x != nil {
+		return x.SkillSlug
+	}
+	return ""
+}
+
+type TestQuestion struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`          // порядковый номер
+	Text          string                 `protobuf:"bytes,2,opt,name=text,proto3" json:"text,omitempty"`       // формулировка вопроса
+	Options       []string               `protobuf:"bytes,3,rep,name=options,proto3" json:"options,omitempty"` // варианты ответа
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TestQuestion) Reset() {
+	*x = TestQuestion{}
+	mi := &file_proto_users_v1_service_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TestQuestion) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TestQuestion) ProtoMessage() {}
+
+func (x *TestQuestion) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_users_v1_service_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TestQuestion.ProtoReflect.Descriptor instead.
+func (*TestQuestion) Descriptor() ([]byte, []int) {
+	return file_proto_users_v1_service_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *TestQuestion) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *TestQuestion) GetText() string {
+	if x != nil {
+		return x.Text
+	}
+	return ""
+}
+
+func (x *TestQuestion) GetOptions() []string {
+	if x != nil {
+		return x.Options
+	}
+	return nil
+}
+
+type ExpertiseTest struct {
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	SkillSlug        string                 `protobuf:"bytes,1,opt,name=skill_slug,json=skillSlug,proto3" json:"skill_slug,omitempty"`
+	Available        bool                   `protobuf:"varint,2,opt,name=available,proto3" json:"available,omitempty"` // если false — теста по навыку пока нет (вернётся reason)
+	Reason           string                 `protobuf:"bytes,3,opt,name=reason,proto3" json:"reason,omitempty"`
+	Questions        []*TestQuestion        `protobuf:"bytes,4,rep,name=questions,proto3" json:"questions,omitempty"`
+	PassThresholdPct int32                  `protobuf:"varint,5,opt,name=pass_threshold_pct,json=passThresholdPct,proto3" json:"pass_threshold_pct,omitempty"` // например 70
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *ExpertiseTest) Reset() {
+	*x = ExpertiseTest{}
+	mi := &file_proto_users_v1_service_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ExpertiseTest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExpertiseTest) ProtoMessage() {}
+
+func (x *ExpertiseTest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_users_v1_service_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ExpertiseTest.ProtoReflect.Descriptor instead.
+func (*ExpertiseTest) Descriptor() ([]byte, []int) {
+	return file_proto_users_v1_service_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *ExpertiseTest) GetSkillSlug() string {
+	if x != nil {
+		return x.SkillSlug
+	}
+	return ""
+}
+
+func (x *ExpertiseTest) GetAvailable() bool {
+	if x != nil {
+		return x.Available
+	}
+	return false
+}
+
+func (x *ExpertiseTest) GetReason() string {
+	if x != nil {
+		return x.Reason
+	}
+	return ""
+}
+
+func (x *ExpertiseTest) GetQuestions() []*TestQuestion {
+	if x != nil {
+		return x.Questions
+	}
+	return nil
+}
+
+func (x *ExpertiseTest) GetPassThresholdPct() int32 {
+	if x != nil {
+		return x.PassThresholdPct
+	}
+	return 0
+}
+
+type SubmitExpertiseTestRequest struct {
+	state     protoimpl.MessageState `protogen:"open.v1"`
+	UserId    string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	SkillSlug string                 `protobuf:"bytes,2,opt,name=skill_slug,json=skillSlug,proto3" json:"skill_slug,omitempty"`
+	// Ответы в виде map question_id -> chosen_option_index. Используем repeated parallel
+	// для простоты с protobuf-runtime.
+	AnswerIndices []int32 `protobuf:"varint,3,rep,packed,name=answer_indices,json=answerIndices,proto3" json:"answer_indices,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SubmitExpertiseTestRequest) Reset() {
+	*x = SubmitExpertiseTestRequest{}
+	mi := &file_proto_users_v1_service_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SubmitExpertiseTestRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SubmitExpertiseTestRequest) ProtoMessage() {}
+
+func (x *SubmitExpertiseTestRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_users_v1_service_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SubmitExpertiseTestRequest.ProtoReflect.Descriptor instead.
+func (*SubmitExpertiseTestRequest) Descriptor() ([]byte, []int) {
+	return file_proto_users_v1_service_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *SubmitExpertiseTestRequest) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *SubmitExpertiseTestRequest) GetSkillSlug() string {
+	if x != nil {
+		return x.SkillSlug
+	}
+	return ""
+}
+
+func (x *SubmitExpertiseTestRequest) GetAnswerIndices() []int32 {
+	if x != nil {
+		return x.AnswerIndices
+	}
+	return nil
+}
+
+type SubmitExpertiseTestResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Passed        bool                   `protobuf:"varint,1,opt,name=passed,proto3" json:"passed,omitempty"`
+	Correct       int32                  `protobuf:"varint,2,opt,name=correct,proto3" json:"correct,omitempty"`
+	Total         int32                  `protobuf:"varint,3,opt,name=total,proto3" json:"total,omitempty"`
+	ScorePct      int32                  `protobuf:"varint,4,opt,name=score_pct,json=scorePct,proto3" json:"score_pct,omitempty"`
+	Message       string                 `protobuf:"bytes,5,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SubmitExpertiseTestResponse) Reset() {
+	*x = SubmitExpertiseTestResponse{}
+	mi := &file_proto_users_v1_service_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SubmitExpertiseTestResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SubmitExpertiseTestResponse) ProtoMessage() {}
+
+func (x *SubmitExpertiseTestResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_users_v1_service_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SubmitExpertiseTestResponse.ProtoReflect.Descriptor instead.
+func (*SubmitExpertiseTestResponse) Descriptor() ([]byte, []int) {
+	return file_proto_users_v1_service_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *SubmitExpertiseTestResponse) GetPassed() bool {
+	if x != nil {
+		return x.Passed
+	}
+	return false
+}
+
+func (x *SubmitExpertiseTestResponse) GetCorrect() int32 {
+	if x != nil {
+		return x.Correct
+	}
+	return 0
+}
+
+func (x *SubmitExpertiseTestResponse) GetTotal() int32 {
+	if x != nil {
+		return x.Total
+	}
+	return 0
+}
+
+func (x *SubmitExpertiseTestResponse) GetScorePct() int32 {
+	if x != nil {
+		return x.ScorePct
+	}
+	return 0
+}
+
+func (x *SubmitExpertiseTestResponse) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
 var File_proto_users_v1_service_proto protoreflect.FileDescriptor
 
 const file_proto_users_v1_service_proto_rawDesc = "" +
@@ -341,7 +659,32 @@ const file_proto_users_v1_service_proto_rawDesc = "" +
 	"\x18AddVerifiedSkillsRequest\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\x12\x1f\n" +
 	"\vskill_slugs\x18\x02 \x03(\tR\n" +
-	"skillSlugs2\xa7\x03\n" +
+	"skillSlugs\"8\n" +
+	"\x17GetExpertiseTestRequest\x12\x1d\n" +
+	"\n" +
+	"skill_slug\x18\x01 \x01(\tR\tskillSlug\"L\n" +
+	"\fTestQuestion\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x12\n" +
+	"\x04text\x18\x02 \x01(\tR\x04text\x12\x18\n" +
+	"\aoptions\x18\x03 \x03(\tR\aoptions\"\xc8\x01\n" +
+	"\rExpertiseTest\x12\x1d\n" +
+	"\n" +
+	"skill_slug\x18\x01 \x01(\tR\tskillSlug\x12\x1c\n" +
+	"\tavailable\x18\x02 \x01(\bR\tavailable\x12\x16\n" +
+	"\x06reason\x18\x03 \x01(\tR\x06reason\x124\n" +
+	"\tquestions\x18\x04 \x03(\v2\x16.users.v1.TestQuestionR\tquestions\x12,\n" +
+	"\x12pass_threshold_pct\x18\x05 \x01(\x05R\x10passThresholdPct\"{\n" +
+	"\x1aSubmitExpertiseTestRequest\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\tR\x06userId\x12\x1d\n" +
+	"\n" +
+	"skill_slug\x18\x02 \x01(\tR\tskillSlug\x12%\n" +
+	"\x0eanswer_indices\x18\x03 \x03(\x05R\ranswerIndices\"\x9c\x01\n" +
+	"\x1bSubmitExpertiseTestResponse\x12\x16\n" +
+	"\x06passed\x18\x01 \x01(\bR\x06passed\x12\x18\n" +
+	"\acorrect\x18\x02 \x01(\x05R\acorrect\x12\x14\n" +
+	"\x05total\x18\x03 \x01(\x05R\x05total\x12\x1b\n" +
+	"\tscore_pct\x18\x04 \x01(\x05R\bscorePct\x12\x18\n" +
+	"\amessage\x18\x05 \x01(\tR\amessage2\xdb\x04\n" +
 	"\fUsersService\x12<\n" +
 	"\n" +
 	"NewProfile\x12\x1b.users.v1.NewProfileRequest\x1a\x11.users.v1.Profile\x12B\n" +
@@ -350,7 +693,9 @@ const file_proto_users_v1_service_proto_rawDesc = "" +
 	"\n" +
 	"GetProfile\x12\x1b.users.v1.GetProfileRequest\x1a\x11.users.v1.Profile\x12H\n" +
 	"\x0eGetAllProfiles\x12\x1f.users.v1.GetAllProfilesRequest\x1a\x15.users.v1.ProfileList\x12J\n" +
-	"\x11AddVerifiedSkills\x12\".users.v1.AddVerifiedSkillsRequest\x1a\x11.users.v1.ProfileB;Z9github.com/StudJobs/proto_srtucture/gen/go/proto/users/v1b\x06proto3"
+	"\x11AddVerifiedSkills\x12\".users.v1.AddVerifiedSkillsRequest\x1a\x11.users.v1.Profile\x12N\n" +
+	"\x10GetExpertiseTest\x12!.users.v1.GetExpertiseTestRequest\x1a\x17.users.v1.ExpertiseTest\x12b\n" +
+	"\x13SubmitExpertiseTest\x12$.users.v1.SubmitExpertiseTestRequest\x1a%.users.v1.SubmitExpertiseTestResponseB;Z9github.com/StudJobs/proto_srtucture/gen/go/proto/users/v1b\x06proto3"
 
 var (
 	file_proto_users_v1_service_proto_rawDescOnce sync.Once
@@ -364,40 +709,50 @@ func file_proto_users_v1_service_proto_rawDescGZIP() []byte {
 	return file_proto_users_v1_service_proto_rawDescData
 }
 
-var file_proto_users_v1_service_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_proto_users_v1_service_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
 var file_proto_users_v1_service_proto_goTypes = []any{
-	(*NewProfileRequest)(nil),        // 0: users.v1.NewProfileRequest
-	(*UpdateProfileRequest)(nil),     // 1: users.v1.UpdateProfileRequest
-	(*DeleteProfileRequest)(nil),     // 2: users.v1.DeleteProfileRequest
-	(*GetProfileRequest)(nil),        // 3: users.v1.GetProfileRequest
-	(*GetAllProfilesRequest)(nil),    // 4: users.v1.GetAllProfilesRequest
-	(*AddVerifiedSkillsRequest)(nil), // 5: users.v1.AddVerifiedSkillsRequest
-	(*Profile)(nil),                  // 6: users.v1.Profile
-	(*v1.Pagination)(nil),            // 7: common.v1.Pagination
-	(*v1.Empty)(nil),                 // 8: common.v1.Empty
-	(*ProfileList)(nil),              // 9: users.v1.ProfileList
+	(*NewProfileRequest)(nil),           // 0: users.v1.NewProfileRequest
+	(*UpdateProfileRequest)(nil),        // 1: users.v1.UpdateProfileRequest
+	(*DeleteProfileRequest)(nil),        // 2: users.v1.DeleteProfileRequest
+	(*GetProfileRequest)(nil),           // 3: users.v1.GetProfileRequest
+	(*GetAllProfilesRequest)(nil),       // 4: users.v1.GetAllProfilesRequest
+	(*AddVerifiedSkillsRequest)(nil),    // 5: users.v1.AddVerifiedSkillsRequest
+	(*GetExpertiseTestRequest)(nil),     // 6: users.v1.GetExpertiseTestRequest
+	(*TestQuestion)(nil),                // 7: users.v1.TestQuestion
+	(*ExpertiseTest)(nil),               // 8: users.v1.ExpertiseTest
+	(*SubmitExpertiseTestRequest)(nil),  // 9: users.v1.SubmitExpertiseTestRequest
+	(*SubmitExpertiseTestResponse)(nil), // 10: users.v1.SubmitExpertiseTestResponse
+	(*Profile)(nil),                     // 11: users.v1.Profile
+	(*v1.Pagination)(nil),               // 12: common.v1.Pagination
+	(*v1.Empty)(nil),                    // 13: common.v1.Empty
+	(*ProfileList)(nil),                 // 14: users.v1.ProfileList
 }
 var file_proto_users_v1_service_proto_depIdxs = []int32{
-	6, // 0: users.v1.NewProfileRequest.profile:type_name -> users.v1.Profile
-	6, // 1: users.v1.UpdateProfileRequest.profile:type_name -> users.v1.Profile
-	7, // 2: users.v1.GetAllProfilesRequest.pagination:type_name -> common.v1.Pagination
-	0, // 3: users.v1.UsersService.NewProfile:input_type -> users.v1.NewProfileRequest
-	1, // 4: users.v1.UsersService.UpdateProfile:input_type -> users.v1.UpdateProfileRequest
-	2, // 5: users.v1.UsersService.DeleteProfile:input_type -> users.v1.DeleteProfileRequest
-	3, // 6: users.v1.UsersService.GetProfile:input_type -> users.v1.GetProfileRequest
-	4, // 7: users.v1.UsersService.GetAllProfiles:input_type -> users.v1.GetAllProfilesRequest
-	5, // 8: users.v1.UsersService.AddVerifiedSkills:input_type -> users.v1.AddVerifiedSkillsRequest
-	6, // 9: users.v1.UsersService.NewProfile:output_type -> users.v1.Profile
-	6, // 10: users.v1.UsersService.UpdateProfile:output_type -> users.v1.Profile
-	8, // 11: users.v1.UsersService.DeleteProfile:output_type -> common.v1.Empty
-	6, // 12: users.v1.UsersService.GetProfile:output_type -> users.v1.Profile
-	9, // 13: users.v1.UsersService.GetAllProfiles:output_type -> users.v1.ProfileList
-	6, // 14: users.v1.UsersService.AddVerifiedSkills:output_type -> users.v1.Profile
-	9, // [9:15] is the sub-list for method output_type
-	3, // [3:9] is the sub-list for method input_type
-	3, // [3:3] is the sub-list for extension type_name
-	3, // [3:3] is the sub-list for extension extendee
-	0, // [0:3] is the sub-list for field type_name
+	11, // 0: users.v1.NewProfileRequest.profile:type_name -> users.v1.Profile
+	11, // 1: users.v1.UpdateProfileRequest.profile:type_name -> users.v1.Profile
+	12, // 2: users.v1.GetAllProfilesRequest.pagination:type_name -> common.v1.Pagination
+	7,  // 3: users.v1.ExpertiseTest.questions:type_name -> users.v1.TestQuestion
+	0,  // 4: users.v1.UsersService.NewProfile:input_type -> users.v1.NewProfileRequest
+	1,  // 5: users.v1.UsersService.UpdateProfile:input_type -> users.v1.UpdateProfileRequest
+	2,  // 6: users.v1.UsersService.DeleteProfile:input_type -> users.v1.DeleteProfileRequest
+	3,  // 7: users.v1.UsersService.GetProfile:input_type -> users.v1.GetProfileRequest
+	4,  // 8: users.v1.UsersService.GetAllProfiles:input_type -> users.v1.GetAllProfilesRequest
+	5,  // 9: users.v1.UsersService.AddVerifiedSkills:input_type -> users.v1.AddVerifiedSkillsRequest
+	6,  // 10: users.v1.UsersService.GetExpertiseTest:input_type -> users.v1.GetExpertiseTestRequest
+	9,  // 11: users.v1.UsersService.SubmitExpertiseTest:input_type -> users.v1.SubmitExpertiseTestRequest
+	11, // 12: users.v1.UsersService.NewProfile:output_type -> users.v1.Profile
+	11, // 13: users.v1.UsersService.UpdateProfile:output_type -> users.v1.Profile
+	13, // 14: users.v1.UsersService.DeleteProfile:output_type -> common.v1.Empty
+	11, // 15: users.v1.UsersService.GetProfile:output_type -> users.v1.Profile
+	14, // 16: users.v1.UsersService.GetAllProfiles:output_type -> users.v1.ProfileList
+	11, // 17: users.v1.UsersService.AddVerifiedSkills:output_type -> users.v1.Profile
+	8,  // 18: users.v1.UsersService.GetExpertiseTest:output_type -> users.v1.ExpertiseTest
+	10, // 19: users.v1.UsersService.SubmitExpertiseTest:output_type -> users.v1.SubmitExpertiseTestResponse
+	12, // [12:20] is the sub-list for method output_type
+	4,  // [4:12] is the sub-list for method input_type
+	4,  // [4:4] is the sub-list for extension type_name
+	4,  // [4:4] is the sub-list for extension extendee
+	0,  // [0:4] is the sub-list for field type_name
 }
 
 func init() { file_proto_users_v1_service_proto_init() }
@@ -412,7 +767,7 @@ func file_proto_users_v1_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_users_v1_service_proto_rawDesc), len(file_proto_users_v1_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   6,
+			NumMessages:   11,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

@@ -26,6 +26,13 @@ service UsersService {
   // Добавить навыки в verified_skill_slugs профиля (union). Используется при approve
   // микрозадачи / квеста — навык фиксируется как подтверждённый.
   rpc AddVerifiedSkills(AddVerifiedSkillsRequest) returns (Profile);
+
+  // Получить список тест-вопросов по навыку (для прохождения тестирования эксперта).
+  rpc GetExpertiseTest(GetExpertiseTestRequest) returns (ExpertiseTest);
+
+  // Отправить ответы на тест. Если процент правильных >= порог — навык
+  // добавляется в expert_verified_skill_slugs профиля.
+  rpc SubmitExpertiseTest(SubmitExpertiseTestRequest) returns (SubmitExpertiseTestResponse);
 }
 
 message NewProfileRequest {
@@ -54,4 +61,38 @@ message GetAllProfilesRequest {
 message AddVerifiedSkillsRequest {
   string user_id = 1;
   repeated string skill_slugs = 2;
+}
+
+message GetExpertiseTestRequest {
+  string skill_slug = 1;
+}
+
+message TestQuestion {
+  int32 id = 1;          // порядковый номер
+  string text = 2;       // формулировка вопроса
+  repeated string options = 3; // варианты ответа
+}
+
+message ExpertiseTest {
+  string skill_slug = 1;
+  bool available = 2;        // если false — теста по навыку пока нет (вернётся reason)
+  string reason = 3;
+  repeated TestQuestion questions = 4;
+  int32 pass_threshold_pct = 5; // например 70
+}
+
+message SubmitExpertiseTestRequest {
+  string user_id = 1;
+  string skill_slug = 2;
+  // Ответы в виде map question_id -> chosen_option_index. Используем repeated parallel
+  // для простоты с protobuf-runtime.
+  repeated int32 answer_indices = 3;
+}
+
+message SubmitExpertiseTestResponse {
+  bool passed = 1;
+  int32 correct = 2;
+  int32 total = 3;
+  int32 score_pct = 4;
+  string message = 5;
 }
