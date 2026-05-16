@@ -25,13 +25,14 @@ const (
 type AchievementType int32
 
 const (
-	AchievementType_ACHIEVEMENT_TYPE_UNSPECIFIED      AchievementType = 0 // По умолчанию (неклассифицированное)
-	AchievementType_ACHIEVEMENT_TYPE_PET_PROJECT      AchievementType = 1 // Пет-проект
-	AchievementType_ACHIEVEMENT_TYPE_COURSEWORK       AchievementType = 2 // Курсовая работа
-	AchievementType_ACHIEVEMENT_TYPE_HACKATHON        AchievementType = 3 // Хакатон
-	AchievementType_ACHIEVEMENT_TYPE_COURSE           AchievementType = 4 // Курс / сертификат
-	AchievementType_ACHIEVEMENT_TYPE_MICROTASK_RESULT AchievementType = 5 // Результат микрозадачи
-	AchievementType_ACHIEVEMENT_TYPE_OTHER            AchievementType = 6 // Иное
+	AchievementType_ACHIEVEMENT_TYPE_UNSPECIFIED        AchievementType = 0 // По умолчанию (неклассифицированное)
+	AchievementType_ACHIEVEMENT_TYPE_PET_PROJECT        AchievementType = 1 // Пет-проект
+	AchievementType_ACHIEVEMENT_TYPE_COURSEWORK         AchievementType = 2 // Курсовая работа
+	AchievementType_ACHIEVEMENT_TYPE_HACKATHON          AchievementType = 3 // Хакатон
+	AchievementType_ACHIEVEMENT_TYPE_COURSE             AchievementType = 4 // Курс / сертификат
+	AchievementType_ACHIEVEMENT_TYPE_MICROTASK_RESULT   AchievementType = 5 // Результат микрозадачи
+	AchievementType_ACHIEVEMENT_TYPE_OTHER              AchievementType = 6 // Иное
+	AchievementType_ACHIEVEMENT_TYPE_SKILL_VERIFICATION AchievementType = 7 // Заявка студента на подтверждение конкретного навыка
 )
 
 // Enum value maps for AchievementType.
@@ -44,15 +45,17 @@ var (
 		4: "ACHIEVEMENT_TYPE_COURSE",
 		5: "ACHIEVEMENT_TYPE_MICROTASK_RESULT",
 		6: "ACHIEVEMENT_TYPE_OTHER",
+		7: "ACHIEVEMENT_TYPE_SKILL_VERIFICATION",
 	}
 	AchievementType_value = map[string]int32{
-		"ACHIEVEMENT_TYPE_UNSPECIFIED":      0,
-		"ACHIEVEMENT_TYPE_PET_PROJECT":      1,
-		"ACHIEVEMENT_TYPE_COURSEWORK":       2,
-		"ACHIEVEMENT_TYPE_HACKATHON":        3,
-		"ACHIEVEMENT_TYPE_COURSE":           4,
-		"ACHIEVEMENT_TYPE_MICROTASK_RESULT": 5,
-		"ACHIEVEMENT_TYPE_OTHER":            6,
+		"ACHIEVEMENT_TYPE_UNSPECIFIED":        0,
+		"ACHIEVEMENT_TYPE_PET_PROJECT":        1,
+		"ACHIEVEMENT_TYPE_COURSEWORK":         2,
+		"ACHIEVEMENT_TYPE_HACKATHON":          3,
+		"ACHIEVEMENT_TYPE_COURSE":             4,
+		"ACHIEVEMENT_TYPE_MICROTASK_RESULT":   5,
+		"ACHIEVEMENT_TYPE_OTHER":              6,
+		"ACHIEVEMENT_TYPE_SKILL_VERIFICATION": 7,
 	}
 )
 
@@ -159,6 +162,7 @@ type AchievementMeta struct {
 	// презентацию / скриншоты). Эксперт видит это поле в очереди проверки.
 	ExternalUrl   string `protobuf:"bytes,13,opt,name=external_url,json=externalUrl,proto3" json:"external_url,omitempty"` // Опциональная URL-ссылка
 	Description   string `protobuf:"bytes,14,opt,name=description,proto3" json:"description,omitempty"`                    // Описание / контекст работы (max 1024 chars)
+	SkillSlug     string `protobuf:"bytes,15,opt,name=skill_slug,json=skillSlug,proto3" json:"skill_slug,omitempty"`       // Для SKILL_VERIFICATION — slug подтверждаемого навыка
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -287,6 +291,13 @@ func (x *AchievementMeta) GetExternalUrl() string {
 func (x *AchievementMeta) GetDescription() string {
 	if x != nil {
 		return x.Description
+	}
+	return ""
+}
+
+func (x *AchievementMeta) GetSkillSlug() string {
+	if x != nil {
+		return x.SkillSlug
 	}
 	return ""
 }
@@ -454,7 +465,7 @@ var File_proto_achievement_v1_types_proto protoreflect.FileDescriptor
 
 const file_proto_achievement_v1_types_proto_rawDesc = "" +
 	"\n" +
-	" proto/achievement/v1/types.proto\x12\x0eachievement.v1\"\x80\x04\n" +
+	" proto/achievement/v1/types.proto\x12\x0eachievement.v1\"\x9f\x04\n" +
 	"\x0fAchievementMeta\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x1b\n" +
 	"\tuser_uuid\x18\x02 \x01(\tR\buserUuid\x12\x1b\n" +
@@ -473,7 +484,9 @@ const file_proto_achievement_v1_types_proto_rawDesc = "" +
 	"reviewedAt\x12%\n" +
 	"\x0ereview_comment\x18\f \x01(\tR\rreviewComment\x12!\n" +
 	"\fexternal_url\x18\r \x01(\tR\vexternalUrl\x12 \n" +
-	"\vdescription\x18\x0e \x01(\tR\vdescription\"V\n" +
+	"\vdescription\x18\x0e \x01(\tR\vdescription\x12\x1d\n" +
+	"\n" +
+	"skill_slug\x18\x0f \x01(\tR\tskillSlug\"V\n" +
 	"\x0fAchievementList\x12C\n" +
 	"\fachievements\x18\x01 \x03(\v2\x1f.achievement.v1.AchievementMetaR\fachievements\"A\n" +
 	"\x0eAchievementUrl\x12\x10\n" +
@@ -485,7 +498,7 @@ const file_proto_achievement_v1_types_proto_rawDesc = "" +
 	"upload_url\x18\x01 \x01(\tR\tuploadUrl\x12\x15\n" +
 	"\x06s3_key\x18\x02 \x01(\tR\x05s3Key\x12\x1d\n" +
 	"\n" +
-	"expires_at\x18\x03 \x01(\x03R\texpiresAt*\xf6\x01\n" +
+	"expires_at\x18\x03 \x01(\x03R\texpiresAt*\x9f\x02\n" +
 	"\x0fAchievementType\x12 \n" +
 	"\x1cACHIEVEMENT_TYPE_UNSPECIFIED\x10\x00\x12 \n" +
 	"\x1cACHIEVEMENT_TYPE_PET_PROJECT\x10\x01\x12\x1f\n" +
@@ -493,7 +506,8 @@ const file_proto_achievement_v1_types_proto_rawDesc = "" +
 	"\x1aACHIEVEMENT_TYPE_HACKATHON\x10\x03\x12\x1b\n" +
 	"\x17ACHIEVEMENT_TYPE_COURSE\x10\x04\x12%\n" +
 	"!ACHIEVEMENT_TYPE_MICROTASK_RESULT\x10\x05\x12\x1a\n" +
-	"\x16ACHIEVEMENT_TYPE_OTHER\x10\x06*\xbd\x01\n" +
+	"\x16ACHIEVEMENT_TYPE_OTHER\x10\x06\x12'\n" +
+	"#ACHIEVEMENT_TYPE_SKILL_VERIFICATION\x10\a*\xbd\x01\n" +
 	"\x12VerificationStatus\x12#\n" +
 	"\x1fVERIFICATION_STATUS_UNSPECIFIED\x10\x00\x12\x1d\n" +
 	"\x19VERIFICATION_STATUS_DRAFT\x10\x01\x12\x1f\n" +

@@ -23,6 +23,7 @@ message Profile {
   repeated string skill_slugs = 13;  // Slug-и навыков из справочника skills
   string github = 14;                // Профиль на GitHub (полный URL или username)
   repeated string verified_skill_slugs = 15; // Подтверждённые экспертом / approve-нутой микрозадачей
+  repeated string expert_skill_slugs = 16;   // Для роли EXPERT — какие навыки эксперт берётся валидировать
 }
 
 // Список профилей с пагинацией

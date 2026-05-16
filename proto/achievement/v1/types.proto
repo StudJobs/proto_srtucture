@@ -15,6 +15,7 @@ enum AchievementType {
   ACHIEVEMENT_TYPE_COURSE = 4;       // Курс / сертификат
   ACHIEVEMENT_TYPE_MICROTASK_RESULT = 5; // Результат микрозадачи
   ACHIEVEMENT_TYPE_OTHER = 6;        // Иное
+  ACHIEVEMENT_TYPE_SKILL_VERIFICATION = 7; // Заявка студента на подтверждение конкретного навыка
 }
 
 // Статус экспертной верификации портфолио
@@ -47,6 +48,7 @@ message AchievementMeta {
   // презентацию / скриншоты). Эксперт видит это поле в очереди проверки.
   string external_url = 13;                       // Опциональная URL-ссылка
   string description = 14;                        // Описание / контекст работы (max 1024 chars)
+  string skill_slug = 15;                         // Для SKILL_VERIFICATION — slug подтверждаемого навыка
 }
 
 // Список метаданных достижений

@@ -40,6 +40,7 @@ type Profile struct {
 	SkillSlugs           []string               `protobuf:"bytes,13,rep,name=skill_slugs,json=skillSlugs,proto3" json:"skill_slugs,omitempty"`                               // Slug-и навыков из справочника skills
 	Github               string                 `protobuf:"bytes,14,opt,name=github,proto3" json:"github,omitempty"`                                                         // Профиль на GitHub (полный URL или username)
 	VerifiedSkillSlugs   []string               `protobuf:"bytes,15,rep,name=verified_skill_slugs,json=verifiedSkillSlugs,proto3" json:"verified_skill_slugs,omitempty"`     // Подтверждённые экспертом / approve-нутой микрозадачей
+	ExpertSkillSlugs     []string               `protobuf:"bytes,16,rep,name=expert_skill_slugs,json=expertSkillSlugs,proto3" json:"expert_skill_slugs,omitempty"`           // Для роли EXPERT — какие навыки эксперт берётся валидировать
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
 }
@@ -179,6 +180,13 @@ func (x *Profile) GetVerifiedSkillSlugs() []string {
 	return nil
 }
 
+func (x *Profile) GetExpertSkillSlugs() []string {
+	if x != nil {
+		return x.ExpertSkillSlugs
+	}
+	return nil
+}
+
 // Список профилей с пагинацией
 type ProfileList struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -236,7 +244,7 @@ var File_proto_users_v1_types_proto protoreflect.FileDescriptor
 
 const file_proto_users_v1_types_proto_rawDesc = "" +
 	"\n" +
-	"\x1aproto/users/v1/types.proto\x12\busers.v1\x1a\x1bproto/common/v1/types.proto\"\xce\x03\n" +
+	"\x1aproto/users/v1/types.proto\x12\busers.v1\x1a\x1bproto/common/v1/types.proto\"\xfc\x03\n" +
 	"\aProfile\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1d\n" +
 	"\n" +
@@ -255,7 +263,8 @@ const file_proto_users_v1_types_proto_rawDesc = "" +
 	"\vskill_slugs\x18\r \x03(\tR\n" +
 	"skillSlugs\x12\x16\n" +
 	"\x06github\x18\x0e \x01(\tR\x06github\x120\n" +
-	"\x14verified_skill_slugs\x18\x0f \x03(\tR\x12verifiedSkillSlugs\"{\n" +
+	"\x14verified_skill_slugs\x18\x0f \x03(\tR\x12verifiedSkillSlugs\x12,\n" +
+	"\x12expert_skill_slugs\x18\x10 \x03(\tR\x10expertSkillSlugs\"{\n" +
 	"\vProfileList\x12-\n" +
 	"\bprofiles\x18\x01 \x03(\v2\x11.users.v1.ProfileR\bprofiles\x12=\n" +
 	"\n" +
