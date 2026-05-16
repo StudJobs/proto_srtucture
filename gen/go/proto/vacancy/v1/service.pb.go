@@ -22,6 +22,66 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type ModerateVacancyRequest struct {
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	Id               string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	ModerationStatus int32                  `protobuf:"varint,2,opt,name=moderation_status,json=moderationStatus,proto3" json:"moderation_status,omitempty"` // 2 = PUBLISHED, 3 = REJECTED
+	Comment          string                 `protobuf:"bytes,3,opt,name=comment,proto3" json:"comment,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *ModerateVacancyRequest) Reset() {
+	*x = ModerateVacancyRequest{}
+	mi := &file_proto_vacancy_v1_service_proto_msgTypes[0]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ModerateVacancyRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ModerateVacancyRequest) ProtoMessage() {}
+
+func (x *ModerateVacancyRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_vacancy_v1_service_proto_msgTypes[0]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ModerateVacancyRequest.ProtoReflect.Descriptor instead.
+func (*ModerateVacancyRequest) Descriptor() ([]byte, []int) {
+	return file_proto_vacancy_v1_service_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *ModerateVacancyRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *ModerateVacancyRequest) GetModerationStatus() int32 {
+	if x != nil {
+		return x.ModerationStatus
+	}
+	return 0
+}
+
+func (x *ModerateVacancyRequest) GetComment() string {
+	if x != nil {
+		return x.Comment
+	}
+	return ""
+}
+
 type NewVacancyRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Vacancy       *Vacancy               `protobuf:"bytes,1,opt,name=vacancy,proto3" json:"vacancy,omitempty"`
@@ -31,7 +91,7 @@ type NewVacancyRequest struct {
 
 func (x *NewVacancyRequest) Reset() {
 	*x = NewVacancyRequest{}
-	mi := &file_proto_vacancy_v1_service_proto_msgTypes[0]
+	mi := &file_proto_vacancy_v1_service_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -43,7 +103,7 @@ func (x *NewVacancyRequest) String() string {
 func (*NewVacancyRequest) ProtoMessage() {}
 
 func (x *NewVacancyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_vacancy_v1_service_proto_msgTypes[0]
+	mi := &file_proto_vacancy_v1_service_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -56,7 +116,7 @@ func (x *NewVacancyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use NewVacancyRequest.ProtoReflect.Descriptor instead.
 func (*NewVacancyRequest) Descriptor() ([]byte, []int) {
-	return file_proto_vacancy_v1_service_proto_rawDescGZIP(), []int{0}
+	return file_proto_vacancy_v1_service_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *NewVacancyRequest) GetVacancy() *Vacancy {
@@ -76,7 +136,7 @@ type UpdateVacancyRequest struct {
 
 func (x *UpdateVacancyRequest) Reset() {
 	*x = UpdateVacancyRequest{}
-	mi := &file_proto_vacancy_v1_service_proto_msgTypes[1]
+	mi := &file_proto_vacancy_v1_service_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -88,7 +148,7 @@ func (x *UpdateVacancyRequest) String() string {
 func (*UpdateVacancyRequest) ProtoMessage() {}
 
 func (x *UpdateVacancyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_vacancy_v1_service_proto_msgTypes[1]
+	mi := &file_proto_vacancy_v1_service_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -101,7 +161,7 @@ func (x *UpdateVacancyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateVacancyRequest.ProtoReflect.Descriptor instead.
 func (*UpdateVacancyRequest) Descriptor() ([]byte, []int) {
-	return file_proto_vacancy_v1_service_proto_rawDescGZIP(), []int{1}
+	return file_proto_vacancy_v1_service_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *UpdateVacancyRequest) GetId() string {
@@ -127,7 +187,7 @@ type DeleteVacancyRequest struct {
 
 func (x *DeleteVacancyRequest) Reset() {
 	*x = DeleteVacancyRequest{}
-	mi := &file_proto_vacancy_v1_service_proto_msgTypes[2]
+	mi := &file_proto_vacancy_v1_service_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -139,7 +199,7 @@ func (x *DeleteVacancyRequest) String() string {
 func (*DeleteVacancyRequest) ProtoMessage() {}
 
 func (x *DeleteVacancyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_vacancy_v1_service_proto_msgTypes[2]
+	mi := &file_proto_vacancy_v1_service_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -152,7 +212,7 @@ func (x *DeleteVacancyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteVacancyRequest.ProtoReflect.Descriptor instead.
 func (*DeleteVacancyRequest) Descriptor() ([]byte, []int) {
-	return file_proto_vacancy_v1_service_proto_rawDescGZIP(), []int{2}
+	return file_proto_vacancy_v1_service_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *DeleteVacancyRequest) GetId() string {
@@ -171,7 +231,7 @@ type GetVacancyRequest struct {
 
 func (x *GetVacancyRequest) Reset() {
 	*x = GetVacancyRequest{}
-	mi := &file_proto_vacancy_v1_service_proto_msgTypes[3]
+	mi := &file_proto_vacancy_v1_service_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -183,7 +243,7 @@ func (x *GetVacancyRequest) String() string {
 func (*GetVacancyRequest) ProtoMessage() {}
 
 func (x *GetVacancyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_vacancy_v1_service_proto_msgTypes[3]
+	mi := &file_proto_vacancy_v1_service_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -196,7 +256,7 @@ func (x *GetVacancyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetVacancyRequest.ProtoReflect.Descriptor instead.
 func (*GetVacancyRequest) Descriptor() ([]byte, []int) {
-	return file_proto_vacancy_v1_service_proto_rawDescGZIP(), []int{3}
+	return file_proto_vacancy_v1_service_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *GetVacancyRequest) GetId() string {
@@ -224,7 +284,7 @@ type GetAllVacanciesRequest struct {
 
 func (x *GetAllVacanciesRequest) Reset() {
 	*x = GetAllVacanciesRequest{}
-	mi := &file_proto_vacancy_v1_service_proto_msgTypes[4]
+	mi := &file_proto_vacancy_v1_service_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -236,7 +296,7 @@ func (x *GetAllVacanciesRequest) String() string {
 func (*GetAllVacanciesRequest) ProtoMessage() {}
 
 func (x *GetAllVacanciesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_vacancy_v1_service_proto_msgTypes[4]
+	mi := &file_proto_vacancy_v1_service_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -249,7 +309,7 @@ func (x *GetAllVacanciesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetAllVacanciesRequest.ProtoReflect.Descriptor instead.
 func (*GetAllVacanciesRequest) Descriptor() ([]byte, []int) {
-	return file_proto_vacancy_v1_service_proto_rawDescGZIP(), []int{4}
+	return file_proto_vacancy_v1_service_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *GetAllVacanciesRequest) GetPagination() *v1.Pagination {
@@ -340,7 +400,7 @@ type GetHRVacanciesRequest struct {
 
 func (x *GetHRVacanciesRequest) Reset() {
 	*x = GetHRVacanciesRequest{}
-	mi := &file_proto_vacancy_v1_service_proto_msgTypes[5]
+	mi := &file_proto_vacancy_v1_service_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -352,7 +412,7 @@ func (x *GetHRVacanciesRequest) String() string {
 func (*GetHRVacanciesRequest) ProtoMessage() {}
 
 func (x *GetHRVacanciesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_vacancy_v1_service_proto_msgTypes[5]
+	mi := &file_proto_vacancy_v1_service_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -365,7 +425,7 @@ func (x *GetHRVacanciesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetHRVacanciesRequest.ProtoReflect.Descriptor instead.
 func (*GetHRVacanciesRequest) Descriptor() ([]byte, []int) {
-	return file_proto_vacancy_v1_service_proto_rawDescGZIP(), []int{5}
+	return file_proto_vacancy_v1_service_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *GetHRVacanciesRequest) GetPagination() *v1.Pagination {
@@ -446,7 +506,7 @@ type PositionsRequest struct {
 
 func (x *PositionsRequest) Reset() {
 	*x = PositionsRequest{}
-	mi := &file_proto_vacancy_v1_service_proto_msgTypes[6]
+	mi := &file_proto_vacancy_v1_service_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -458,7 +518,7 @@ func (x *PositionsRequest) String() string {
 func (*PositionsRequest) ProtoMessage() {}
 
 func (x *PositionsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_vacancy_v1_service_proto_msgTypes[6]
+	mi := &file_proto_vacancy_v1_service_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -471,7 +531,7 @@ func (x *PositionsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PositionsRequest.ProtoReflect.Descriptor instead.
 func (*PositionsRequest) Descriptor() ([]byte, []int) {
-	return file_proto_vacancy_v1_service_proto_rawDescGZIP(), []int{6}
+	return file_proto_vacancy_v1_service_proto_rawDescGZIP(), []int{7}
 }
 
 type PositionsResponse struct {
@@ -483,7 +543,7 @@ type PositionsResponse struct {
 
 func (x *PositionsResponse) Reset() {
 	*x = PositionsResponse{}
-	mi := &file_proto_vacancy_v1_service_proto_msgTypes[7]
+	mi := &file_proto_vacancy_v1_service_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -495,7 +555,7 @@ func (x *PositionsResponse) String() string {
 func (*PositionsResponse) ProtoMessage() {}
 
 func (x *PositionsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_vacancy_v1_service_proto_msgTypes[7]
+	mi := &file_proto_vacancy_v1_service_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -508,7 +568,7 @@ func (x *PositionsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PositionsResponse.ProtoReflect.Descriptor instead.
 func (*PositionsResponse) Descriptor() ([]byte, []int) {
-	return file_proto_vacancy_v1_service_proto_rawDescGZIP(), []int{7}
+	return file_proto_vacancy_v1_service_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *PositionsResponse) GetPosition() []string {
@@ -523,7 +583,11 @@ var File_proto_vacancy_v1_service_proto protoreflect.FileDescriptor
 const file_proto_vacancy_v1_service_proto_rawDesc = "" +
 	"\n" +
 	"\x1eproto/vacancy/v1/service.proto\x12\n" +
-	"vacancy.v1\x1a\x1cproto/vacancy/v1/types.proto\x1a\x1bproto/common/v1/types.proto\"B\n" +
+	"vacancy.v1\x1a\x1cproto/vacancy/v1/types.proto\x1a\x1bproto/common/v1/types.proto\"o\n" +
+	"\x16ModerateVacancyRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12+\n" +
+	"\x11moderation_status\x18\x02 \x01(\x05R\x10moderationStatus\x12\x18\n" +
+	"\acomment\x18\x03 \x01(\tR\acomment\"B\n" +
 	"\x11NewVacancyRequest\x12-\n" +
 	"\avacancy\x18\x01 \x01(\v2\x13.vacancy.v1.VacancyR\avacancy\"U\n" +
 	"\x14UpdateVacancyRequest\x12\x0e\n" +
@@ -571,7 +635,7 @@ const file_proto_vacancy_v1_service_proto_rawDesc = "" +
 	" \x01(\tR\vsearchTitle\"\x12\n" +
 	"\x10PositionsRequest\"/\n" +
 	"\x11PositionsResponse\x12\x1a\n" +
-	"\bposition\x18\x01 \x03(\tR\bposition2\x94\x04\n" +
+	"\bposition\x18\x01 \x03(\tR\bposition2\xe0\x04\n" +
 	"\x0eVacancyService\x12@\n" +
 	"\n" +
 	"NewVacancy\x12\x1d.vacancy.v1.NewVacancyRequest\x1a\x13.vacancy.v1.Vacancy\x12F\n" +
@@ -581,7 +645,8 @@ const file_proto_vacancy_v1_service_proto_rawDesc = "" +
 	"GetVacancy\x12\x1d.vacancy.v1.GetVacancyRequest\x1a\x13.vacancy.v1.Vacancy\x12N\n" +
 	"\x0fGetAllVacancies\x12\".vacancy.v1.GetAllVacanciesRequest\x1a\x17.vacancy.v1.VacancyList\x12L\n" +
 	"\x0eGetHRVacancies\x12!.vacancy.v1.GetHRVacanciesRequest\x1a\x17.vacancy.v1.VacancyList\x12S\n" +
-	"\x14GetAllExistPositions\x12\x1c.vacancy.v1.PositionsRequest\x1a\x1d.vacancy.v1.PositionsResponseB=Z;github.com/StudJobs/proto_srtucture/gen/go/proto/vacancy/v1b\x06proto3"
+	"\x14GetAllExistPositions\x12\x1c.vacancy.v1.PositionsRequest\x1a\x1d.vacancy.v1.PositionsResponse\x12J\n" +
+	"\x0fModerateVacancy\x12\".vacancy.v1.ModerateVacancyRequest\x1a\x13.vacancy.v1.VacancyB=Z;github.com/StudJobs/proto_srtucture/gen/go/proto/vacancy/v1b\x06proto3"
 
 var (
 	file_proto_vacancy_v1_service_proto_rawDescOnce sync.Once
@@ -595,42 +660,45 @@ func file_proto_vacancy_v1_service_proto_rawDescGZIP() []byte {
 	return file_proto_vacancy_v1_service_proto_rawDescData
 }
 
-var file_proto_vacancy_v1_service_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
+var file_proto_vacancy_v1_service_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
 var file_proto_vacancy_v1_service_proto_goTypes = []any{
-	(*NewVacancyRequest)(nil),      // 0: vacancy.v1.NewVacancyRequest
-	(*UpdateVacancyRequest)(nil),   // 1: vacancy.v1.UpdateVacancyRequest
-	(*DeleteVacancyRequest)(nil),   // 2: vacancy.v1.DeleteVacancyRequest
-	(*GetVacancyRequest)(nil),      // 3: vacancy.v1.GetVacancyRequest
-	(*GetAllVacanciesRequest)(nil), // 4: vacancy.v1.GetAllVacanciesRequest
-	(*GetHRVacanciesRequest)(nil),  // 5: vacancy.v1.GetHRVacanciesRequest
-	(*PositionsRequest)(nil),       // 6: vacancy.v1.PositionsRequest
-	(*PositionsResponse)(nil),      // 7: vacancy.v1.PositionsResponse
-	(*Vacancy)(nil),                // 8: vacancy.v1.Vacancy
-	(*v1.Pagination)(nil),          // 9: common.v1.Pagination
-	(*v1.Empty)(nil),               // 10: common.v1.Empty
-	(*VacancyList)(nil),            // 11: vacancy.v1.VacancyList
+	(*ModerateVacancyRequest)(nil), // 0: vacancy.v1.ModerateVacancyRequest
+	(*NewVacancyRequest)(nil),      // 1: vacancy.v1.NewVacancyRequest
+	(*UpdateVacancyRequest)(nil),   // 2: vacancy.v1.UpdateVacancyRequest
+	(*DeleteVacancyRequest)(nil),   // 3: vacancy.v1.DeleteVacancyRequest
+	(*GetVacancyRequest)(nil),      // 4: vacancy.v1.GetVacancyRequest
+	(*GetAllVacanciesRequest)(nil), // 5: vacancy.v1.GetAllVacanciesRequest
+	(*GetHRVacanciesRequest)(nil),  // 6: vacancy.v1.GetHRVacanciesRequest
+	(*PositionsRequest)(nil),       // 7: vacancy.v1.PositionsRequest
+	(*PositionsResponse)(nil),      // 8: vacancy.v1.PositionsResponse
+	(*Vacancy)(nil),                // 9: vacancy.v1.Vacancy
+	(*v1.Pagination)(nil),          // 10: common.v1.Pagination
+	(*v1.Empty)(nil),               // 11: common.v1.Empty
+	(*VacancyList)(nil),            // 12: vacancy.v1.VacancyList
 }
 var file_proto_vacancy_v1_service_proto_depIdxs = []int32{
-	8,  // 0: vacancy.v1.NewVacancyRequest.vacancy:type_name -> vacancy.v1.Vacancy
-	8,  // 1: vacancy.v1.UpdateVacancyRequest.vacancy:type_name -> vacancy.v1.Vacancy
-	9,  // 2: vacancy.v1.GetAllVacanciesRequest.pagination:type_name -> common.v1.Pagination
-	9,  // 3: vacancy.v1.GetHRVacanciesRequest.pagination:type_name -> common.v1.Pagination
-	0,  // 4: vacancy.v1.VacancyService.NewVacancy:input_type -> vacancy.v1.NewVacancyRequest
-	1,  // 5: vacancy.v1.VacancyService.UpdateVacancy:input_type -> vacancy.v1.UpdateVacancyRequest
-	2,  // 6: vacancy.v1.VacancyService.DeleteVacancy:input_type -> vacancy.v1.DeleteVacancyRequest
-	3,  // 7: vacancy.v1.VacancyService.GetVacancy:input_type -> vacancy.v1.GetVacancyRequest
-	4,  // 8: vacancy.v1.VacancyService.GetAllVacancies:input_type -> vacancy.v1.GetAllVacanciesRequest
-	5,  // 9: vacancy.v1.VacancyService.GetHRVacancies:input_type -> vacancy.v1.GetHRVacanciesRequest
-	6,  // 10: vacancy.v1.VacancyService.GetAllExistPositions:input_type -> vacancy.v1.PositionsRequest
-	8,  // 11: vacancy.v1.VacancyService.NewVacancy:output_type -> vacancy.v1.Vacancy
-	8,  // 12: vacancy.v1.VacancyService.UpdateVacancy:output_type -> vacancy.v1.Vacancy
-	10, // 13: vacancy.v1.VacancyService.DeleteVacancy:output_type -> common.v1.Empty
-	8,  // 14: vacancy.v1.VacancyService.GetVacancy:output_type -> vacancy.v1.Vacancy
-	11, // 15: vacancy.v1.VacancyService.GetAllVacancies:output_type -> vacancy.v1.VacancyList
-	11, // 16: vacancy.v1.VacancyService.GetHRVacancies:output_type -> vacancy.v1.VacancyList
-	7,  // 17: vacancy.v1.VacancyService.GetAllExistPositions:output_type -> vacancy.v1.PositionsResponse
-	11, // [11:18] is the sub-list for method output_type
-	4,  // [4:11] is the sub-list for method input_type
+	9,  // 0: vacancy.v1.NewVacancyRequest.vacancy:type_name -> vacancy.v1.Vacancy
+	9,  // 1: vacancy.v1.UpdateVacancyRequest.vacancy:type_name -> vacancy.v1.Vacancy
+	10, // 2: vacancy.v1.GetAllVacanciesRequest.pagination:type_name -> common.v1.Pagination
+	10, // 3: vacancy.v1.GetHRVacanciesRequest.pagination:type_name -> common.v1.Pagination
+	1,  // 4: vacancy.v1.VacancyService.NewVacancy:input_type -> vacancy.v1.NewVacancyRequest
+	2,  // 5: vacancy.v1.VacancyService.UpdateVacancy:input_type -> vacancy.v1.UpdateVacancyRequest
+	3,  // 6: vacancy.v1.VacancyService.DeleteVacancy:input_type -> vacancy.v1.DeleteVacancyRequest
+	4,  // 7: vacancy.v1.VacancyService.GetVacancy:input_type -> vacancy.v1.GetVacancyRequest
+	5,  // 8: vacancy.v1.VacancyService.GetAllVacancies:input_type -> vacancy.v1.GetAllVacanciesRequest
+	6,  // 9: vacancy.v1.VacancyService.GetHRVacancies:input_type -> vacancy.v1.GetHRVacanciesRequest
+	7,  // 10: vacancy.v1.VacancyService.GetAllExistPositions:input_type -> vacancy.v1.PositionsRequest
+	0,  // 11: vacancy.v1.VacancyService.ModerateVacancy:input_type -> vacancy.v1.ModerateVacancyRequest
+	9,  // 12: vacancy.v1.VacancyService.NewVacancy:output_type -> vacancy.v1.Vacancy
+	9,  // 13: vacancy.v1.VacancyService.UpdateVacancy:output_type -> vacancy.v1.Vacancy
+	11, // 14: vacancy.v1.VacancyService.DeleteVacancy:output_type -> common.v1.Empty
+	9,  // 15: vacancy.v1.VacancyService.GetVacancy:output_type -> vacancy.v1.Vacancy
+	12, // 16: vacancy.v1.VacancyService.GetAllVacancies:output_type -> vacancy.v1.VacancyList
+	12, // 17: vacancy.v1.VacancyService.GetHRVacancies:output_type -> vacancy.v1.VacancyList
+	8,  // 18: vacancy.v1.VacancyService.GetAllExistPositions:output_type -> vacancy.v1.PositionsResponse
+	9,  // 19: vacancy.v1.VacancyService.ModerateVacancy:output_type -> vacancy.v1.Vacancy
+	12, // [12:20] is the sub-list for method output_type
+	4,  // [4:12] is the sub-list for method input_type
 	4,  // [4:4] is the sub-list for extension type_name
 	4,  // [4:4] is the sub-list for extension extendee
 	0,  // [0:4] is the sub-list for field type_name
@@ -648,7 +716,7 @@ func file_proto_vacancy_v1_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_vacancy_v1_service_proto_rawDesc), len(file_proto_vacancy_v1_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   8,
+			NumMessages:   9,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

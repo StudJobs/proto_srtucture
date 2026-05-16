@@ -88,7 +88,9 @@ type Application struct {
 	UpdatedAt   string            `protobuf:"bytes,7,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
 	// Сводные поля, заполняются только в ответах ListMine/ListForVacancy.
 	// hr_comment — необязательный коммент HR при accept/reject.
-	HrComment     string `protobuf:"bytes,8,opt,name=hr_comment,json=hrComment,proto3" json:"hr_comment,omitempty"`
+	HrComment string `protobuf:"bytes,8,opt,name=hr_comment,json=hrComment,proto3" json:"hr_comment,omitempty"`
+	// HR-сотрудник, взявший отклик в работу (auto-set при первом просмотре отклика HR'ом).
+	HrAssigneeId  string `protobuf:"bytes,9,opt,name=hr_assignee_id,json=hrAssigneeId,proto3" json:"hr_assignee_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -179,6 +181,13 @@ func (x *Application) GetHrComment() string {
 	return ""
 }
 
+func (x *Application) GetHrAssigneeId() string {
+	if x != nil {
+		return x.HrAssigneeId
+	}
+	return ""
+}
+
 type ApplicationList struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Applications  []*Application         `protobuf:"bytes,1,rep,name=applications,proto3" json:"applications,omitempty"`
@@ -235,7 +244,7 @@ var File_proto_application_v1_types_proto protoreflect.FileDescriptor
 
 const file_proto_application_v1_types_proto_rawDesc = "" +
 	"\n" +
-	" proto/application/v1/types.proto\x12\x0eapplication.v1\x1a\x1bproto/common/v1/types.proto\"\x96\x02\n" +
+	" proto/application/v1/types.proto\x12\x0eapplication.v1\x1a\x1bproto/common/v1/types.proto\"\xbc\x02\n" +
 	"\vApplication\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1d\n" +
 	"\n" +
@@ -249,7 +258,8 @@ const file_proto_application_v1_types_proto_rawDesc = "" +
 	"\n" +
 	"updated_at\x18\a \x01(\tR\tupdatedAt\x12\x1d\n" +
 	"\n" +
-	"hr_comment\x18\b \x01(\tR\thrComment\"\x91\x01\n" +
+	"hr_comment\x18\b \x01(\tR\thrComment\x12$\n" +
+	"\x0ehr_assignee_id\x18\t \x01(\tR\fhrAssigneeId\"\x91\x01\n" +
 	"\x0fApplicationList\x12?\n" +
 	"\fapplications\x18\x01 \x03(\v2\x1b.application.v1.ApplicationR\fapplications\x12=\n" +
 	"\n" +

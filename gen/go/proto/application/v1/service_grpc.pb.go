@@ -25,6 +25,8 @@ const (
 	ApplicationService_ListMine_FullMethodName       = "/application.v1.ApplicationService/ListMine"
 	ApplicationService_ListForVacancy_FullMethodName = "/application.v1.ApplicationService/ListForVacancy"
 	ApplicationService_UpdateStatus_FullMethodName   = "/application.v1.ApplicationService/UpdateStatus"
+	ApplicationService_Get_FullMethodName            = "/application.v1.ApplicationService/Get"
+	ApplicationService_AssignHR_FullMethodName       = "/application.v1.ApplicationService/AssignHR"
 )
 
 // ApplicationServiceClient is the client API for ApplicationService service.
@@ -46,6 +48,11 @@ type ApplicationServiceClient interface {
 	ListForVacancy(ctx context.Context, in *ListForVacancyRequest, opts ...grpc.CallOption) (*ApplicationList, error)
 	// UpdateStatus — HR меняет статус отклика (accept/reject + опциональный коммент).
 	UpdateStatus(ctx context.Context, in *UpdateStatusRequest, opts ...grpc.CallOption) (*Application, error)
+	// Get — получить один отклик по id (нужно для chat-access-check, owner/HR-membership).
+	Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*Application, error)
+	// AssignHR — auto-set hr_assignee_id при первом просмотре отклика HR-сотрудником.
+	// Идемпотентно: если уже set — возвращает текущего assignee без изменений.
+	AssignHR(ctx context.Context, in *AssignHRRequest, opts ...grpc.CallOption) (*Application, error)
 }
 
 type applicationServiceClient struct {
@@ -106,6 +113,26 @@ func (c *applicationServiceClient) UpdateStatus(ctx context.Context, in *UpdateS
 	return out, nil
 }
 
+func (c *applicationServiceClient) Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*Application, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Application)
+	err := c.cc.Invoke(ctx, ApplicationService_Get_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *applicationServiceClient) AssignHR(ctx context.Context, in *AssignHRRequest, opts ...grpc.CallOption) (*Application, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Application)
+	err := c.cc.Invoke(ctx, ApplicationService_AssignHR_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ApplicationServiceServer is the server API for ApplicationService service.
 // All implementations must embed UnimplementedApplicationServiceServer
 // for forward compatibility.
@@ -125,6 +152,11 @@ type ApplicationServiceServer interface {
 	ListForVacancy(context.Context, *ListForVacancyRequest) (*ApplicationList, error)
 	// UpdateStatus — HR меняет статус отклика (accept/reject + опциональный коммент).
 	UpdateStatus(context.Context, *UpdateStatusRequest) (*Application, error)
+	// Get — получить один отклик по id (нужно для chat-access-check, owner/HR-membership).
+	Get(context.Context, *GetRequest) (*Application, error)
+	// AssignHR — auto-set hr_assignee_id при первом просмотре отклика HR-сотрудником.
+	// Идемпотентно: если уже set — возвращает текущего assignee без изменений.
+	AssignHR(context.Context, *AssignHRRequest) (*Application, error)
 	mustEmbedUnimplementedApplicationServiceServer()
 }
 
@@ -149,6 +181,12 @@ func (UnimplementedApplicationServiceServer) ListForVacancy(context.Context, *Li
 }
 func (UnimplementedApplicationServiceServer) UpdateStatus(context.Context, *UpdateStatusRequest) (*Application, error) {
 	return nil, status.Error(codes.Unimplemented, "method UpdateStatus not implemented")
+}
+func (UnimplementedApplicationServiceServer) Get(context.Context, *GetRequest) (*Application, error) {
+	return nil, status.Error(codes.Unimplemented, "method Get not implemented")
+}
+func (UnimplementedApplicationServiceServer) AssignHR(context.Context, *AssignHRRequest) (*Application, error) {
+	return nil, status.Error(codes.Unimplemented, "method AssignHR not implemented")
 }
 func (UnimplementedApplicationServiceServer) mustEmbedUnimplementedApplicationServiceServer() {}
 func (UnimplementedApplicationServiceServer) testEmbeddedByValue()                            {}
@@ -261,6 +299,42 @@ func _ApplicationService_UpdateStatus_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ApplicationService_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ApplicationServiceServer).Get(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ApplicationService_Get_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ApplicationServiceServer).Get(ctx, req.(*GetRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ApplicationService_AssignHR_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AssignHRRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ApplicationServiceServer).AssignHR(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ApplicationService_AssignHR_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ApplicationServiceServer).AssignHR(ctx, req.(*AssignHRRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ApplicationService_ServiceDesc is the grpc.ServiceDesc for ApplicationService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -287,6 +361,14 @@ var ApplicationService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateStatus",
 			Handler:    _ApplicationService_UpdateStatus_Handler,
+		},
+		{
+			MethodName: "Get",
+			Handler:    _ApplicationService_Get_Handler,
+		},
+		{
+			MethodName: "AssignHR",
+			Handler:    _ApplicationService_AssignHR_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

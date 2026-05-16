@@ -29,6 +29,15 @@ service VacancyService {
 
   // получение всех позиций
   rpc GetAllExistPositions(PositionsRequest) returns (PositionsResponse);
+
+  // Owner модерирует вакансию (approve=PUBLISHED / reject=REJECTED).
+  rpc ModerateVacancy(ModerateVacancyRequest) returns (Vacancy);
+}
+
+message ModerateVacancyRequest {
+  string id = 1;
+  int32 moderation_status = 2; // 2 = PUBLISHED, 3 = REJECTED
+  string comment = 3;
 }
 
 message NewVacancyRequest {

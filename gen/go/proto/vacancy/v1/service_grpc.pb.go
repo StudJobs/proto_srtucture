@@ -27,6 +27,7 @@ const (
 	VacancyService_GetAllVacancies_FullMethodName      = "/vacancy.v1.VacancyService/GetAllVacancies"
 	VacancyService_GetHRVacancies_FullMethodName       = "/vacancy.v1.VacancyService/GetHRVacancies"
 	VacancyService_GetAllExistPositions_FullMethodName = "/vacancy.v1.VacancyService/GetAllExistPositions"
+	VacancyService_ModerateVacancy_FullMethodName      = "/vacancy.v1.VacancyService/ModerateVacancy"
 )
 
 // VacancyServiceClient is the client API for VacancyService service.
@@ -47,6 +48,8 @@ type VacancyServiceClient interface {
 	GetHRVacancies(ctx context.Context, in *GetHRVacanciesRequest, opts ...grpc.CallOption) (*VacancyList, error)
 	// получение всех позиций
 	GetAllExistPositions(ctx context.Context, in *PositionsRequest, opts ...grpc.CallOption) (*PositionsResponse, error)
+	// Owner модерирует вакансию (approve=PUBLISHED / reject=REJECTED).
+	ModerateVacancy(ctx context.Context, in *ModerateVacancyRequest, opts ...grpc.CallOption) (*Vacancy, error)
 }
 
 type vacancyServiceClient struct {
@@ -127,6 +130,16 @@ func (c *vacancyServiceClient) GetAllExistPositions(ctx context.Context, in *Pos
 	return out, nil
 }
 
+func (c *vacancyServiceClient) ModerateVacancy(ctx context.Context, in *ModerateVacancyRequest, opts ...grpc.CallOption) (*Vacancy, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Vacancy)
+	err := c.cc.Invoke(ctx, VacancyService_ModerateVacancy_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // VacancyServiceServer is the server API for VacancyService service.
 // All implementations must embed UnimplementedVacancyServiceServer
 // for forward compatibility.
@@ -145,6 +158,8 @@ type VacancyServiceServer interface {
 	GetHRVacancies(context.Context, *GetHRVacanciesRequest) (*VacancyList, error)
 	// получение всех позиций
 	GetAllExistPositions(context.Context, *PositionsRequest) (*PositionsResponse, error)
+	// Owner модерирует вакансию (approve=PUBLISHED / reject=REJECTED).
+	ModerateVacancy(context.Context, *ModerateVacancyRequest) (*Vacancy, error)
 	mustEmbedUnimplementedVacancyServiceServer()
 }
 
@@ -175,6 +190,9 @@ func (UnimplementedVacancyServiceServer) GetHRVacancies(context.Context, *GetHRV
 }
 func (UnimplementedVacancyServiceServer) GetAllExistPositions(context.Context, *PositionsRequest) (*PositionsResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetAllExistPositions not implemented")
+}
+func (UnimplementedVacancyServiceServer) ModerateVacancy(context.Context, *ModerateVacancyRequest) (*Vacancy, error) {
+	return nil, status.Error(codes.Unimplemented, "method ModerateVacancy not implemented")
 }
 func (UnimplementedVacancyServiceServer) mustEmbedUnimplementedVacancyServiceServer() {}
 func (UnimplementedVacancyServiceServer) testEmbeddedByValue()                        {}
@@ -323,6 +341,24 @@ func _VacancyService_GetAllExistPositions_Handler(srv interface{}, ctx context.C
 	return interceptor(ctx, in, info, handler)
 }
 
+func _VacancyService_ModerateVacancy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ModerateVacancyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VacancyServiceServer).ModerateVacancy(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: VacancyService_ModerateVacancy_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VacancyServiceServer).ModerateVacancy(ctx, req.(*ModerateVacancyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // VacancyService_ServiceDesc is the grpc.ServiceDesc for VacancyService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -357,6 +393,10 @@ var VacancyService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAllExistPositions",
 			Handler:    _VacancyService_GetAllExistPositions_Handler,
+		},
+		{
+			MethodName: "ModerateVacancy",
+			Handler:    _VacancyService_ModerateVacancy_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

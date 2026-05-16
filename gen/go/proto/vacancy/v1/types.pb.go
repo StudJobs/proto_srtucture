@@ -46,9 +46,21 @@ type Vacancy struct {
 	// ID прикрепленного файла
 	AttachmentId string `protobuf:"bytes,10,opt,name=attachment_id,json=attachmentId,proto3" json:"attachment_id,omitempty"`
 	// Slug-и навыков, требуемых для вакансии
-	SkillSlugs    []string `protobuf:"bytes,11,rep,name=skill_slugs,json=skillSlugs,proto3" json:"skill_slugs,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	SkillSlugs []string `protobuf:"bytes,11,rep,name=skill_slugs,json=skillSlugs,proto3" json:"skill_slugs,omitempty"`
+	// Модерация вакансий компанией (для HR-flow):
+	//
+	//	1 — на модерации (создал HR-сотрудник, ждёт одобрения owner-ом),
+	//	2 — опубликовано (либо owner создал сам, либо HR + approved),
+	//	3 — отклонено owner-ом.
+	//
+	// Студенты видят только PUBLISHED.
+	ModerationStatus int32 `protobuf:"varint,12,opt,name=moderation_status,json=moderationStatus,proto3" json:"moderation_status,omitempty"`
+	// Автор-сотрудник, создавший вакансию (опц. HR; для owner-creator равен company_id).
+	AuthorId string `protobuf:"bytes,13,opt,name=author_id,json=authorId,proto3" json:"author_id,omitempty"`
+	// Комментарий модератора при отклонении.
+	ModerationComment string `protobuf:"bytes,14,opt,name=moderation_comment,json=moderationComment,proto3" json:"moderation_comment,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
 }
 
 func (x *Vacancy) Reset() {
@@ -158,6 +170,27 @@ func (x *Vacancy) GetSkillSlugs() []string {
 	return nil
 }
 
+func (x *Vacancy) GetModerationStatus() int32 {
+	if x != nil {
+		return x.ModerationStatus
+	}
+	return 0
+}
+
+func (x *Vacancy) GetAuthorId() string {
+	if x != nil {
+		return x.AuthorId
+	}
+	return ""
+}
+
+func (x *Vacancy) GetModerationComment() string {
+	if x != nil {
+		return x.ModerationComment
+	}
+	return ""
+}
+
 // Список вакансий с пагинацией
 type VacancyList struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -216,7 +249,7 @@ var File_proto_vacancy_v1_types_proto protoreflect.FileDescriptor
 const file_proto_vacancy_v1_types_proto_rawDesc = "" +
 	"\n" +
 	"\x1cproto/vacancy/v1/types.proto\x12\n" +
-	"vacancy.v1\x1a\x1bproto/common/v1/types.proto\"\xcf\x02\n" +
+	"vacancy.v1\x1a\x1bproto/common/v1/types.proto\"\xc8\x03\n" +
 	"\aVacancy\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x14\n" +
 	"\x05title\x18\x02 \x01(\tR\x05title\x12\x1e\n" +
@@ -234,7 +267,10 @@ const file_proto_vacancy_v1_types_proto_rawDesc = "" +
 	"\rattachment_id\x18\n" +
 	" \x01(\tR\fattachmentId\x12\x1f\n" +
 	"\vskill_slugs\x18\v \x03(\tR\n" +
-	"skillSlugs\"\x7f\n" +
+	"skillSlugs\x12+\n" +
+	"\x11moderation_status\x18\f \x01(\x05R\x10moderationStatus\x12\x1b\n" +
+	"\tauthor_id\x18\r \x01(\tR\bauthorId\x12-\n" +
+	"\x12moderation_comment\x18\x0e \x01(\tR\x11moderationComment\"\x7f\n" +
 	"\vVacancyList\x121\n" +
 	"\tvacancies\x18\x01 \x03(\v2\x13.vacancy.v1.VacancyR\tvacancies\x12=\n" +
 	"\n" +

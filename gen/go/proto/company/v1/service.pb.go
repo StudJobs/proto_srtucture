@@ -22,6 +22,58 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type MembershipStatus int32
+
+const (
+	MembershipStatus_MEMBERSHIP_STATUS_UNSPECIFIED MembershipStatus = 0
+	MembershipStatus_MEMBERSHIP_STATUS_PENDING     MembershipStatus = 1
+	MembershipStatus_MEMBERSHIP_STATUS_APPROVED    MembershipStatus = 2
+	MembershipStatus_MEMBERSHIP_STATUS_REJECTED    MembershipStatus = 3
+)
+
+// Enum value maps for MembershipStatus.
+var (
+	MembershipStatus_name = map[int32]string{
+		0: "MEMBERSHIP_STATUS_UNSPECIFIED",
+		1: "MEMBERSHIP_STATUS_PENDING",
+		2: "MEMBERSHIP_STATUS_APPROVED",
+		3: "MEMBERSHIP_STATUS_REJECTED",
+	}
+	MembershipStatus_value = map[string]int32{
+		"MEMBERSHIP_STATUS_UNSPECIFIED": 0,
+		"MEMBERSHIP_STATUS_PENDING":     1,
+		"MEMBERSHIP_STATUS_APPROVED":    2,
+		"MEMBERSHIP_STATUS_REJECTED":    3,
+	}
+)
+
+func (x MembershipStatus) Enum() *MembershipStatus {
+	p := new(MembershipStatus)
+	*p = x
+	return p
+}
+
+func (x MembershipStatus) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (MembershipStatus) Descriptor() protoreflect.EnumDescriptor {
+	return file_proto_company_v1_service_proto_enumTypes[0].Descriptor()
+}
+
+func (MembershipStatus) Type() protoreflect.EnumType {
+	return &file_proto_company_v1_service_proto_enumTypes[0]
+}
+
+func (x MembershipStatus) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use MembershipStatus.Descriptor instead.
+func (MembershipStatus) EnumDescriptor() ([]byte, []int) {
+	return file_proto_company_v1_service_proto_rawDescGZIP(), []int{0}
+}
+
 type NewCompanyRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Company       *Company               `protobuf:"bytes,1,opt,name=company,proto3" json:"company,omitempty"`
@@ -276,6 +328,350 @@ func (x *GetAllCompaniesRequest) GetQuery() string {
 	return ""
 }
 
+type CompanyMember struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	CompanyId     string                 `protobuf:"bytes,2,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	UserId        string                 `protobuf:"bytes,3,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	Status        MembershipStatus       `protobuf:"varint,4,opt,name=status,proto3,enum=company.v1.MembershipStatus" json:"status,omitempty"`
+	Note          string                 `protobuf:"bytes,5,opt,name=note,proto3" json:"note,omitempty"` // комментарий HR при заявке (например: «работаю в этой компании»)
+	CreatedAt     string                 `protobuf:"bytes,6,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	ReviewedAt    string                 `protobuf:"bytes,7,opt,name=reviewed_at,json=reviewedAt,proto3" json:"reviewed_at,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CompanyMember) Reset() {
+	*x = CompanyMember{}
+	mi := &file_proto_company_v1_service_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CompanyMember) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CompanyMember) ProtoMessage() {}
+
+func (x *CompanyMember) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_company_v1_service_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CompanyMember.ProtoReflect.Descriptor instead.
+func (*CompanyMember) Descriptor() ([]byte, []int) {
+	return file_proto_company_v1_service_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *CompanyMember) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *CompanyMember) GetCompanyId() string {
+	if x != nil {
+		return x.CompanyId
+	}
+	return ""
+}
+
+func (x *CompanyMember) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *CompanyMember) GetStatus() MembershipStatus {
+	if x != nil {
+		return x.Status
+	}
+	return MembershipStatus_MEMBERSHIP_STATUS_UNSPECIFIED
+}
+
+func (x *CompanyMember) GetNote() string {
+	if x != nil {
+		return x.Note
+	}
+	return ""
+}
+
+func (x *CompanyMember) GetCreatedAt() string {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return ""
+}
+
+func (x *CompanyMember) GetReviewedAt() string {
+	if x != nil {
+		return x.ReviewedAt
+	}
+	return ""
+}
+
+type CompanyMemberList struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Members       []*CompanyMember       `protobuf:"bytes,1,rep,name=members,proto3" json:"members,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CompanyMemberList) Reset() {
+	*x = CompanyMemberList{}
+	mi := &file_proto_company_v1_service_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CompanyMemberList) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CompanyMemberList) ProtoMessage() {}
+
+func (x *CompanyMemberList) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_company_v1_service_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CompanyMemberList.ProtoReflect.Descriptor instead.
+func (*CompanyMemberList) Descriptor() ([]byte, []int) {
+	return file_proto_company_v1_service_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *CompanyMemberList) GetMembers() []*CompanyMember {
+	if x != nil {
+		return x.Members
+	}
+	return nil
+}
+
+type ApplyMembershipRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	CompanyId     string                 `protobuf:"bytes,1,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	UserId        string                 `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	Note          string                 `protobuf:"bytes,3,opt,name=note,proto3" json:"note,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ApplyMembershipRequest) Reset() {
+	*x = ApplyMembershipRequest{}
+	mi := &file_proto_company_v1_service_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ApplyMembershipRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ApplyMembershipRequest) ProtoMessage() {}
+
+func (x *ApplyMembershipRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_company_v1_service_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ApplyMembershipRequest.ProtoReflect.Descriptor instead.
+func (*ApplyMembershipRequest) Descriptor() ([]byte, []int) {
+	return file_proto_company_v1_service_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *ApplyMembershipRequest) GetCompanyId() string {
+	if x != nil {
+		return x.CompanyId
+	}
+	return ""
+}
+
+func (x *ApplyMembershipRequest) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *ApplyMembershipRequest) GetNote() string {
+	if x != nil {
+		return x.Note
+	}
+	return ""
+}
+
+type ReviewMembershipRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	MembershipId  string                 `protobuf:"bytes,1,opt,name=membership_id,json=membershipId,proto3" json:"membership_id,omitempty"`
+	Status        MembershipStatus       `protobuf:"varint,2,opt,name=status,proto3,enum=company.v1.MembershipStatus" json:"status,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ReviewMembershipRequest) Reset() {
+	*x = ReviewMembershipRequest{}
+	mi := &file_proto_company_v1_service_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ReviewMembershipRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ReviewMembershipRequest) ProtoMessage() {}
+
+func (x *ReviewMembershipRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_company_v1_service_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ReviewMembershipRequest.ProtoReflect.Descriptor instead.
+func (*ReviewMembershipRequest) Descriptor() ([]byte, []int) {
+	return file_proto_company_v1_service_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *ReviewMembershipRequest) GetMembershipId() string {
+	if x != nil {
+		return x.MembershipId
+	}
+	return ""
+}
+
+func (x *ReviewMembershipRequest) GetStatus() MembershipStatus {
+	if x != nil {
+		return x.Status
+	}
+	return MembershipStatus_MEMBERSHIP_STATUS_UNSPECIFIED
+}
+
+type ListMembersRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	CompanyId     string                 `protobuf:"bytes,1,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	Status        MembershipStatus       `protobuf:"varint,2,opt,name=status,proto3,enum=company.v1.MembershipStatus" json:"status,omitempty"` // 0 = все
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListMembersRequest) Reset() {
+	*x = ListMembersRequest{}
+	mi := &file_proto_company_v1_service_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListMembersRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListMembersRequest) ProtoMessage() {}
+
+func (x *ListMembersRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_company_v1_service_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListMembersRequest.ProtoReflect.Descriptor instead.
+func (*ListMembersRequest) Descriptor() ([]byte, []int) {
+	return file_proto_company_v1_service_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *ListMembersRequest) GetCompanyId() string {
+	if x != nil {
+		return x.CompanyId
+	}
+	return ""
+}
+
+func (x *ListMembersRequest) GetStatus() MembershipStatus {
+	if x != nil {
+		return x.Status
+	}
+	return MembershipStatus_MEMBERSHIP_STATUS_UNSPECIFIED
+}
+
+type GetMembershipByUserRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserId        string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetMembershipByUserRequest) Reset() {
+	*x = GetMembershipByUserRequest{}
+	mi := &file_proto_company_v1_service_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetMembershipByUserRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetMembershipByUserRequest) ProtoMessage() {}
+
+func (x *GetMembershipByUserRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_company_v1_service_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetMembershipByUserRequest.ProtoReflect.Descriptor instead.
+func (*GetMembershipByUserRequest) Descriptor() ([]byte, []int) {
+	return file_proto_company_v1_service_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *GetMembershipByUserRequest) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
 var File_proto_company_v1_service_proto protoreflect.FileDescriptor
 
 const file_proto_company_v1_service_proto_rawDesc = "" +
@@ -297,7 +693,39 @@ const file_proto_company_v1_service_proto_rawDesc = "" +
 	"pagination\x12\x12\n" +
 	"\x04city\x18\x02 \x01(\tR\x04city\x12!\n" +
 	"\fcompany_type\x18\x03 \x01(\tR\vcompanyType\x12\x14\n" +
-	"\x05query\x18\x04 \x01(\tR\x05query2\xf1\x02\n" +
+	"\x05query\x18\x04 \x01(\tR\x05query\"\xe1\x01\n" +
+	"\rCompanyMember\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1d\n" +
+	"\n" +
+	"company_id\x18\x02 \x01(\tR\tcompanyId\x12\x17\n" +
+	"\auser_id\x18\x03 \x01(\tR\x06userId\x124\n" +
+	"\x06status\x18\x04 \x01(\x0e2\x1c.company.v1.MembershipStatusR\x06status\x12\x12\n" +
+	"\x04note\x18\x05 \x01(\tR\x04note\x12\x1d\n" +
+	"\n" +
+	"created_at\x18\x06 \x01(\tR\tcreatedAt\x12\x1f\n" +
+	"\vreviewed_at\x18\a \x01(\tR\n" +
+	"reviewedAt\"H\n" +
+	"\x11CompanyMemberList\x123\n" +
+	"\amembers\x18\x01 \x03(\v2\x19.company.v1.CompanyMemberR\amembers\"d\n" +
+	"\x16ApplyMembershipRequest\x12\x1d\n" +
+	"\n" +
+	"company_id\x18\x01 \x01(\tR\tcompanyId\x12\x17\n" +
+	"\auser_id\x18\x02 \x01(\tR\x06userId\x12\x12\n" +
+	"\x04note\x18\x03 \x01(\tR\x04note\"t\n" +
+	"\x17ReviewMembershipRequest\x12#\n" +
+	"\rmembership_id\x18\x01 \x01(\tR\fmembershipId\x124\n" +
+	"\x06status\x18\x02 \x01(\x0e2\x1c.company.v1.MembershipStatusR\x06status\"i\n" +
+	"\x12ListMembersRequest\x12\x1d\n" +
+	"\n" +
+	"company_id\x18\x01 \x01(\tR\tcompanyId\x124\n" +
+	"\x06status\x18\x02 \x01(\x0e2\x1c.company.v1.MembershipStatusR\x06status\"5\n" +
+	"\x1aGetMembershipByUserRequest\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\tR\x06userId*\x94\x01\n" +
+	"\x10MembershipStatus\x12!\n" +
+	"\x1dMEMBERSHIP_STATUS_UNSPECIFIED\x10\x00\x12\x1d\n" +
+	"\x19MEMBERSHIP_STATUS_PENDING\x10\x01\x12\x1e\n" +
+	"\x1aMEMBERSHIP_STATUS_APPROVED\x10\x02\x12\x1e\n" +
+	"\x1aMEMBERSHIP_STATUS_REJECTED\x10\x032\xbf\x05\n" +
 	"\x0eCompanyService\x12@\n" +
 	"\n" +
 	"NewCompany\x12\x1d.company.v1.NewCompanyRequest\x1a\x13.company.v1.Company\x12F\n" +
@@ -305,7 +733,11 @@ const file_proto_company_v1_service_proto_rawDesc = "" +
 	"\rDeleteCompany\x12 .company.v1.DeleteCompanyRequest\x1a\x10.common.v1.Empty\x12@\n" +
 	"\n" +
 	"GetCompany\x12\x1d.company.v1.GetCompanyRequest\x1a\x13.company.v1.Company\x12N\n" +
-	"\x0fGetAllCompanies\x12\".company.v1.GetAllCompaniesRequest\x1a\x17.company.v1.CompanyListB=Z;github.com/StudJobs/proto_srtucture/gen/go/proto/company/v1b\x06proto3"
+	"\x0fGetAllCompanies\x12\".company.v1.GetAllCompaniesRequest\x1a\x17.company.v1.CompanyList\x12P\n" +
+	"\x0fApplyMembership\x12\".company.v1.ApplyMembershipRequest\x1a\x19.company.v1.CompanyMember\x12R\n" +
+	"\x10ReviewMembership\x12#.company.v1.ReviewMembershipRequest\x1a\x19.company.v1.CompanyMember\x12L\n" +
+	"\vListMembers\x12\x1e.company.v1.ListMembersRequest\x1a\x1d.company.v1.CompanyMemberList\x12X\n" +
+	"\x13GetMembershipByUser\x12&.company.v1.GetMembershipByUserRequest\x1a\x19.company.v1.CompanyMemberB=Z;github.com/StudJobs/proto_srtucture/gen/go/proto/company/v1b\x06proto3"
 
 var (
 	file_proto_company_v1_service_proto_rawDescOnce sync.Once
@@ -319,37 +751,57 @@ func file_proto_company_v1_service_proto_rawDescGZIP() []byte {
 	return file_proto_company_v1_service_proto_rawDescData
 }
 
-var file_proto_company_v1_service_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_proto_company_v1_service_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_proto_company_v1_service_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
 var file_proto_company_v1_service_proto_goTypes = []any{
-	(*NewCompanyRequest)(nil),      // 0: company.v1.NewCompanyRequest
-	(*UpdateCompanyRequest)(nil),   // 1: company.v1.UpdateCompanyRequest
-	(*DeleteCompanyRequest)(nil),   // 2: company.v1.DeleteCompanyRequest
-	(*GetCompanyRequest)(nil),      // 3: company.v1.GetCompanyRequest
-	(*GetAllCompaniesRequest)(nil), // 4: company.v1.GetAllCompaniesRequest
-	(*Company)(nil),                // 5: company.v1.Company
-	(*v1.Pagination)(nil),          // 6: common.v1.Pagination
-	(*v1.Empty)(nil),               // 7: common.v1.Empty
-	(*CompanyList)(nil),            // 8: company.v1.CompanyList
+	(MembershipStatus)(0),              // 0: company.v1.MembershipStatus
+	(*NewCompanyRequest)(nil),          // 1: company.v1.NewCompanyRequest
+	(*UpdateCompanyRequest)(nil),       // 2: company.v1.UpdateCompanyRequest
+	(*DeleteCompanyRequest)(nil),       // 3: company.v1.DeleteCompanyRequest
+	(*GetCompanyRequest)(nil),          // 4: company.v1.GetCompanyRequest
+	(*GetAllCompaniesRequest)(nil),     // 5: company.v1.GetAllCompaniesRequest
+	(*CompanyMember)(nil),              // 6: company.v1.CompanyMember
+	(*CompanyMemberList)(nil),          // 7: company.v1.CompanyMemberList
+	(*ApplyMembershipRequest)(nil),     // 8: company.v1.ApplyMembershipRequest
+	(*ReviewMembershipRequest)(nil),    // 9: company.v1.ReviewMembershipRequest
+	(*ListMembersRequest)(nil),         // 10: company.v1.ListMembersRequest
+	(*GetMembershipByUserRequest)(nil), // 11: company.v1.GetMembershipByUserRequest
+	(*Company)(nil),                    // 12: company.v1.Company
+	(*v1.Pagination)(nil),              // 13: common.v1.Pagination
+	(*v1.Empty)(nil),                   // 14: common.v1.Empty
+	(*CompanyList)(nil),                // 15: company.v1.CompanyList
 }
 var file_proto_company_v1_service_proto_depIdxs = []int32{
-	5, // 0: company.v1.NewCompanyRequest.company:type_name -> company.v1.Company
-	5, // 1: company.v1.UpdateCompanyRequest.company:type_name -> company.v1.Company
-	6, // 2: company.v1.GetAllCompaniesRequest.pagination:type_name -> common.v1.Pagination
-	0, // 3: company.v1.CompanyService.NewCompany:input_type -> company.v1.NewCompanyRequest
-	1, // 4: company.v1.CompanyService.UpdateCompany:input_type -> company.v1.UpdateCompanyRequest
-	2, // 5: company.v1.CompanyService.DeleteCompany:input_type -> company.v1.DeleteCompanyRequest
-	3, // 6: company.v1.CompanyService.GetCompany:input_type -> company.v1.GetCompanyRequest
-	4, // 7: company.v1.CompanyService.GetAllCompanies:input_type -> company.v1.GetAllCompaniesRequest
-	5, // 8: company.v1.CompanyService.NewCompany:output_type -> company.v1.Company
-	5, // 9: company.v1.CompanyService.UpdateCompany:output_type -> company.v1.Company
-	7, // 10: company.v1.CompanyService.DeleteCompany:output_type -> common.v1.Empty
-	5, // 11: company.v1.CompanyService.GetCompany:output_type -> company.v1.Company
-	8, // 12: company.v1.CompanyService.GetAllCompanies:output_type -> company.v1.CompanyList
-	8, // [8:13] is the sub-list for method output_type
-	3, // [3:8] is the sub-list for method input_type
-	3, // [3:3] is the sub-list for extension type_name
-	3, // [3:3] is the sub-list for extension extendee
-	0, // [0:3] is the sub-list for field type_name
+	12, // 0: company.v1.NewCompanyRequest.company:type_name -> company.v1.Company
+	12, // 1: company.v1.UpdateCompanyRequest.company:type_name -> company.v1.Company
+	13, // 2: company.v1.GetAllCompaniesRequest.pagination:type_name -> common.v1.Pagination
+	0,  // 3: company.v1.CompanyMember.status:type_name -> company.v1.MembershipStatus
+	6,  // 4: company.v1.CompanyMemberList.members:type_name -> company.v1.CompanyMember
+	0,  // 5: company.v1.ReviewMembershipRequest.status:type_name -> company.v1.MembershipStatus
+	0,  // 6: company.v1.ListMembersRequest.status:type_name -> company.v1.MembershipStatus
+	1,  // 7: company.v1.CompanyService.NewCompany:input_type -> company.v1.NewCompanyRequest
+	2,  // 8: company.v1.CompanyService.UpdateCompany:input_type -> company.v1.UpdateCompanyRequest
+	3,  // 9: company.v1.CompanyService.DeleteCompany:input_type -> company.v1.DeleteCompanyRequest
+	4,  // 10: company.v1.CompanyService.GetCompany:input_type -> company.v1.GetCompanyRequest
+	5,  // 11: company.v1.CompanyService.GetAllCompanies:input_type -> company.v1.GetAllCompaniesRequest
+	8,  // 12: company.v1.CompanyService.ApplyMembership:input_type -> company.v1.ApplyMembershipRequest
+	9,  // 13: company.v1.CompanyService.ReviewMembership:input_type -> company.v1.ReviewMembershipRequest
+	10, // 14: company.v1.CompanyService.ListMembers:input_type -> company.v1.ListMembersRequest
+	11, // 15: company.v1.CompanyService.GetMembershipByUser:input_type -> company.v1.GetMembershipByUserRequest
+	12, // 16: company.v1.CompanyService.NewCompany:output_type -> company.v1.Company
+	12, // 17: company.v1.CompanyService.UpdateCompany:output_type -> company.v1.Company
+	14, // 18: company.v1.CompanyService.DeleteCompany:output_type -> common.v1.Empty
+	12, // 19: company.v1.CompanyService.GetCompany:output_type -> company.v1.Company
+	15, // 20: company.v1.CompanyService.GetAllCompanies:output_type -> company.v1.CompanyList
+	6,  // 21: company.v1.CompanyService.ApplyMembership:output_type -> company.v1.CompanyMember
+	6,  // 22: company.v1.CompanyService.ReviewMembership:output_type -> company.v1.CompanyMember
+	7,  // 23: company.v1.CompanyService.ListMembers:output_type -> company.v1.CompanyMemberList
+	6,  // 24: company.v1.CompanyService.GetMembershipByUser:output_type -> company.v1.CompanyMember
+	16, // [16:25] is the sub-list for method output_type
+	7,  // [7:16] is the sub-list for method input_type
+	7,  // [7:7] is the sub-list for extension type_name
+	7,  // [7:7] is the sub-list for extension extendee
+	0,  // [0:7] is the sub-list for field type_name
 }
 
 func init() { file_proto_company_v1_service_proto_init() }
@@ -363,13 +815,14 @@ func file_proto_company_v1_service_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_company_v1_service_proto_rawDesc), len(file_proto_company_v1_service_proto_rawDesc)),
-			NumEnums:      0,
-			NumMessages:   5,
+			NumEnums:      1,
+			NumMessages:   11,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
 		GoTypes:           file_proto_company_v1_service_proto_goTypes,
 		DependencyIndexes: file_proto_company_v1_service_proto_depIdxs,
+		EnumInfos:         file_proto_company_v1_service_proto_enumTypes,
 		MessageInfos:      file_proto_company_v1_service_proto_msgTypes,
 	}.Build()
 	File_proto_company_v1_service_proto = out.File

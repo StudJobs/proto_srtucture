@@ -13,6 +13,15 @@ service CompanyService {
   rpc DeleteCompany(DeleteCompanyRequest) returns (common.v1.Empty);
   rpc GetCompany(GetCompanyRequest) returns (Company);
   rpc GetAllCompanies(GetAllCompaniesRequest) returns (CompanyList);
+
+  // HR-membership: HR подаёт заявку быть сотрудником конкретной компании.
+  rpc ApplyMembership(ApplyMembershipRequest) returns (CompanyMember);
+  // Owner одобряет/отклоняет заявку.
+  rpc ReviewMembership(ReviewMembershipRequest) returns (CompanyMember);
+  // Список сотрудников компании (для owner и для HR — увидеть статус).
+  rpc ListMembers(ListMembersRequest) returns (CompanyMemberList);
+  // Найти companyID, в которой пользователь подтверждённый HR.
+  rpc GetMembershipByUser(GetMembershipByUserRequest) returns (CompanyMember);
 }
 
 message NewCompanyRequest {
@@ -39,4 +48,45 @@ message GetAllCompaniesRequest {
   // query фильтрует компании по подстроке в name/description (ILIKE).
   // Пустая строка — не фильтровать.
   string query = 4;
+}
+
+enum MembershipStatus {
+  MEMBERSHIP_STATUS_UNSPECIFIED = 0;
+  MEMBERSHIP_STATUS_PENDING = 1;
+  MEMBERSHIP_STATUS_APPROVED = 2;
+  MEMBERSHIP_STATUS_REJECTED = 3;
+}
+
+message CompanyMember {
+  string id = 1;
+  string company_id = 2;
+  string user_id = 3;
+  MembershipStatus status = 4;
+  string note = 5;       // комментарий HR при заявке (например: «работаю в этой компании»)
+  string created_at = 6;
+  string reviewed_at = 7;
+}
+
+message CompanyMemberList {
+  repeated CompanyMember members = 1;
+}
+
+message ApplyMembershipRequest {
+  string company_id = 1;
+  string user_id = 2;
+  string note = 3;
+}
+
+message ReviewMembershipRequest {
+  string membership_id = 1;
+  MembershipStatus status = 2;
+}
+
+message ListMembersRequest {
+  string company_id = 1;
+  MembershipStatus status = 2; // 0 = все
+}
+
+message GetMembershipByUserRequest {
+  string user_id = 1;
 }

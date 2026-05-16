@@ -22,6 +22,102 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type GetRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetRequest) Reset() {
+	*x = GetRequest{}
+	mi := &file_proto_application_v1_service_proto_msgTypes[0]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetRequest) ProtoMessage() {}
+
+func (x *GetRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_application_v1_service_proto_msgTypes[0]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetRequest.ProtoReflect.Descriptor instead.
+func (*GetRequest) Descriptor() ([]byte, []int) {
+	return file_proto_application_v1_service_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *GetRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type AssignHRRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	HrUserId      string                 `protobuf:"bytes,2,opt,name=hr_user_id,json=hrUserId,proto3" json:"hr_user_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AssignHRRequest) Reset() {
+	*x = AssignHRRequest{}
+	mi := &file_proto_application_v1_service_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AssignHRRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AssignHRRequest) ProtoMessage() {}
+
+func (x *AssignHRRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_application_v1_service_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AssignHRRequest.ProtoReflect.Descriptor instead.
+func (*AssignHRRequest) Descriptor() ([]byte, []int) {
+	return file_proto_application_v1_service_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *AssignHRRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *AssignHRRequest) GetHrUserId() string {
+	if x != nil {
+		return x.HrUserId
+	}
+	return ""
+}
+
 type ApplyRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	VacancyId     string                 `protobuf:"bytes,1,opt,name=vacancy_id,json=vacancyId,proto3" json:"vacancy_id,omitempty"`
@@ -33,7 +129,7 @@ type ApplyRequest struct {
 
 func (x *ApplyRequest) Reset() {
 	*x = ApplyRequest{}
-	mi := &file_proto_application_v1_service_proto_msgTypes[0]
+	mi := &file_proto_application_v1_service_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -45,7 +141,7 @@ func (x *ApplyRequest) String() string {
 func (*ApplyRequest) ProtoMessage() {}
 
 func (x *ApplyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_application_v1_service_proto_msgTypes[0]
+	mi := &file_proto_application_v1_service_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -58,7 +154,7 @@ func (x *ApplyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ApplyRequest.ProtoReflect.Descriptor instead.
 func (*ApplyRequest) Descriptor() ([]byte, []int) {
-	return file_proto_application_v1_service_proto_rawDescGZIP(), []int{0}
+	return file_proto_application_v1_service_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *ApplyRequest) GetVacancyId() string {
@@ -92,7 +188,7 @@ type WithdrawRequest struct {
 
 func (x *WithdrawRequest) Reset() {
 	*x = WithdrawRequest{}
-	mi := &file_proto_application_v1_service_proto_msgTypes[1]
+	mi := &file_proto_application_v1_service_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -104,7 +200,7 @@ func (x *WithdrawRequest) String() string {
 func (*WithdrawRequest) ProtoMessage() {}
 
 func (x *WithdrawRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_application_v1_service_proto_msgTypes[1]
+	mi := &file_proto_application_v1_service_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -117,7 +213,7 @@ func (x *WithdrawRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WithdrawRequest.ProtoReflect.Descriptor instead.
 func (*WithdrawRequest) Descriptor() ([]byte, []int) {
-	return file_proto_application_v1_service_proto_rawDescGZIP(), []int{1}
+	return file_proto_application_v1_service_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *WithdrawRequest) GetId() string {
@@ -146,7 +242,7 @@ type ListMineRequest struct {
 
 func (x *ListMineRequest) Reset() {
 	*x = ListMineRequest{}
-	mi := &file_proto_application_v1_service_proto_msgTypes[2]
+	mi := &file_proto_application_v1_service_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -158,7 +254,7 @@ func (x *ListMineRequest) String() string {
 func (*ListMineRequest) ProtoMessage() {}
 
 func (x *ListMineRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_application_v1_service_proto_msgTypes[2]
+	mi := &file_proto_application_v1_service_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -171,7 +267,7 @@ func (x *ListMineRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListMineRequest.ProtoReflect.Descriptor instead.
 func (*ListMineRequest) Descriptor() ([]byte, []int) {
-	return file_proto_application_v1_service_proto_rawDescGZIP(), []int{2}
+	return file_proto_application_v1_service_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *ListMineRequest) GetStudentId() string {
@@ -206,7 +302,7 @@ type ListForVacancyRequest struct {
 
 func (x *ListForVacancyRequest) Reset() {
 	*x = ListForVacancyRequest{}
-	mi := &file_proto_application_v1_service_proto_msgTypes[3]
+	mi := &file_proto_application_v1_service_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -218,7 +314,7 @@ func (x *ListForVacancyRequest) String() string {
 func (*ListForVacancyRequest) ProtoMessage() {}
 
 func (x *ListForVacancyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_application_v1_service_proto_msgTypes[3]
+	mi := &file_proto_application_v1_service_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -231,7 +327,7 @@ func (x *ListForVacancyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListForVacancyRequest.ProtoReflect.Descriptor instead.
 func (*ListForVacancyRequest) Descriptor() ([]byte, []int) {
-	return file_proto_application_v1_service_proto_rawDescGZIP(), []int{3}
+	return file_proto_application_v1_service_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *ListForVacancyRequest) GetVacancyId() string {
@@ -266,7 +362,7 @@ type UpdateStatusRequest struct {
 
 func (x *UpdateStatusRequest) Reset() {
 	*x = UpdateStatusRequest{}
-	mi := &file_proto_application_v1_service_proto_msgTypes[4]
+	mi := &file_proto_application_v1_service_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -278,7 +374,7 @@ func (x *UpdateStatusRequest) String() string {
 func (*UpdateStatusRequest) ProtoMessage() {}
 
 func (x *UpdateStatusRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_application_v1_service_proto_msgTypes[4]
+	mi := &file_proto_application_v1_service_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -291,7 +387,7 @@ func (x *UpdateStatusRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateStatusRequest.ProtoReflect.Descriptor instead.
 func (*UpdateStatusRequest) Descriptor() ([]byte, []int) {
-	return file_proto_application_v1_service_proto_rawDescGZIP(), []int{4}
+	return file_proto_application_v1_service_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *UpdateStatusRequest) GetId() string {
@@ -319,7 +415,14 @@ var File_proto_application_v1_service_proto protoreflect.FileDescriptor
 
 const file_proto_application_v1_service_proto_rawDesc = "" +
 	"\n" +
-	"\"proto/application/v1/service.proto\x12\x0eapplication.v1\x1a proto/application/v1/types.proto\x1a\x1bproto/common/v1/types.proto\"o\n" +
+	"\"proto/application/v1/service.proto\x12\x0eapplication.v1\x1a proto/application/v1/types.proto\x1a\x1bproto/common/v1/types.proto\"\x1c\n" +
+	"\n" +
+	"GetRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"?\n" +
+	"\x0fAssignHRRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1c\n" +
+	"\n" +
+	"hr_user_id\x18\x02 \x01(\tR\bhrUserId\"o\n" +
 	"\fApplyRequest\x12\x1d\n" +
 	"\n" +
 	"vacancy_id\x18\x01 \x01(\tR\tvacancyId\x12\x1d\n" +
@@ -348,13 +451,15 @@ const file_proto_application_v1_service_proto_rawDesc = "" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x129\n" +
 	"\x06status\x18\x02 \x01(\x0e2!.application.v1.ApplicationStatusR\x06status\x12\x1d\n" +
 	"\n" +
-	"hr_comment\x18\x03 \x01(\tR\thrComment2\x91\x03\n" +
+	"hr_comment\x18\x03 \x01(\tR\thrComment2\x9b\x04\n" +
 	"\x12ApplicationService\x12B\n" +
 	"\x05Apply\x12\x1c.application.v1.ApplyRequest\x1a\x1b.application.v1.Application\x12=\n" +
 	"\bWithdraw\x12\x1f.application.v1.WithdrawRequest\x1a\x10.common.v1.Empty\x12L\n" +
 	"\bListMine\x12\x1f.application.v1.ListMineRequest\x1a\x1f.application.v1.ApplicationList\x12X\n" +
 	"\x0eListForVacancy\x12%.application.v1.ListForVacancyRequest\x1a\x1f.application.v1.ApplicationList\x12P\n" +
-	"\fUpdateStatus\x12#.application.v1.UpdateStatusRequest\x1a\x1b.application.v1.ApplicationBAZ?github.com/StudJobs/proto_srtucture/gen/go/proto/application/v1b\x06proto3"
+	"\fUpdateStatus\x12#.application.v1.UpdateStatusRequest\x1a\x1b.application.v1.Application\x12>\n" +
+	"\x03Get\x12\x1a.application.v1.GetRequest\x1a\x1b.application.v1.Application\x12H\n" +
+	"\bAssignHR\x12\x1f.application.v1.AssignHRRequest\x1a\x1b.application.v1.ApplicationBAZ?github.com/StudJobs/proto_srtucture/gen/go/proto/application/v1b\x06proto3"
 
 var (
 	file_proto_application_v1_service_proto_rawDescOnce sync.Once
@@ -368,37 +473,43 @@ func file_proto_application_v1_service_proto_rawDescGZIP() []byte {
 	return file_proto_application_v1_service_proto_rawDescData
 }
 
-var file_proto_application_v1_service_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_proto_application_v1_service_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_proto_application_v1_service_proto_goTypes = []any{
-	(*ApplyRequest)(nil),          // 0: application.v1.ApplyRequest
-	(*WithdrawRequest)(nil),       // 1: application.v1.WithdrawRequest
-	(*ListMineRequest)(nil),       // 2: application.v1.ListMineRequest
-	(*ListForVacancyRequest)(nil), // 3: application.v1.ListForVacancyRequest
-	(*UpdateStatusRequest)(nil),   // 4: application.v1.UpdateStatusRequest
-	(*v1.Pagination)(nil),         // 5: common.v1.Pagination
-	(ApplicationStatus)(0),        // 6: application.v1.ApplicationStatus
-	(*Application)(nil),           // 7: application.v1.Application
-	(*v1.Empty)(nil),              // 8: common.v1.Empty
-	(*ApplicationList)(nil),       // 9: application.v1.ApplicationList
+	(*GetRequest)(nil),            // 0: application.v1.GetRequest
+	(*AssignHRRequest)(nil),       // 1: application.v1.AssignHRRequest
+	(*ApplyRequest)(nil),          // 2: application.v1.ApplyRequest
+	(*WithdrawRequest)(nil),       // 3: application.v1.WithdrawRequest
+	(*ListMineRequest)(nil),       // 4: application.v1.ListMineRequest
+	(*ListForVacancyRequest)(nil), // 5: application.v1.ListForVacancyRequest
+	(*UpdateStatusRequest)(nil),   // 6: application.v1.UpdateStatusRequest
+	(*v1.Pagination)(nil),         // 7: common.v1.Pagination
+	(ApplicationStatus)(0),        // 8: application.v1.ApplicationStatus
+	(*Application)(nil),           // 9: application.v1.Application
+	(*v1.Empty)(nil),              // 10: common.v1.Empty
+	(*ApplicationList)(nil),       // 11: application.v1.ApplicationList
 }
 var file_proto_application_v1_service_proto_depIdxs = []int32{
-	5,  // 0: application.v1.ListMineRequest.pagination:type_name -> common.v1.Pagination
-	6,  // 1: application.v1.ListMineRequest.status:type_name -> application.v1.ApplicationStatus
-	5,  // 2: application.v1.ListForVacancyRequest.pagination:type_name -> common.v1.Pagination
-	6,  // 3: application.v1.ListForVacancyRequest.status:type_name -> application.v1.ApplicationStatus
-	6,  // 4: application.v1.UpdateStatusRequest.status:type_name -> application.v1.ApplicationStatus
-	0,  // 5: application.v1.ApplicationService.Apply:input_type -> application.v1.ApplyRequest
-	1,  // 6: application.v1.ApplicationService.Withdraw:input_type -> application.v1.WithdrawRequest
-	2,  // 7: application.v1.ApplicationService.ListMine:input_type -> application.v1.ListMineRequest
-	3,  // 8: application.v1.ApplicationService.ListForVacancy:input_type -> application.v1.ListForVacancyRequest
-	4,  // 9: application.v1.ApplicationService.UpdateStatus:input_type -> application.v1.UpdateStatusRequest
-	7,  // 10: application.v1.ApplicationService.Apply:output_type -> application.v1.Application
-	8,  // 11: application.v1.ApplicationService.Withdraw:output_type -> common.v1.Empty
-	9,  // 12: application.v1.ApplicationService.ListMine:output_type -> application.v1.ApplicationList
-	9,  // 13: application.v1.ApplicationService.ListForVacancy:output_type -> application.v1.ApplicationList
-	7,  // 14: application.v1.ApplicationService.UpdateStatus:output_type -> application.v1.Application
-	10, // [10:15] is the sub-list for method output_type
-	5,  // [5:10] is the sub-list for method input_type
+	7,  // 0: application.v1.ListMineRequest.pagination:type_name -> common.v1.Pagination
+	8,  // 1: application.v1.ListMineRequest.status:type_name -> application.v1.ApplicationStatus
+	7,  // 2: application.v1.ListForVacancyRequest.pagination:type_name -> common.v1.Pagination
+	8,  // 3: application.v1.ListForVacancyRequest.status:type_name -> application.v1.ApplicationStatus
+	8,  // 4: application.v1.UpdateStatusRequest.status:type_name -> application.v1.ApplicationStatus
+	2,  // 5: application.v1.ApplicationService.Apply:input_type -> application.v1.ApplyRequest
+	3,  // 6: application.v1.ApplicationService.Withdraw:input_type -> application.v1.WithdrawRequest
+	4,  // 7: application.v1.ApplicationService.ListMine:input_type -> application.v1.ListMineRequest
+	5,  // 8: application.v1.ApplicationService.ListForVacancy:input_type -> application.v1.ListForVacancyRequest
+	6,  // 9: application.v1.ApplicationService.UpdateStatus:input_type -> application.v1.UpdateStatusRequest
+	0,  // 10: application.v1.ApplicationService.Get:input_type -> application.v1.GetRequest
+	1,  // 11: application.v1.ApplicationService.AssignHR:input_type -> application.v1.AssignHRRequest
+	9,  // 12: application.v1.ApplicationService.Apply:output_type -> application.v1.Application
+	10, // 13: application.v1.ApplicationService.Withdraw:output_type -> common.v1.Empty
+	11, // 14: application.v1.ApplicationService.ListMine:output_type -> application.v1.ApplicationList
+	11, // 15: application.v1.ApplicationService.ListForVacancy:output_type -> application.v1.ApplicationList
+	9,  // 16: application.v1.ApplicationService.UpdateStatus:output_type -> application.v1.Application
+	9,  // 17: application.v1.ApplicationService.Get:output_type -> application.v1.Application
+	9,  // 18: application.v1.ApplicationService.AssignHR:output_type -> application.v1.Application
+	12, // [12:19] is the sub-list for method output_type
+	5,  // [5:12] is the sub-list for method input_type
 	5,  // [5:5] is the sub-list for extension type_name
 	5,  // [5:5] is the sub-list for extension extendee
 	0,  // [0:5] is the sub-list for field type_name
@@ -416,7 +527,7 @@ func file_proto_application_v1_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_application_v1_service_proto_rawDesc), len(file_proto_application_v1_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   5,
+			NumMessages:   7,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

@@ -27,6 +27,8 @@ message Application {
   // Сводные поля, заполняются только в ответах ListMine/ListForVacancy.
   // hr_comment — необязательный коммент HR при accept/reject.
   string hr_comment = 8;
+  // HR-сотрудник, взявший отклик в работу (auto-set при первом просмотре отклика HR'ом).
+  string hr_assignee_id = 9;
 }
 
 message ApplicationList {

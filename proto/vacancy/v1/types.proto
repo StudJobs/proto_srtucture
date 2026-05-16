@@ -30,6 +30,17 @@ message Vacancy {
   string attachment_id = 10;
   // Slug-и навыков, требуемых для вакансии
   repeated string skill_slugs = 11;
+
+  // Модерация вакансий компанией (для HR-flow):
+  //   1 — на модерации (создал HR-сотрудник, ждёт одобрения owner-ом),
+  //   2 — опубликовано (либо owner создал сам, либо HR + approved),
+  //   3 — отклонено owner-ом.
+  // Студенты видят только PUBLISHED.
+  int32 moderation_status = 12;
+  // Автор-сотрудник, создавший вакансию (опц. HR; для owner-creator равен company_id).
+  string author_id = 13;
+  // Комментарий модератора при отклонении.
+  string moderation_comment = 14;
 }
 
 // Список вакансий с пагинацией

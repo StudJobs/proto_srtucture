@@ -20,11 +20,15 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	CompanyService_NewCompany_FullMethodName      = "/company.v1.CompanyService/NewCompany"
-	CompanyService_UpdateCompany_FullMethodName   = "/company.v1.CompanyService/UpdateCompany"
-	CompanyService_DeleteCompany_FullMethodName   = "/company.v1.CompanyService/DeleteCompany"
-	CompanyService_GetCompany_FullMethodName      = "/company.v1.CompanyService/GetCompany"
-	CompanyService_GetAllCompanies_FullMethodName = "/company.v1.CompanyService/GetAllCompanies"
+	CompanyService_NewCompany_FullMethodName          = "/company.v1.CompanyService/NewCompany"
+	CompanyService_UpdateCompany_FullMethodName       = "/company.v1.CompanyService/UpdateCompany"
+	CompanyService_DeleteCompany_FullMethodName       = "/company.v1.CompanyService/DeleteCompany"
+	CompanyService_GetCompany_FullMethodName          = "/company.v1.CompanyService/GetCompany"
+	CompanyService_GetAllCompanies_FullMethodName     = "/company.v1.CompanyService/GetAllCompanies"
+	CompanyService_ApplyMembership_FullMethodName     = "/company.v1.CompanyService/ApplyMembership"
+	CompanyService_ReviewMembership_FullMethodName    = "/company.v1.CompanyService/ReviewMembership"
+	CompanyService_ListMembers_FullMethodName         = "/company.v1.CompanyService/ListMembers"
+	CompanyService_GetMembershipByUser_FullMethodName = "/company.v1.CompanyService/GetMembershipByUser"
 )
 
 // CompanyServiceClient is the client API for CompanyService service.
@@ -36,6 +40,14 @@ type CompanyServiceClient interface {
 	DeleteCompany(ctx context.Context, in *DeleteCompanyRequest, opts ...grpc.CallOption) (*v1.Empty, error)
 	GetCompany(ctx context.Context, in *GetCompanyRequest, opts ...grpc.CallOption) (*Company, error)
 	GetAllCompanies(ctx context.Context, in *GetAllCompaniesRequest, opts ...grpc.CallOption) (*CompanyList, error)
+	// HR-membership: HR подаёт заявку быть сотрудником конкретной компании.
+	ApplyMembership(ctx context.Context, in *ApplyMembershipRequest, opts ...grpc.CallOption) (*CompanyMember, error)
+	// Owner одобряет/отклоняет заявку.
+	ReviewMembership(ctx context.Context, in *ReviewMembershipRequest, opts ...grpc.CallOption) (*CompanyMember, error)
+	// Список сотрудников компании (для owner и для HR — увидеть статус).
+	ListMembers(ctx context.Context, in *ListMembersRequest, opts ...grpc.CallOption) (*CompanyMemberList, error)
+	// Найти companyID, в которой пользователь подтверждённый HR.
+	GetMembershipByUser(ctx context.Context, in *GetMembershipByUserRequest, opts ...grpc.CallOption) (*CompanyMember, error)
 }
 
 type companyServiceClient struct {
@@ -96,6 +108,46 @@ func (c *companyServiceClient) GetAllCompanies(ctx context.Context, in *GetAllCo
 	return out, nil
 }
 
+func (c *companyServiceClient) ApplyMembership(ctx context.Context, in *ApplyMembershipRequest, opts ...grpc.CallOption) (*CompanyMember, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CompanyMember)
+	err := c.cc.Invoke(ctx, CompanyService_ApplyMembership_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *companyServiceClient) ReviewMembership(ctx context.Context, in *ReviewMembershipRequest, opts ...grpc.CallOption) (*CompanyMember, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CompanyMember)
+	err := c.cc.Invoke(ctx, CompanyService_ReviewMembership_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *companyServiceClient) ListMembers(ctx context.Context, in *ListMembersRequest, opts ...grpc.CallOption) (*CompanyMemberList, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CompanyMemberList)
+	err := c.cc.Invoke(ctx, CompanyService_ListMembers_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *companyServiceClient) GetMembershipByUser(ctx context.Context, in *GetMembershipByUserRequest, opts ...grpc.CallOption) (*CompanyMember, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CompanyMember)
+	err := c.cc.Invoke(ctx, CompanyService_GetMembershipByUser_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // CompanyServiceServer is the server API for CompanyService service.
 // All implementations must embed UnimplementedCompanyServiceServer
 // for forward compatibility.
@@ -105,6 +157,14 @@ type CompanyServiceServer interface {
 	DeleteCompany(context.Context, *DeleteCompanyRequest) (*v1.Empty, error)
 	GetCompany(context.Context, *GetCompanyRequest) (*Company, error)
 	GetAllCompanies(context.Context, *GetAllCompaniesRequest) (*CompanyList, error)
+	// HR-membership: HR подаёт заявку быть сотрудником конкретной компании.
+	ApplyMembership(context.Context, *ApplyMembershipRequest) (*CompanyMember, error)
+	// Owner одобряет/отклоняет заявку.
+	ReviewMembership(context.Context, *ReviewMembershipRequest) (*CompanyMember, error)
+	// Список сотрудников компании (для owner и для HR — увидеть статус).
+	ListMembers(context.Context, *ListMembersRequest) (*CompanyMemberList, error)
+	// Найти companyID, в которой пользователь подтверждённый HR.
+	GetMembershipByUser(context.Context, *GetMembershipByUserRequest) (*CompanyMember, error)
 	mustEmbedUnimplementedCompanyServiceServer()
 }
 
@@ -129,6 +189,18 @@ func (UnimplementedCompanyServiceServer) GetCompany(context.Context, *GetCompany
 }
 func (UnimplementedCompanyServiceServer) GetAllCompanies(context.Context, *GetAllCompaniesRequest) (*CompanyList, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetAllCompanies not implemented")
+}
+func (UnimplementedCompanyServiceServer) ApplyMembership(context.Context, *ApplyMembershipRequest) (*CompanyMember, error) {
+	return nil, status.Error(codes.Unimplemented, "method ApplyMembership not implemented")
+}
+func (UnimplementedCompanyServiceServer) ReviewMembership(context.Context, *ReviewMembershipRequest) (*CompanyMember, error) {
+	return nil, status.Error(codes.Unimplemented, "method ReviewMembership not implemented")
+}
+func (UnimplementedCompanyServiceServer) ListMembers(context.Context, *ListMembersRequest) (*CompanyMemberList, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListMembers not implemented")
+}
+func (UnimplementedCompanyServiceServer) GetMembershipByUser(context.Context, *GetMembershipByUserRequest) (*CompanyMember, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetMembershipByUser not implemented")
 }
 func (UnimplementedCompanyServiceServer) mustEmbedUnimplementedCompanyServiceServer() {}
 func (UnimplementedCompanyServiceServer) testEmbeddedByValue()                        {}
@@ -241,6 +313,78 @@ func _CompanyService_GetAllCompanies_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CompanyService_ApplyMembership_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ApplyMembershipRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CompanyServiceServer).ApplyMembership(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CompanyService_ApplyMembership_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CompanyServiceServer).ApplyMembership(ctx, req.(*ApplyMembershipRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CompanyService_ReviewMembership_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ReviewMembershipRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CompanyServiceServer).ReviewMembership(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CompanyService_ReviewMembership_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CompanyServiceServer).ReviewMembership(ctx, req.(*ReviewMembershipRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CompanyService_ListMembers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListMembersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CompanyServiceServer).ListMembers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CompanyService_ListMembers_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CompanyServiceServer).ListMembers(ctx, req.(*ListMembersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CompanyService_GetMembershipByUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetMembershipByUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CompanyServiceServer).GetMembershipByUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CompanyService_GetMembershipByUser_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CompanyServiceServer).GetMembershipByUser(ctx, req.(*GetMembershipByUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // CompanyService_ServiceDesc is the grpc.ServiceDesc for CompanyService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -267,6 +411,22 @@ var CompanyService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAllCompanies",
 			Handler:    _CompanyService_GetAllCompanies_Handler,
+		},
+		{
+			MethodName: "ApplyMembership",
+			Handler:    _CompanyService_ApplyMembership_Handler,
+		},
+		{
+			MethodName: "ReviewMembership",
+			Handler:    _CompanyService_ReviewMembership_Handler,
+		},
+		{
+			MethodName: "ListMembers",
+			Handler:    _CompanyService_ListMembers_Handler,
+		},
+		{
+			MethodName: "GetMembershipByUser",
+			Handler:    _CompanyService_GetMembershipByUser_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

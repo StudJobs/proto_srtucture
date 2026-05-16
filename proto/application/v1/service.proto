@@ -26,6 +26,22 @@ service ApplicationService {
 
   // UpdateStatus — HR меняет статус отклика (accept/reject + опциональный коммент).
   rpc UpdateStatus(UpdateStatusRequest) returns (Application);
+
+  // Get — получить один отклик по id (нужно для chat-access-check, owner/HR-membership).
+  rpc Get(GetRequest) returns (Application);
+
+  // AssignHR — auto-set hr_assignee_id при первом просмотре отклика HR-сотрудником.
+  // Идемпотентно: если уже set — возвращает текущего assignee без изменений.
+  rpc AssignHR(AssignHRRequest) returns (Application);
+}
+
+message GetRequest {
+  string id = 1;
+}
+
+message AssignHRRequest {
+  string id = 1;
+  string hr_user_id = 2;
 }
 
 message ApplyRequest {
