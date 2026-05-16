@@ -132,20 +132,26 @@ func (SubmissionStatus) EnumDescriptor() ([]byte, []int) {
 }
 
 type MicroTask struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	CompanyId     string                 `protobuf:"bytes,2,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"` // UUID компании-владельца задачи
-	Title         string                 `protobuf:"bytes,3,opt,name=title,proto3" json:"title,omitempty"`
-	Description   string                 `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`                 // Многострочное описание задачи
-	Reward        int32                  `protobuf:"varint,5,opt,name=reward,proto3" json:"reward,omitempty"`                          // Награда в рублях (опционально, может быть 0)
-	Deadline      string                 `protobuf:"bytes,6,opt,name=deadline,proto3" json:"deadline,omitempty"`                       // ISO-дата дедлайна
-	SkillSlugs    []string               `protobuf:"bytes,7,rep,name=skill_slugs,json=skillSlugs,proto3" json:"skill_slugs,omitempty"` // Slug-и нужных для решения навыков
-	Status        MicroTaskStatus        `protobuf:"varint,8,opt,name=status,proto3,enum=microtask.v1.MicroTaskStatus" json:"status,omitempty"`
-	AssignedTo    string                 `protobuf:"bytes,9,opt,name=assigned_to,json=assignedTo,proto3" json:"assigned_to,omitempty"` // UUID студента, который взял задачу (если ASSIGNED+)
-	CreatedAt     string                 `protobuf:"bytes,10,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	UpdatedAt     string                 `protobuf:"bytes,11,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state       protoimpl.MessageState `protogen:"open.v1"`
+	Id          string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	CompanyId   string                 `protobuf:"bytes,2,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"` // UUID компании-владельца задачи (для quest — UUID эксперта)
+	Title       string                 `protobuf:"bytes,3,opt,name=title,proto3" json:"title,omitempty"`
+	Description string                 `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`                 // Многострочное описание задачи
+	Reward      int32                  `protobuf:"varint,5,opt,name=reward,proto3" json:"reward,omitempty"`                          // Награда в рублях (опционально, может быть 0)
+	Deadline    string                 `protobuf:"bytes,6,opt,name=deadline,proto3" json:"deadline,omitempty"`                       // ISO-дата дедлайна
+	SkillSlugs  []string               `protobuf:"bytes,7,rep,name=skill_slugs,json=skillSlugs,proto3" json:"skill_slugs,omitempty"` // Slug-и нужных для решения навыков
+	Status      MicroTaskStatus        `protobuf:"varint,8,opt,name=status,proto3,enum=microtask.v1.MicroTaskStatus" json:"status,omitempty"`
+	AssignedTo  string                 `protobuf:"bytes,9,opt,name=assigned_to,json=assignedTo,proto3" json:"assigned_to,omitempty"` // UUID студента, который взял задачу (если ASSIGNED+)
+	CreatedAt   string                 `protobuf:"bytes,10,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	UpdatedAt   string                 `protobuf:"bytes,11,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	// Поля типа «квест от эксперта». Если is_skill_quest=true, задача создаётся
+	// эксперт-ом для конкретного студента, исключается из публичной выдачи List,
+	// и при approve добавляет target_skill_slug в verified_skill_slugs профиля.
+	IsSkillQuest    bool   `protobuf:"varint,12,opt,name=is_skill_quest,json=isSkillQuest,proto3" json:"is_skill_quest,omitempty"`
+	TargetStudentId string `protobuf:"bytes,13,opt,name=target_student_id,json=targetStudentId,proto3" json:"target_student_id,omitempty"`
+	TargetSkillSlug string `protobuf:"bytes,14,opt,name=target_skill_slug,json=targetSkillSlug,proto3" json:"target_skill_slug,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
 func (x *MicroTask) Reset() {
@@ -255,6 +261,27 @@ func (x *MicroTask) GetUpdatedAt() string {
 	return ""
 }
 
+func (x *MicroTask) GetIsSkillQuest() bool {
+	if x != nil {
+		return x.IsSkillQuest
+	}
+	return false
+}
+
+func (x *MicroTask) GetTargetStudentId() string {
+	if x != nil {
+		return x.TargetStudentId
+	}
+	return ""
+}
+
+func (x *MicroTask) GetTargetSkillSlug() string {
+	if x != nil {
+		return x.TargetSkillSlug
+	}
+	return ""
+}
+
 type MicroTaskList struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Tasks         []*MicroTask           `protobuf:"bytes,1,rep,name=tasks,proto3" json:"tasks,omitempty"`
@@ -308,18 +335,20 @@ func (x *MicroTaskList) GetPagination() *v1.PaginationResponse {
 }
 
 type Submission struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	MicrotaskId   string                 `protobuf:"bytes,2,opt,name=microtask_id,json=microtaskId,proto3" json:"microtask_id,omitempty"`
-	StudentId     string                 `protobuf:"bytes,3,opt,name=student_id,json=studentId,proto3" json:"student_id,omitempty"`
-	SolutionUrl   string                 `protobuf:"bytes,4,opt,name=solution_url,json=solutionUrl,proto3" json:"solution_url,omitempty"` // Ссылка на репо/файл с решением
-	Comment       string                 `protobuf:"bytes,5,opt,name=comment,proto3" json:"comment,omitempty"`                            // Комментарий студента (опционально)
-	Status        SubmissionStatus       `protobuf:"varint,6,opt,name=status,proto3,enum=microtask.v1.SubmissionStatus" json:"status,omitempty"`
-	ReviewComment string                 `protobuf:"bytes,7,opt,name=review_comment,json=reviewComment,proto3" json:"review_comment,omitempty"` // Комментарий HR при approve/reject
-	SubmittedAt   string                 `protobuf:"bytes,8,opt,name=submitted_at,json=submittedAt,proto3" json:"submitted_at,omitempty"`
-	ReviewedAt    string                 `protobuf:"bytes,9,opt,name=reviewed_at,json=reviewedAt,proto3" json:"reviewed_at,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	Id               string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	MicrotaskId      string                 `protobuf:"bytes,2,opt,name=microtask_id,json=microtaskId,proto3" json:"microtask_id,omitempty"`
+	StudentId        string                 `protobuf:"bytes,3,opt,name=student_id,json=studentId,proto3" json:"student_id,omitempty"`
+	SolutionUrl      string                 `protobuf:"bytes,4,opt,name=solution_url,json=solutionUrl,proto3" json:"solution_url,omitempty"` // Ссылка на репо/файл с решением (если задана студентом)
+	Comment          string                 `protobuf:"bytes,5,opt,name=comment,proto3" json:"comment,omitempty"`                            // Комментарий студента (опционально)
+	Status           SubmissionStatus       `protobuf:"varint,6,opt,name=status,proto3,enum=microtask.v1.SubmissionStatus" json:"status,omitempty"`
+	ReviewComment    string                 `protobuf:"bytes,7,opt,name=review_comment,json=reviewComment,proto3" json:"review_comment,omitempty"` // Комментарий HR при approve/reject
+	SubmittedAt      string                 `protobuf:"bytes,8,opt,name=submitted_at,json=submittedAt,proto3" json:"submitted_at,omitempty"`
+	ReviewedAt       string                 `protobuf:"bytes,9,opt,name=reviewed_at,json=reviewedAt,proto3" json:"reviewed_at,omitempty"`
+	SolutionFileName string                 `protobuf:"bytes,10,opt,name=solution_file_name,json=solutionFileName,proto3" json:"solution_file_name,omitempty"` // Имя загруженного файла (если был загружен через S3)
+	SolutionFileUrl  string                 `protobuf:"bytes,11,opt,name=solution_file_url,json=solutionFileUrl,proto3" json:"solution_file_url,omitempty"`    // GET-presigned URL — заполняется при выдаче в API, не хранится в БД
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
 }
 
 func (x *Submission) Reset() {
@@ -415,6 +444,20 @@ func (x *Submission) GetReviewedAt() string {
 	return ""
 }
 
+func (x *Submission) GetSolutionFileName() string {
+	if x != nil {
+		return x.SolutionFileName
+	}
+	return ""
+}
+
+func (x *Submission) GetSolutionFileUrl() string {
+	if x != nil {
+		return x.SolutionFileUrl
+	}
+	return ""
+}
+
 type SubmissionList struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Submissions   []*Submission          `protobuf:"bytes,1,rep,name=submissions,proto3" json:"submissions,omitempty"`
@@ -471,7 +514,7 @@ var File_proto_microtask_v1_types_proto protoreflect.FileDescriptor
 
 const file_proto_microtask_v1_types_proto_rawDesc = "" +
 	"\n" +
-	"\x1eproto/microtask/v1/types.proto\x12\fmicrotask.v1\x1a\x1bproto/common/v1/types.proto\"\xdd\x02\n" +
+	"\x1eproto/microtask/v1/types.proto\x12\fmicrotask.v1\x1a\x1bproto/common/v1/types.proto\"\xdb\x03\n" +
 	"\tMicroTask\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1d\n" +
 	"\n" +
@@ -489,12 +532,15 @@ const file_proto_microtask_v1_types_proto_rawDesc = "" +
 	"created_at\x18\n" +
 	" \x01(\tR\tcreatedAt\x12\x1d\n" +
 	"\n" +
-	"updated_at\x18\v \x01(\tR\tupdatedAt\"}\n" +
+	"updated_at\x18\v \x01(\tR\tupdatedAt\x12$\n" +
+	"\x0eis_skill_quest\x18\f \x01(\bR\fisSkillQuest\x12*\n" +
+	"\x11target_student_id\x18\r \x01(\tR\x0ftargetStudentId\x12*\n" +
+	"\x11target_skill_slug\x18\x0e \x01(\tR\x0ftargetSkillSlug\"}\n" +
 	"\rMicroTaskList\x12-\n" +
 	"\x05tasks\x18\x01 \x03(\v2\x17.microtask.v1.MicroTaskR\x05tasks\x12=\n" +
 	"\n" +
 	"pagination\x18\x02 \x01(\v2\x1d.common.v1.PaginationResponseR\n" +
-	"pagination\"\xbe\x02\n" +
+	"pagination\"\x98\x03\n" +
 	"\n" +
 	"Submission\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12!\n" +
@@ -507,7 +553,10 @@ const file_proto_microtask_v1_types_proto_rawDesc = "" +
 	"\x0ereview_comment\x18\a \x01(\tR\rreviewComment\x12!\n" +
 	"\fsubmitted_at\x18\b \x01(\tR\vsubmittedAt\x12\x1f\n" +
 	"\vreviewed_at\x18\t \x01(\tR\n" +
-	"reviewedAt\"\x8b\x01\n" +
+	"reviewedAt\x12,\n" +
+	"\x12solution_file_name\x18\n" +
+	" \x01(\tR\x10solutionFileName\x12*\n" +
+	"\x11solution_file_url\x18\v \x01(\tR\x0fsolutionFileUrl\"\x8b\x01\n" +
 	"\x0eSubmissionList\x12:\n" +
 	"\vsubmissions\x18\x01 \x03(\v2\x18.microtask.v1.SubmissionR\vsubmissions\x12=\n" +
 	"\n" +

@@ -20,17 +20,20 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	MicroTaskService_Create_FullMethodName          = "/microtask.v1.MicroTaskService/Create"
-	MicroTaskService_Update_FullMethodName          = "/microtask.v1.MicroTaskService/Update"
-	MicroTaskService_Delete_FullMethodName          = "/microtask.v1.MicroTaskService/Delete"
-	MicroTaskService_Get_FullMethodName             = "/microtask.v1.MicroTaskService/Get"
-	MicroTaskService_List_FullMethodName            = "/microtask.v1.MicroTaskService/List"
-	MicroTaskService_ListByCompany_FullMethodName   = "/microtask.v1.MicroTaskService/ListByCompany"
-	MicroTaskService_ListByStudent_FullMethodName   = "/microtask.v1.MicroTaskService/ListByStudent"
-	MicroTaskService_Apply_FullMethodName           = "/microtask.v1.MicroTaskService/Apply"
-	MicroTaskService_Submit_FullMethodName          = "/microtask.v1.MicroTaskService/Submit"
-	MicroTaskService_ListSubmissions_FullMethodName = "/microtask.v1.MicroTaskService/ListSubmissions"
-	MicroTaskService_Review_FullMethodName          = "/microtask.v1.MicroTaskService/Review"
+	MicroTaskService_Create_FullMethodName                = "/microtask.v1.MicroTaskService/Create"
+	MicroTaskService_Update_FullMethodName                = "/microtask.v1.MicroTaskService/Update"
+	MicroTaskService_Delete_FullMethodName                = "/microtask.v1.MicroTaskService/Delete"
+	MicroTaskService_Get_FullMethodName                   = "/microtask.v1.MicroTaskService/Get"
+	MicroTaskService_List_FullMethodName                  = "/microtask.v1.MicroTaskService/List"
+	MicroTaskService_ListByCompany_FullMethodName         = "/microtask.v1.MicroTaskService/ListByCompany"
+	MicroTaskService_ListByStudent_FullMethodName         = "/microtask.v1.MicroTaskService/ListByStudent"
+	MicroTaskService_Apply_FullMethodName                 = "/microtask.v1.MicroTaskService/Apply"
+	MicroTaskService_Submit_FullMethodName                = "/microtask.v1.MicroTaskService/Submit"
+	MicroTaskService_SolutionUploadInit_FullMethodName    = "/microtask.v1.MicroTaskService/SolutionUploadInit"
+	MicroTaskService_SolutionUploadConfirm_FullMethodName = "/microtask.v1.MicroTaskService/SolutionUploadConfirm"
+	MicroTaskService_CreateSkillQuest_FullMethodName      = "/microtask.v1.MicroTaskService/CreateSkillQuest"
+	MicroTaskService_ListSubmissions_FullMethodName       = "/microtask.v1.MicroTaskService/ListSubmissions"
+	MicroTaskService_Review_FullMethodName                = "/microtask.v1.MicroTaskService/Review"
 )
 
 // MicroTaskServiceClient is the client API for MicroTaskService service.
@@ -56,6 +59,12 @@ type MicroTaskServiceClient interface {
 	Apply(ctx context.Context, in *ApplyRequest, opts ...grpc.CallOption) (*MicroTask, error)
 	// Студент отправляет решение. Создаёт Submission в PENDING.
 	Submit(ctx context.Context, in *SubmitRequest, opts ...grpc.CallOption) (*Submission, error)
+	// Студент инициирует загрузку файла-решения. Возвращает presigned PUT URL и file_id.
+	SolutionUploadInit(ctx context.Context, in *SolutionUploadInitRequest, opts ...grpc.CallOption) (*SolutionUploadInitResponse, error)
+	// Студент подтверждает, что PUT в S3 прошёл успешно. Регистрирует file_id для использования в Submit.
+	SolutionUploadConfirm(ctx context.Context, in *SolutionUploadConfirmRequest, opts ...grpc.CallOption) (*v1.Empty, error)
+	// Эксперт создаёт квест (микрозадача типа skill_quest, привязанная к одному студенту и навыку).
+	CreateSkillQuest(ctx context.Context, in *CreateSkillQuestRequest, opts ...grpc.CallOption) (*MicroTask, error)
 	// Список submission'ов конкретной задачи (для HR-ревью) или конкретного студента.
 	ListSubmissions(ctx context.Context, in *ListSubmissionsRequest, opts ...grpc.CallOption) (*SubmissionList, error)
 	// HR апрувит/реджектит submission. При APPROVE задача переходит в COMPLETED,
@@ -161,6 +170,36 @@ func (c *microTaskServiceClient) Submit(ctx context.Context, in *SubmitRequest, 
 	return out, nil
 }
 
+func (c *microTaskServiceClient) SolutionUploadInit(ctx context.Context, in *SolutionUploadInitRequest, opts ...grpc.CallOption) (*SolutionUploadInitResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SolutionUploadInitResponse)
+	err := c.cc.Invoke(ctx, MicroTaskService_SolutionUploadInit_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *microTaskServiceClient) SolutionUploadConfirm(ctx context.Context, in *SolutionUploadConfirmRequest, opts ...grpc.CallOption) (*v1.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(v1.Empty)
+	err := c.cc.Invoke(ctx, MicroTaskService_SolutionUploadConfirm_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *microTaskServiceClient) CreateSkillQuest(ctx context.Context, in *CreateSkillQuestRequest, opts ...grpc.CallOption) (*MicroTask, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MicroTask)
+	err := c.cc.Invoke(ctx, MicroTaskService_CreateSkillQuest_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *microTaskServiceClient) ListSubmissions(ctx context.Context, in *ListSubmissionsRequest, opts ...grpc.CallOption) (*SubmissionList, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(SubmissionList)
@@ -204,6 +243,12 @@ type MicroTaskServiceServer interface {
 	Apply(context.Context, *ApplyRequest) (*MicroTask, error)
 	// Студент отправляет решение. Создаёт Submission в PENDING.
 	Submit(context.Context, *SubmitRequest) (*Submission, error)
+	// Студент инициирует загрузку файла-решения. Возвращает presigned PUT URL и file_id.
+	SolutionUploadInit(context.Context, *SolutionUploadInitRequest) (*SolutionUploadInitResponse, error)
+	// Студент подтверждает, что PUT в S3 прошёл успешно. Регистрирует file_id для использования в Submit.
+	SolutionUploadConfirm(context.Context, *SolutionUploadConfirmRequest) (*v1.Empty, error)
+	// Эксперт создаёт квест (микрозадача типа skill_quest, привязанная к одному студенту и навыку).
+	CreateSkillQuest(context.Context, *CreateSkillQuestRequest) (*MicroTask, error)
 	// Список submission'ов конкретной задачи (для HR-ревью) или конкретного студента.
 	ListSubmissions(context.Context, *ListSubmissionsRequest) (*SubmissionList, error)
 	// HR апрувит/реджектит submission. При APPROVE задача переходит в COMPLETED,
@@ -245,6 +290,15 @@ func (UnimplementedMicroTaskServiceServer) Apply(context.Context, *ApplyRequest)
 }
 func (UnimplementedMicroTaskServiceServer) Submit(context.Context, *SubmitRequest) (*Submission, error) {
 	return nil, status.Error(codes.Unimplemented, "method Submit not implemented")
+}
+func (UnimplementedMicroTaskServiceServer) SolutionUploadInit(context.Context, *SolutionUploadInitRequest) (*SolutionUploadInitResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method SolutionUploadInit not implemented")
+}
+func (UnimplementedMicroTaskServiceServer) SolutionUploadConfirm(context.Context, *SolutionUploadConfirmRequest) (*v1.Empty, error) {
+	return nil, status.Error(codes.Unimplemented, "method SolutionUploadConfirm not implemented")
+}
+func (UnimplementedMicroTaskServiceServer) CreateSkillQuest(context.Context, *CreateSkillQuestRequest) (*MicroTask, error) {
+	return nil, status.Error(codes.Unimplemented, "method CreateSkillQuest not implemented")
 }
 func (UnimplementedMicroTaskServiceServer) ListSubmissions(context.Context, *ListSubmissionsRequest) (*SubmissionList, error) {
 	return nil, status.Error(codes.Unimplemented, "method ListSubmissions not implemented")
@@ -435,6 +489,60 @@ func _MicroTaskService_Submit_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _MicroTaskService_SolutionUploadInit_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SolutionUploadInitRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MicroTaskServiceServer).SolutionUploadInit(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MicroTaskService_SolutionUploadInit_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MicroTaskServiceServer).SolutionUploadInit(ctx, req.(*SolutionUploadInitRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _MicroTaskService_SolutionUploadConfirm_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SolutionUploadConfirmRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MicroTaskServiceServer).SolutionUploadConfirm(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MicroTaskService_SolutionUploadConfirm_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MicroTaskServiceServer).SolutionUploadConfirm(ctx, req.(*SolutionUploadConfirmRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _MicroTaskService_CreateSkillQuest_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateSkillQuestRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MicroTaskServiceServer).CreateSkillQuest(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MicroTaskService_CreateSkillQuest_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MicroTaskServiceServer).CreateSkillQuest(ctx, req.(*CreateSkillQuestRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _MicroTaskService_ListSubmissions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListSubmissionsRequest)
 	if err := dec(in); err != nil {
@@ -513,6 +621,18 @@ var MicroTaskService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Submit",
 			Handler:    _MicroTaskService_Submit_Handler,
+		},
+		{
+			MethodName: "SolutionUploadInit",
+			Handler:    _MicroTaskService_SolutionUploadInit_Handler,
+		},
+		{
+			MethodName: "SolutionUploadConfirm",
+			Handler:    _MicroTaskService_SolutionUploadConfirm_Handler,
+		},
+		{
+			MethodName: "CreateSkillQuest",
+			Handler:    _MicroTaskService_CreateSkillQuest_Handler,
 		},
 		{
 			MethodName: "ListSubmissions",

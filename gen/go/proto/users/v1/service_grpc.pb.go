@@ -20,11 +20,12 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	UsersService_NewProfile_FullMethodName     = "/users.v1.UsersService/NewProfile"
-	UsersService_UpdateProfile_FullMethodName  = "/users.v1.UsersService/UpdateProfile"
-	UsersService_DeleteProfile_FullMethodName  = "/users.v1.UsersService/DeleteProfile"
-	UsersService_GetProfile_FullMethodName     = "/users.v1.UsersService/GetProfile"
-	UsersService_GetAllProfiles_FullMethodName = "/users.v1.UsersService/GetAllProfiles"
+	UsersService_NewProfile_FullMethodName        = "/users.v1.UsersService/NewProfile"
+	UsersService_UpdateProfile_FullMethodName     = "/users.v1.UsersService/UpdateProfile"
+	UsersService_DeleteProfile_FullMethodName     = "/users.v1.UsersService/DeleteProfile"
+	UsersService_GetProfile_FullMethodName        = "/users.v1.UsersService/GetProfile"
+	UsersService_GetAllProfiles_FullMethodName    = "/users.v1.UsersService/GetAllProfiles"
+	UsersService_AddVerifiedSkills_FullMethodName = "/users.v1.UsersService/AddVerifiedSkills"
 )
 
 // UsersServiceClient is the client API for UsersService service.
@@ -41,6 +42,9 @@ type UsersServiceClient interface {
 	GetProfile(ctx context.Context, in *GetProfileRequest, opts ...grpc.CallOption) (*Profile, error)
 	// Получить все профили
 	GetAllProfiles(ctx context.Context, in *GetAllProfilesRequest, opts ...grpc.CallOption) (*ProfileList, error)
+	// Добавить навыки в verified_skill_slugs профиля (union). Используется при approve
+	// микрозадачи / квеста — навык фиксируется как подтверждённый.
+	AddVerifiedSkills(ctx context.Context, in *AddVerifiedSkillsRequest, opts ...grpc.CallOption) (*Profile, error)
 }
 
 type usersServiceClient struct {
@@ -101,6 +105,16 @@ func (c *usersServiceClient) GetAllProfiles(ctx context.Context, in *GetAllProfi
 	return out, nil
 }
 
+func (c *usersServiceClient) AddVerifiedSkills(ctx context.Context, in *AddVerifiedSkillsRequest, opts ...grpc.CallOption) (*Profile, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Profile)
+	err := c.cc.Invoke(ctx, UsersService_AddVerifiedSkills_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UsersServiceServer is the server API for UsersService service.
 // All implementations must embed UnimplementedUsersServiceServer
 // for forward compatibility.
@@ -115,6 +129,9 @@ type UsersServiceServer interface {
 	GetProfile(context.Context, *GetProfileRequest) (*Profile, error)
 	// Получить все профили
 	GetAllProfiles(context.Context, *GetAllProfilesRequest) (*ProfileList, error)
+	// Добавить навыки в verified_skill_slugs профиля (union). Используется при approve
+	// микрозадачи / квеста — навык фиксируется как подтверждённый.
+	AddVerifiedSkills(context.Context, *AddVerifiedSkillsRequest) (*Profile, error)
 	mustEmbedUnimplementedUsersServiceServer()
 }
 
@@ -139,6 +156,9 @@ func (UnimplementedUsersServiceServer) GetProfile(context.Context, *GetProfileRe
 }
 func (UnimplementedUsersServiceServer) GetAllProfiles(context.Context, *GetAllProfilesRequest) (*ProfileList, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetAllProfiles not implemented")
+}
+func (UnimplementedUsersServiceServer) AddVerifiedSkills(context.Context, *AddVerifiedSkillsRequest) (*Profile, error) {
+	return nil, status.Error(codes.Unimplemented, "method AddVerifiedSkills not implemented")
 }
 func (UnimplementedUsersServiceServer) mustEmbedUnimplementedUsersServiceServer() {}
 func (UnimplementedUsersServiceServer) testEmbeddedByValue()                      {}
@@ -251,6 +271,24 @@ func _UsersService_GetAllProfiles_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UsersService_AddVerifiedSkills_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddVerifiedSkillsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsersServiceServer).AddVerifiedSkills(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UsersService_AddVerifiedSkills_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsersServiceServer).AddVerifiedSkills(ctx, req.(*AddVerifiedSkillsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // UsersService_ServiceDesc is the grpc.ServiceDesc for UsersService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -277,6 +315,10 @@ var UsersService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAllProfiles",
 			Handler:    _UsersService_GetAllProfiles_Handler,
+		},
+		{
+			MethodName: "AddVerifiedSkills",
+			Handler:    _UsersService_AddVerifiedSkills_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

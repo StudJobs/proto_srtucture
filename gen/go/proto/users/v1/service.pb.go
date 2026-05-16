@@ -266,6 +266,58 @@ func (x *GetAllProfilesRequest) GetRole() string {
 	return ""
 }
 
+type AddVerifiedSkillsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserId        string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	SkillSlugs    []string               `protobuf:"bytes,2,rep,name=skill_slugs,json=skillSlugs,proto3" json:"skill_slugs,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AddVerifiedSkillsRequest) Reset() {
+	*x = AddVerifiedSkillsRequest{}
+	mi := &file_proto_users_v1_service_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AddVerifiedSkillsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AddVerifiedSkillsRequest) ProtoMessage() {}
+
+func (x *AddVerifiedSkillsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_users_v1_service_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AddVerifiedSkillsRequest.ProtoReflect.Descriptor instead.
+func (*AddVerifiedSkillsRequest) Descriptor() ([]byte, []int) {
+	return file_proto_users_v1_service_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *AddVerifiedSkillsRequest) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *AddVerifiedSkillsRequest) GetSkillSlugs() []string {
+	if x != nil {
+		return x.SkillSlugs
+	}
+	return nil
+}
+
 var File_proto_users_v1_service_proto protoreflect.FileDescriptor
 
 const file_proto_users_v1_service_proto_rawDesc = "" +
@@ -285,7 +337,11 @@ const file_proto_users_v1_service_proto_rawDesc = "" +
 	"pagination\x18\x01 \x01(\v2\x15.common.v1.PaginationR\n" +
 	"pagination\x12/\n" +
 	"\x13profession_category\x18\x02 \x01(\tR\x12professionCategory\x12\x12\n" +
-	"\x04role\x18\x03 \x01(\tR\x04role2\xdb\x02\n" +
+	"\x04role\x18\x03 \x01(\tR\x04role\"T\n" +
+	"\x18AddVerifiedSkillsRequest\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\tR\x06userId\x12\x1f\n" +
+	"\vskill_slugs\x18\x02 \x03(\tR\n" +
+	"skillSlugs2\xa7\x03\n" +
 	"\fUsersService\x12<\n" +
 	"\n" +
 	"NewProfile\x12\x1b.users.v1.NewProfileRequest\x1a\x11.users.v1.Profile\x12B\n" +
@@ -293,7 +349,8 @@ const file_proto_users_v1_service_proto_rawDesc = "" +
 	"\rDeleteProfile\x12\x1e.users.v1.DeleteProfileRequest\x1a\x10.common.v1.Empty\x12<\n" +
 	"\n" +
 	"GetProfile\x12\x1b.users.v1.GetProfileRequest\x1a\x11.users.v1.Profile\x12H\n" +
-	"\x0eGetAllProfiles\x12\x1f.users.v1.GetAllProfilesRequest\x1a\x15.users.v1.ProfileListB;Z9github.com/StudJobs/proto_srtucture/gen/go/proto/users/v1b\x06proto3"
+	"\x0eGetAllProfiles\x12\x1f.users.v1.GetAllProfilesRequest\x1a\x15.users.v1.ProfileList\x12J\n" +
+	"\x11AddVerifiedSkills\x12\".users.v1.AddVerifiedSkillsRequest\x1a\x11.users.v1.ProfileB;Z9github.com/StudJobs/proto_srtucture/gen/go/proto/users/v1b\x06proto3"
 
 var (
 	file_proto_users_v1_service_proto_rawDescOnce sync.Once
@@ -307,34 +364,37 @@ func file_proto_users_v1_service_proto_rawDescGZIP() []byte {
 	return file_proto_users_v1_service_proto_rawDescData
 }
 
-var file_proto_users_v1_service_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_proto_users_v1_service_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_proto_users_v1_service_proto_goTypes = []any{
-	(*NewProfileRequest)(nil),     // 0: users.v1.NewProfileRequest
-	(*UpdateProfileRequest)(nil),  // 1: users.v1.UpdateProfileRequest
-	(*DeleteProfileRequest)(nil),  // 2: users.v1.DeleteProfileRequest
-	(*GetProfileRequest)(nil),     // 3: users.v1.GetProfileRequest
-	(*GetAllProfilesRequest)(nil), // 4: users.v1.GetAllProfilesRequest
-	(*Profile)(nil),               // 5: users.v1.Profile
-	(*v1.Pagination)(nil),         // 6: common.v1.Pagination
-	(*v1.Empty)(nil),              // 7: common.v1.Empty
-	(*ProfileList)(nil),           // 8: users.v1.ProfileList
+	(*NewProfileRequest)(nil),        // 0: users.v1.NewProfileRequest
+	(*UpdateProfileRequest)(nil),     // 1: users.v1.UpdateProfileRequest
+	(*DeleteProfileRequest)(nil),     // 2: users.v1.DeleteProfileRequest
+	(*GetProfileRequest)(nil),        // 3: users.v1.GetProfileRequest
+	(*GetAllProfilesRequest)(nil),    // 4: users.v1.GetAllProfilesRequest
+	(*AddVerifiedSkillsRequest)(nil), // 5: users.v1.AddVerifiedSkillsRequest
+	(*Profile)(nil),                  // 6: users.v1.Profile
+	(*v1.Pagination)(nil),            // 7: common.v1.Pagination
+	(*v1.Empty)(nil),                 // 8: common.v1.Empty
+	(*ProfileList)(nil),              // 9: users.v1.ProfileList
 }
 var file_proto_users_v1_service_proto_depIdxs = []int32{
-	5, // 0: users.v1.NewProfileRequest.profile:type_name -> users.v1.Profile
-	5, // 1: users.v1.UpdateProfileRequest.profile:type_name -> users.v1.Profile
-	6, // 2: users.v1.GetAllProfilesRequest.pagination:type_name -> common.v1.Pagination
+	6, // 0: users.v1.NewProfileRequest.profile:type_name -> users.v1.Profile
+	6, // 1: users.v1.UpdateProfileRequest.profile:type_name -> users.v1.Profile
+	7, // 2: users.v1.GetAllProfilesRequest.pagination:type_name -> common.v1.Pagination
 	0, // 3: users.v1.UsersService.NewProfile:input_type -> users.v1.NewProfileRequest
 	1, // 4: users.v1.UsersService.UpdateProfile:input_type -> users.v1.UpdateProfileRequest
 	2, // 5: users.v1.UsersService.DeleteProfile:input_type -> users.v1.DeleteProfileRequest
 	3, // 6: users.v1.UsersService.GetProfile:input_type -> users.v1.GetProfileRequest
 	4, // 7: users.v1.UsersService.GetAllProfiles:input_type -> users.v1.GetAllProfilesRequest
-	5, // 8: users.v1.UsersService.NewProfile:output_type -> users.v1.Profile
-	5, // 9: users.v1.UsersService.UpdateProfile:output_type -> users.v1.Profile
-	7, // 10: users.v1.UsersService.DeleteProfile:output_type -> common.v1.Empty
-	5, // 11: users.v1.UsersService.GetProfile:output_type -> users.v1.Profile
-	8, // 12: users.v1.UsersService.GetAllProfiles:output_type -> users.v1.ProfileList
-	8, // [8:13] is the sub-list for method output_type
-	3, // [3:8] is the sub-list for method input_type
+	5, // 8: users.v1.UsersService.AddVerifiedSkills:input_type -> users.v1.AddVerifiedSkillsRequest
+	6, // 9: users.v1.UsersService.NewProfile:output_type -> users.v1.Profile
+	6, // 10: users.v1.UsersService.UpdateProfile:output_type -> users.v1.Profile
+	8, // 11: users.v1.UsersService.DeleteProfile:output_type -> common.v1.Empty
+	6, // 12: users.v1.UsersService.GetProfile:output_type -> users.v1.Profile
+	9, // 13: users.v1.UsersService.GetAllProfiles:output_type -> users.v1.ProfileList
+	6, // 14: users.v1.UsersService.AddVerifiedSkills:output_type -> users.v1.Profile
+	9, // [9:15] is the sub-list for method output_type
+	3, // [3:9] is the sub-list for method input_type
 	3, // [3:3] is the sub-list for extension type_name
 	3, // [3:3] is the sub-list for extension extendee
 	0, // [0:3] is the sub-list for field type_name
@@ -352,7 +412,7 @@ func file_proto_users_v1_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_users_v1_service_proto_rawDesc), len(file_proto_users_v1_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   5,
+			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

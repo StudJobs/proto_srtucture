@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package chat.v1;
+
+option go_package = "github.com/StudJobs/proto_srtucture/gen/go/proto/chat/v1";
+
+import "proto/chat/v1/types.proto";
+import "proto/common/v1/types.proto";
+
+service ChatService {
+  // Отправить сообщение. Проверка участника — на стороне Gateway/Service.
+  rpc SendMessage(SendMessageRequest) returns (Message);
+
+  // Получить сообщения треда (asc по created_at), с курсорной пагинацией.
+  rpc ListMessages(ListMessagesRequest) returns (MessageList);
+
+  // Список тредов конкретного пользователя (для inbox-страницы — отложено в MVP).
+  rpc ListUserThreads(ListUserThreadsRequest) returns (ThreadList);
+}
+
+message SendMessageRequest {
+  string thread_id = 1;
+  string from_user_id = 2;
+  string body = 3;
+}
+
+message ListMessagesRequest {
+  string thread_id = 1;
+  common.v1.Pagination pagination = 2;
+}
+
+message ListUserThreadsRequest {
+  string user_id = 1;
+  common.v1.Pagination pagination = 2;
+}
+
+message Thread {
+  string thread_id = 1;
+  string last_message = 2;
+  string last_at = 3;
+  int32 unread_count = 4;
+}
+
+message ThreadList {
+  repeated Thread threads = 1;
+  common.v1.PaginationResponse pagination = 2;
+}

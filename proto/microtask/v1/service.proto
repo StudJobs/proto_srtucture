@@ -40,6 +40,15 @@ service MicroTaskService {
   // Студент отправляет решение. Создаёт Submission в PENDING.
   rpc Submit(SubmitRequest) returns (Submission);
 
+  // Студент инициирует загрузку файла-решения. Возвращает presigned PUT URL и file_id.
+  rpc SolutionUploadInit(SolutionUploadInitRequest) returns (SolutionUploadInitResponse);
+
+  // Студент подтверждает, что PUT в S3 прошёл успешно. Регистрирует file_id для использования в Submit.
+  rpc SolutionUploadConfirm(SolutionUploadConfirmRequest) returns (common.v1.Empty);
+
+  // Эксперт создаёт квест (микрозадача типа skill_quest, привязанная к одному студенту и навыку).
+  rpc CreateSkillQuest(CreateSkillQuestRequest) returns (MicroTask);
+
   // Список submission'ов конкретной задачи (для HR-ревью) или конкретного студента.
   rpc ListSubmissions(ListSubmissionsRequest) returns (SubmissionList);
 
@@ -92,6 +101,33 @@ message SubmitRequest {
   string student_id = 2;
   string solution_url = 3;
   string comment = 4;
+  string solution_file_name = 5;  // имя файла, ранее загруженного через SolutionUploadInit/Confirm
+}
+
+message SolutionUploadInitRequest {
+  string microtask_id = 1;
+  string student_id = 2;
+  string file_name = 3;           // оригинальное имя файла
+}
+
+message SolutionUploadInitResponse {
+  string file_id = 1;             // внутренний id (slug в S3-bucket)
+  string upload_url = 2;          // PUT-presigned URL (короткое TTL)
+}
+
+message SolutionUploadConfirmRequest {
+  string microtask_id = 1;
+  string student_id = 2;
+  string file_id = 3;
+}
+
+message CreateSkillQuestRequest {
+  string expert_id = 1;
+  string target_student_id = 2;
+  string target_skill_slug = 3;
+  string title = 4;
+  string description = 5;
+  string deadline = 6;            // опционально
 }
 
 message ListSubmissionsRequest {

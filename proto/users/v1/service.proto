@@ -22,6 +22,10 @@ service UsersService {
 
   // Получить все профили
   rpc GetAllProfiles(GetAllProfilesRequest) returns (ProfileList);
+
+  // Добавить навыки в verified_skill_slugs профиля (union). Используется при approve
+  // микрозадачи / квеста — навык фиксируется как подтверждённый.
+  rpc AddVerifiedSkills(AddVerifiedSkillsRequest) returns (Profile);
 }
 
 message NewProfileRequest {
@@ -45,4 +49,9 @@ message GetAllProfilesRequest {
   common.v1.Pagination pagination = 1;
   string profession_category = 2; // Опциональный фильтр по категории
   string role = 3;
+}
+
+message AddVerifiedSkillsRequest {
+  string user_id = 1;
+  repeated string skill_slugs = 2;
 }

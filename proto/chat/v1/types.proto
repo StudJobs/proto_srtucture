@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package chat.v1;
+
+option go_package = "github.com/StudJobs/proto_srtucture/gen/go/proto/chat/v1";
+
+import "proto/common/v1/types.proto";
+
+// Сообщение чата. Привязано к thread_id вида:
+//   "application:<application_uuid>" — переписка студента и HR по отклику на вакансию,
+//   "task:<microtask_uuid>"          — переписка студента и владельца микрозадачи,
+//   "quest:<microtask_uuid>"         — переписка студента и эксперта по квесту.
+// Доступ проверяется по участникам: участник = (assigned_student | task.company_id |
+// vacancy.company_id | quest.expert_id).
+message Message {
+  string id = 1;
+  string thread_id = 2;
+  string from_user_id = 3;
+  string body = 4;
+  string created_at = 5;
+}
+
+message MessageList {
+  repeated Message messages = 1;
+  common.v1.PaginationResponse pagination = 2;
+}
