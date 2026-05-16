@@ -26,6 +26,7 @@ const (
 	MicroTaskService_Get_FullMethodName             = "/microtask.v1.MicroTaskService/Get"
 	MicroTaskService_List_FullMethodName            = "/microtask.v1.MicroTaskService/List"
 	MicroTaskService_ListByCompany_FullMethodName   = "/microtask.v1.MicroTaskService/ListByCompany"
+	MicroTaskService_ListByStudent_FullMethodName   = "/microtask.v1.MicroTaskService/ListByStudent"
 	MicroTaskService_Apply_FullMethodName           = "/microtask.v1.MicroTaskService/Apply"
 	MicroTaskService_Submit_FullMethodName          = "/microtask.v1.MicroTaskService/Submit"
 	MicroTaskService_ListSubmissions_FullMethodName = "/microtask.v1.MicroTaskService/ListSubmissions"
@@ -48,6 +49,9 @@ type MicroTaskServiceClient interface {
 	List(ctx context.Context, in *ListMicroTasksRequest, opts ...grpc.CallOption) (*MicroTaskList, error)
 	// Список задач, принадлежащих компании HR (для /hr/tasks).
 	ListByCompany(ctx context.Context, in *ListByCompanyRequest, opts ...grpc.CallOption) (*MicroTaskList, error)
+	// Список задач, взятых конкретным студентом (для «Мои отклики» → «Микрозадачи»).
+	// Возвращает задачи в статусах ASSIGNED/COMPLETED (если status=UNSPECIFIED).
+	ListByStudent(ctx context.Context, in *ListByStudentRequest, opts ...grpc.CallOption) (*MicroTaskList, error)
 	// Студент берёт задачу: status переходит OPEN → ASSIGNED, assigned_to = student_id.
 	Apply(ctx context.Context, in *ApplyRequest, opts ...grpc.CallOption) (*MicroTask, error)
 	// Студент отправляет решение. Создаёт Submission в PENDING.
@@ -127,6 +131,16 @@ func (c *microTaskServiceClient) ListByCompany(ctx context.Context, in *ListByCo
 	return out, nil
 }
 
+func (c *microTaskServiceClient) ListByStudent(ctx context.Context, in *ListByStudentRequest, opts ...grpc.CallOption) (*MicroTaskList, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MicroTaskList)
+	err := c.cc.Invoke(ctx, MicroTaskService_ListByStudent_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *microTaskServiceClient) Apply(ctx context.Context, in *ApplyRequest, opts ...grpc.CallOption) (*MicroTask, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(MicroTask)
@@ -183,6 +197,9 @@ type MicroTaskServiceServer interface {
 	List(context.Context, *ListMicroTasksRequest) (*MicroTaskList, error)
 	// Список задач, принадлежащих компании HR (для /hr/tasks).
 	ListByCompany(context.Context, *ListByCompanyRequest) (*MicroTaskList, error)
+	// Список задач, взятых конкретным студентом (для «Мои отклики» → «Микрозадачи»).
+	// Возвращает задачи в статусах ASSIGNED/COMPLETED (если status=UNSPECIFIED).
+	ListByStudent(context.Context, *ListByStudentRequest) (*MicroTaskList, error)
 	// Студент берёт задачу: status переходит OPEN → ASSIGNED, assigned_to = student_id.
 	Apply(context.Context, *ApplyRequest) (*MicroTask, error)
 	// Студент отправляет решение. Создаёт Submission в PENDING.
@@ -219,6 +236,9 @@ func (UnimplementedMicroTaskServiceServer) List(context.Context, *ListMicroTasks
 }
 func (UnimplementedMicroTaskServiceServer) ListByCompany(context.Context, *ListByCompanyRequest) (*MicroTaskList, error) {
 	return nil, status.Error(codes.Unimplemented, "method ListByCompany not implemented")
+}
+func (UnimplementedMicroTaskServiceServer) ListByStudent(context.Context, *ListByStudentRequest) (*MicroTaskList, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListByStudent not implemented")
 }
 func (UnimplementedMicroTaskServiceServer) Apply(context.Context, *ApplyRequest) (*MicroTask, error) {
 	return nil, status.Error(codes.Unimplemented, "method Apply not implemented")
@@ -361,6 +381,24 @@ func _MicroTaskService_ListByCompany_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _MicroTaskService_ListByStudent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListByStudentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MicroTaskServiceServer).ListByStudent(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MicroTaskService_ListByStudent_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MicroTaskServiceServer).ListByStudent(ctx, req.(*ListByStudentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _MicroTaskService_Apply_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ApplyRequest)
 	if err := dec(in); err != nil {
@@ -463,6 +501,10 @@ var MicroTaskService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListByCompany",
 			Handler:    _MicroTaskService_ListByCompany_Handler,
+		},
+		{
+			MethodName: "ListByStudent",
+			Handler:    _MicroTaskService_ListByStudent_Handler,
 		},
 		{
 			MethodName: "Apply",

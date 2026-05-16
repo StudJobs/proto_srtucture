@@ -318,6 +318,66 @@ func (x *ListByCompanyRequest) GetPagination() *v1.Pagination {
 	return nil
 }
 
+type ListByStudentRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	StudentId     string                 `protobuf:"bytes,1,opt,name=student_id,json=studentId,proto3" json:"student_id,omitempty"`
+	Pagination    *v1.Pagination         `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	Status        MicroTaskStatus        `protobuf:"varint,3,opt,name=status,proto3,enum=microtask.v1.MicroTaskStatus" json:"status,omitempty"` // UNSPECIFIED = вернуть все статусы
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListByStudentRequest) Reset() {
+	*x = ListByStudentRequest{}
+	mi := &file_proto_microtask_v1_service_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListByStudentRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListByStudentRequest) ProtoMessage() {}
+
+func (x *ListByStudentRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_microtask_v1_service_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListByStudentRequest.ProtoReflect.Descriptor instead.
+func (*ListByStudentRequest) Descriptor() ([]byte, []int) {
+	return file_proto_microtask_v1_service_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *ListByStudentRequest) GetStudentId() string {
+	if x != nil {
+		return x.StudentId
+	}
+	return ""
+}
+
+func (x *ListByStudentRequest) GetPagination() *v1.Pagination {
+	if x != nil {
+		return x.Pagination
+	}
+	return nil
+}
+
+func (x *ListByStudentRequest) GetStatus() MicroTaskStatus {
+	if x != nil {
+		return x.Status
+	}
+	return MicroTaskStatus_MICROTASK_STATUS_UNSPECIFIED
+}
+
 type ApplyRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	MicrotaskId   string                 `protobuf:"bytes,1,opt,name=microtask_id,json=microtaskId,proto3" json:"microtask_id,omitempty"`
@@ -328,7 +388,7 @@ type ApplyRequest struct {
 
 func (x *ApplyRequest) Reset() {
 	*x = ApplyRequest{}
-	mi := &file_proto_microtask_v1_service_proto_msgTypes[6]
+	mi := &file_proto_microtask_v1_service_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -340,7 +400,7 @@ func (x *ApplyRequest) String() string {
 func (*ApplyRequest) ProtoMessage() {}
 
 func (x *ApplyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_microtask_v1_service_proto_msgTypes[6]
+	mi := &file_proto_microtask_v1_service_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -353,7 +413,7 @@ func (x *ApplyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ApplyRequest.ProtoReflect.Descriptor instead.
 func (*ApplyRequest) Descriptor() ([]byte, []int) {
-	return file_proto_microtask_v1_service_proto_rawDescGZIP(), []int{6}
+	return file_proto_microtask_v1_service_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *ApplyRequest) GetMicrotaskId() string {
@@ -382,7 +442,7 @@ type SubmitRequest struct {
 
 func (x *SubmitRequest) Reset() {
 	*x = SubmitRequest{}
-	mi := &file_proto_microtask_v1_service_proto_msgTypes[7]
+	mi := &file_proto_microtask_v1_service_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -394,7 +454,7 @@ func (x *SubmitRequest) String() string {
 func (*SubmitRequest) ProtoMessage() {}
 
 func (x *SubmitRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_microtask_v1_service_proto_msgTypes[7]
+	mi := &file_proto_microtask_v1_service_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -407,7 +467,7 @@ func (x *SubmitRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SubmitRequest.ProtoReflect.Descriptor instead.
 func (*SubmitRequest) Descriptor() ([]byte, []int) {
-	return file_proto_microtask_v1_service_proto_rawDescGZIP(), []int{7}
+	return file_proto_microtask_v1_service_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *SubmitRequest) GetMicrotaskId() string {
@@ -450,7 +510,7 @@ type ListSubmissionsRequest struct {
 
 func (x *ListSubmissionsRequest) Reset() {
 	*x = ListSubmissionsRequest{}
-	mi := &file_proto_microtask_v1_service_proto_msgTypes[8]
+	mi := &file_proto_microtask_v1_service_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -462,7 +522,7 @@ func (x *ListSubmissionsRequest) String() string {
 func (*ListSubmissionsRequest) ProtoMessage() {}
 
 func (x *ListSubmissionsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_microtask_v1_service_proto_msgTypes[8]
+	mi := &file_proto_microtask_v1_service_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -475,7 +535,7 @@ func (x *ListSubmissionsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListSubmissionsRequest.ProtoReflect.Descriptor instead.
 func (*ListSubmissionsRequest) Descriptor() ([]byte, []int) {
-	return file_proto_microtask_v1_service_proto_rawDescGZIP(), []int{8}
+	return file_proto_microtask_v1_service_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *ListSubmissionsRequest) GetMicrotaskId() string {
@@ -510,7 +570,7 @@ type ReviewRequest struct {
 
 func (x *ReviewRequest) Reset() {
 	*x = ReviewRequest{}
-	mi := &file_proto_microtask_v1_service_proto_msgTypes[9]
+	mi := &file_proto_microtask_v1_service_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -522,7 +582,7 @@ func (x *ReviewRequest) String() string {
 func (*ReviewRequest) ProtoMessage() {}
 
 func (x *ReviewRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_microtask_v1_service_proto_msgTypes[9]
+	mi := &file_proto_microtask_v1_service_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -535,7 +595,7 @@ func (x *ReviewRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReviewRequest.ProtoReflect.Descriptor instead.
 func (*ReviewRequest) Descriptor() ([]byte, []int) {
-	return file_proto_microtask_v1_service_proto_rawDescGZIP(), []int{9}
+	return file_proto_microtask_v1_service_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *ReviewRequest) GetSubmissionId() string {
@@ -585,7 +645,14 @@ const file_proto_microtask_v1_service_proto_rawDesc = "" +
 	"company_id\x18\x01 \x01(\tR\tcompanyId\x125\n" +
 	"\n" +
 	"pagination\x18\x02 \x01(\v2\x15.common.v1.PaginationR\n" +
-	"pagination\"P\n" +
+	"pagination\"\xa3\x01\n" +
+	"\x14ListByStudentRequest\x12\x1d\n" +
+	"\n" +
+	"student_id\x18\x01 \x01(\tR\tstudentId\x125\n" +
+	"\n" +
+	"pagination\x18\x02 \x01(\v2\x15.common.v1.PaginationR\n" +
+	"pagination\x125\n" +
+	"\x06status\x18\x03 \x01(\x0e2\x1d.microtask.v1.MicroTaskStatusR\x06status\"P\n" +
 	"\fApplyRequest\x12!\n" +
 	"\fmicrotask_id\x18\x01 \x01(\tR\vmicrotaskId\x12\x1d\n" +
 	"\n" +
@@ -606,14 +673,15 @@ const file_proto_microtask_v1_service_proto_rawDesc = "" +
 	"\rReviewRequest\x12#\n" +
 	"\rsubmission_id\x18\x01 \x01(\tR\fsubmissionId\x126\n" +
 	"\x06status\x18\x02 \x01(\x0e2\x1e.microtask.v1.SubmissionStatusR\x06status\x12%\n" +
-	"\x0ereview_comment\x18\x03 \x01(\tR\rreviewComment2\xdc\x05\n" +
+	"\x0ereview_comment\x18\x03 \x01(\tR\rreviewComment2\xae\x06\n" +
 	"\x10MicroTaskService\x12G\n" +
 	"\x06Create\x12$.microtask.v1.CreateMicroTaskRequest\x1a\x17.microtask.v1.MicroTask\x12G\n" +
 	"\x06Update\x12$.microtask.v1.UpdateMicroTaskRequest\x1a\x17.microtask.v1.MicroTask\x12@\n" +
 	"\x06Delete\x12$.microtask.v1.DeleteMicroTaskRequest\x1a\x10.common.v1.Empty\x12A\n" +
 	"\x03Get\x12!.microtask.v1.GetMicroTaskRequest\x1a\x17.microtask.v1.MicroTask\x12H\n" +
 	"\x04List\x12#.microtask.v1.ListMicroTasksRequest\x1a\x1b.microtask.v1.MicroTaskList\x12P\n" +
-	"\rListByCompany\x12\".microtask.v1.ListByCompanyRequest\x1a\x1b.microtask.v1.MicroTaskList\x12<\n" +
+	"\rListByCompany\x12\".microtask.v1.ListByCompanyRequest\x1a\x1b.microtask.v1.MicroTaskList\x12P\n" +
+	"\rListByStudent\x12\".microtask.v1.ListByStudentRequest\x1a\x1b.microtask.v1.MicroTaskList\x12<\n" +
 	"\x05Apply\x12\x1a.microtask.v1.ApplyRequest\x1a\x17.microtask.v1.MicroTask\x12?\n" +
 	"\x06Submit\x12\x1b.microtask.v1.SubmitRequest\x1a\x18.microtask.v1.Submission\x12U\n" +
 	"\x0fListSubmissions\x12$.microtask.v1.ListSubmissionsRequest\x1a\x1c.microtask.v1.SubmissionList\x12?\n" +
@@ -631,7 +699,7 @@ func file_proto_microtask_v1_service_proto_rawDescGZIP() []byte {
 	return file_proto_microtask_v1_service_proto_rawDescData
 }
 
-var file_proto_microtask_v1_service_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
+var file_proto_microtask_v1_service_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
 var file_proto_microtask_v1_service_proto_goTypes = []any{
 	(*CreateMicroTaskRequest)(nil), // 0: microtask.v1.CreateMicroTaskRequest
 	(*UpdateMicroTaskRequest)(nil), // 1: microtask.v1.UpdateMicroTaskRequest
@@ -639,52 +707,57 @@ var file_proto_microtask_v1_service_proto_goTypes = []any{
 	(*GetMicroTaskRequest)(nil),    // 3: microtask.v1.GetMicroTaskRequest
 	(*ListMicroTasksRequest)(nil),  // 4: microtask.v1.ListMicroTasksRequest
 	(*ListByCompanyRequest)(nil),   // 5: microtask.v1.ListByCompanyRequest
-	(*ApplyRequest)(nil),           // 6: microtask.v1.ApplyRequest
-	(*SubmitRequest)(nil),          // 7: microtask.v1.SubmitRequest
-	(*ListSubmissionsRequest)(nil), // 8: microtask.v1.ListSubmissionsRequest
-	(*ReviewRequest)(nil),          // 9: microtask.v1.ReviewRequest
-	(*MicroTask)(nil),              // 10: microtask.v1.MicroTask
-	(*v1.Pagination)(nil),          // 11: common.v1.Pagination
-	(MicroTaskStatus)(0),           // 12: microtask.v1.MicroTaskStatus
-	(SubmissionStatus)(0),          // 13: microtask.v1.SubmissionStatus
-	(*v1.Empty)(nil),               // 14: common.v1.Empty
-	(*MicroTaskList)(nil),          // 15: microtask.v1.MicroTaskList
-	(*Submission)(nil),             // 16: microtask.v1.Submission
-	(*SubmissionList)(nil),         // 17: microtask.v1.SubmissionList
+	(*ListByStudentRequest)(nil),   // 6: microtask.v1.ListByStudentRequest
+	(*ApplyRequest)(nil),           // 7: microtask.v1.ApplyRequest
+	(*SubmitRequest)(nil),          // 8: microtask.v1.SubmitRequest
+	(*ListSubmissionsRequest)(nil), // 9: microtask.v1.ListSubmissionsRequest
+	(*ReviewRequest)(nil),          // 10: microtask.v1.ReviewRequest
+	(*MicroTask)(nil),              // 11: microtask.v1.MicroTask
+	(*v1.Pagination)(nil),          // 12: common.v1.Pagination
+	(MicroTaskStatus)(0),           // 13: microtask.v1.MicroTaskStatus
+	(SubmissionStatus)(0),          // 14: microtask.v1.SubmissionStatus
+	(*v1.Empty)(nil),               // 15: common.v1.Empty
+	(*MicroTaskList)(nil),          // 16: microtask.v1.MicroTaskList
+	(*Submission)(nil),             // 17: microtask.v1.Submission
+	(*SubmissionList)(nil),         // 18: microtask.v1.SubmissionList
 }
 var file_proto_microtask_v1_service_proto_depIdxs = []int32{
-	10, // 0: microtask.v1.CreateMicroTaskRequest.task:type_name -> microtask.v1.MicroTask
-	10, // 1: microtask.v1.UpdateMicroTaskRequest.task:type_name -> microtask.v1.MicroTask
-	11, // 2: microtask.v1.ListMicroTasksRequest.pagination:type_name -> common.v1.Pagination
-	12, // 3: microtask.v1.ListMicroTasksRequest.status:type_name -> microtask.v1.MicroTaskStatus
-	11, // 4: microtask.v1.ListByCompanyRequest.pagination:type_name -> common.v1.Pagination
-	11, // 5: microtask.v1.ListSubmissionsRequest.pagination:type_name -> common.v1.Pagination
-	13, // 6: microtask.v1.ReviewRequest.status:type_name -> microtask.v1.SubmissionStatus
-	0,  // 7: microtask.v1.MicroTaskService.Create:input_type -> microtask.v1.CreateMicroTaskRequest
-	1,  // 8: microtask.v1.MicroTaskService.Update:input_type -> microtask.v1.UpdateMicroTaskRequest
-	2,  // 9: microtask.v1.MicroTaskService.Delete:input_type -> microtask.v1.DeleteMicroTaskRequest
-	3,  // 10: microtask.v1.MicroTaskService.Get:input_type -> microtask.v1.GetMicroTaskRequest
-	4,  // 11: microtask.v1.MicroTaskService.List:input_type -> microtask.v1.ListMicroTasksRequest
-	5,  // 12: microtask.v1.MicroTaskService.ListByCompany:input_type -> microtask.v1.ListByCompanyRequest
-	6,  // 13: microtask.v1.MicroTaskService.Apply:input_type -> microtask.v1.ApplyRequest
-	7,  // 14: microtask.v1.MicroTaskService.Submit:input_type -> microtask.v1.SubmitRequest
-	8,  // 15: microtask.v1.MicroTaskService.ListSubmissions:input_type -> microtask.v1.ListSubmissionsRequest
-	9,  // 16: microtask.v1.MicroTaskService.Review:input_type -> microtask.v1.ReviewRequest
-	10, // 17: microtask.v1.MicroTaskService.Create:output_type -> microtask.v1.MicroTask
-	10, // 18: microtask.v1.MicroTaskService.Update:output_type -> microtask.v1.MicroTask
-	14, // 19: microtask.v1.MicroTaskService.Delete:output_type -> common.v1.Empty
-	10, // 20: microtask.v1.MicroTaskService.Get:output_type -> microtask.v1.MicroTask
-	15, // 21: microtask.v1.MicroTaskService.List:output_type -> microtask.v1.MicroTaskList
-	15, // 22: microtask.v1.MicroTaskService.ListByCompany:output_type -> microtask.v1.MicroTaskList
-	10, // 23: microtask.v1.MicroTaskService.Apply:output_type -> microtask.v1.MicroTask
-	16, // 24: microtask.v1.MicroTaskService.Submit:output_type -> microtask.v1.Submission
-	17, // 25: microtask.v1.MicroTaskService.ListSubmissions:output_type -> microtask.v1.SubmissionList
-	16, // 26: microtask.v1.MicroTaskService.Review:output_type -> microtask.v1.Submission
-	17, // [17:27] is the sub-list for method output_type
-	7,  // [7:17] is the sub-list for method input_type
-	7,  // [7:7] is the sub-list for extension type_name
-	7,  // [7:7] is the sub-list for extension extendee
-	0,  // [0:7] is the sub-list for field type_name
+	11, // 0: microtask.v1.CreateMicroTaskRequest.task:type_name -> microtask.v1.MicroTask
+	11, // 1: microtask.v1.UpdateMicroTaskRequest.task:type_name -> microtask.v1.MicroTask
+	12, // 2: microtask.v1.ListMicroTasksRequest.pagination:type_name -> common.v1.Pagination
+	13, // 3: microtask.v1.ListMicroTasksRequest.status:type_name -> microtask.v1.MicroTaskStatus
+	12, // 4: microtask.v1.ListByCompanyRequest.pagination:type_name -> common.v1.Pagination
+	12, // 5: microtask.v1.ListByStudentRequest.pagination:type_name -> common.v1.Pagination
+	13, // 6: microtask.v1.ListByStudentRequest.status:type_name -> microtask.v1.MicroTaskStatus
+	12, // 7: microtask.v1.ListSubmissionsRequest.pagination:type_name -> common.v1.Pagination
+	14, // 8: microtask.v1.ReviewRequest.status:type_name -> microtask.v1.SubmissionStatus
+	0,  // 9: microtask.v1.MicroTaskService.Create:input_type -> microtask.v1.CreateMicroTaskRequest
+	1,  // 10: microtask.v1.MicroTaskService.Update:input_type -> microtask.v1.UpdateMicroTaskRequest
+	2,  // 11: microtask.v1.MicroTaskService.Delete:input_type -> microtask.v1.DeleteMicroTaskRequest
+	3,  // 12: microtask.v1.MicroTaskService.Get:input_type -> microtask.v1.GetMicroTaskRequest
+	4,  // 13: microtask.v1.MicroTaskService.List:input_type -> microtask.v1.ListMicroTasksRequest
+	5,  // 14: microtask.v1.MicroTaskService.ListByCompany:input_type -> microtask.v1.ListByCompanyRequest
+	6,  // 15: microtask.v1.MicroTaskService.ListByStudent:input_type -> microtask.v1.ListByStudentRequest
+	7,  // 16: microtask.v1.MicroTaskService.Apply:input_type -> microtask.v1.ApplyRequest
+	8,  // 17: microtask.v1.MicroTaskService.Submit:input_type -> microtask.v1.SubmitRequest
+	9,  // 18: microtask.v1.MicroTaskService.ListSubmissions:input_type -> microtask.v1.ListSubmissionsRequest
+	10, // 19: microtask.v1.MicroTaskService.Review:input_type -> microtask.v1.ReviewRequest
+	11, // 20: microtask.v1.MicroTaskService.Create:output_type -> microtask.v1.MicroTask
+	11, // 21: microtask.v1.MicroTaskService.Update:output_type -> microtask.v1.MicroTask
+	15, // 22: microtask.v1.MicroTaskService.Delete:output_type -> common.v1.Empty
+	11, // 23: microtask.v1.MicroTaskService.Get:output_type -> microtask.v1.MicroTask
+	16, // 24: microtask.v1.MicroTaskService.List:output_type -> microtask.v1.MicroTaskList
+	16, // 25: microtask.v1.MicroTaskService.ListByCompany:output_type -> microtask.v1.MicroTaskList
+	16, // 26: microtask.v1.MicroTaskService.ListByStudent:output_type -> microtask.v1.MicroTaskList
+	11, // 27: microtask.v1.MicroTaskService.Apply:output_type -> microtask.v1.MicroTask
+	17, // 28: microtask.v1.MicroTaskService.Submit:output_type -> microtask.v1.Submission
+	18, // 29: microtask.v1.MicroTaskService.ListSubmissions:output_type -> microtask.v1.SubmissionList
+	17, // 30: microtask.v1.MicroTaskService.Review:output_type -> microtask.v1.Submission
+	20, // [20:31] is the sub-list for method output_type
+	9,  // [9:20] is the sub-list for method input_type
+	9,  // [9:9] is the sub-list for extension type_name
+	9,  // [9:9] is the sub-list for extension extendee
+	0,  // [0:9] is the sub-list for field type_name
 }
 
 func init() { file_proto_microtask_v1_service_proto_init() }
@@ -699,7 +772,7 @@ func file_proto_microtask_v1_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_microtask_v1_service_proto_rawDesc), len(file_proto_microtask_v1_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   10,
+			NumMessages:   11,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

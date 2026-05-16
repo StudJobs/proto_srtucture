@@ -28,6 +28,10 @@ service MicroTaskService {
   // Список задач, принадлежащих компании HR (для /hr/tasks).
   rpc ListByCompany(ListByCompanyRequest) returns (MicroTaskList);
 
+  // Список задач, взятых конкретным студентом (для «Мои отклики» → «Микрозадачи»).
+  // Возвращает задачи в статусах ASSIGNED/COMPLETED (если status=UNSPECIFIED).
+  rpc ListByStudent(ListByStudentRequest) returns (MicroTaskList);
+
   // Студенческие операции
 
   // Студент берёт задачу: status переходит OPEN → ASSIGNED, assigned_to = student_id.
@@ -70,6 +74,12 @@ message ListMicroTasksRequest {
 message ListByCompanyRequest {
   string company_id = 1;
   common.v1.Pagination pagination = 2;
+}
+
+message ListByStudentRequest {
+  string student_id = 1;
+  common.v1.Pagination pagination = 2;
+  MicroTaskStatus status = 3;  // UNSPECIFIED = вернуть все статусы
 }
 
 message ApplyRequest {
