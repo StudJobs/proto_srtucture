@@ -42,6 +42,7 @@ type Profile struct {
 	VerifiedSkillSlugs       []string               `protobuf:"bytes,15,rep,name=verified_skill_slugs,json=verifiedSkillSlugs,proto3" json:"verified_skill_slugs,omitempty"`                     // Подтверждённые экспертом / approve-нутой микрозадачей
 	ExpertSkillSlugs         []string               `protobuf:"bytes,16,rep,name=expert_skill_slugs,json=expertSkillSlugs,proto3" json:"expert_skill_slugs,omitempty"`                           // Для роли EXPERT — declared экспертиза (без подтверждения)
 	ExpertVerifiedSkillSlugs []string               `protobuf:"bytes,17,rep,name=expert_verified_skill_slugs,json=expertVerifiedSkillSlugs,proto3" json:"expert_verified_skill_slugs,omitempty"` // Подтверждённая тестом экспертиза. Только по этим slug-ам эксперт может ревьюить «проектные» ачивки.
+	IsHidden                 bool                   `protobuf:"varint,18,opt,name=is_hidden,json=isHidden,proto3" json:"is_hidden,omitempty"`                                                    // Студент скрыл свой профиль от других студентов (HR/Owner/Expert всё равно видят).
 	unknownFields            protoimpl.UnknownFields
 	sizeCache                protoimpl.SizeCache
 }
@@ -195,6 +196,13 @@ func (x *Profile) GetExpertVerifiedSkillSlugs() []string {
 	return nil
 }
 
+func (x *Profile) GetIsHidden() bool {
+	if x != nil {
+		return x.IsHidden
+	}
+	return false
+}
+
 // Список профилей с пагинацией
 type ProfileList struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -252,7 +260,7 @@ var File_proto_users_v1_types_proto protoreflect.FileDescriptor
 
 const file_proto_users_v1_types_proto_rawDesc = "" +
 	"\n" +
-	"\x1aproto/users/v1/types.proto\x12\busers.v1\x1a\x1bproto/common/v1/types.proto\"\xbb\x04\n" +
+	"\x1aproto/users/v1/types.proto\x12\busers.v1\x1a\x1bproto/common/v1/types.proto\"\xd8\x04\n" +
 	"\aProfile\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1d\n" +
 	"\n" +
@@ -273,7 +281,8 @@ const file_proto_users_v1_types_proto_rawDesc = "" +
 	"\x06github\x18\x0e \x01(\tR\x06github\x120\n" +
 	"\x14verified_skill_slugs\x18\x0f \x03(\tR\x12verifiedSkillSlugs\x12,\n" +
 	"\x12expert_skill_slugs\x18\x10 \x03(\tR\x10expertSkillSlugs\x12=\n" +
-	"\x1bexpert_verified_skill_slugs\x18\x11 \x03(\tR\x18expertVerifiedSkillSlugs\"{\n" +
+	"\x1bexpert_verified_skill_slugs\x18\x11 \x03(\tR\x18expertVerifiedSkillSlugs\x12\x1b\n" +
+	"\tis_hidden\x18\x12 \x01(\bR\bisHidden\"{\n" +
 	"\vProfileList\x12-\n" +
 	"\bprofiles\x18\x01 \x03(\v2\x11.users.v1.ProfileR\bprofiles\x12=\n" +
 	"\n" +

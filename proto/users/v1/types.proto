@@ -25,6 +25,7 @@ message Profile {
   repeated string verified_skill_slugs = 15; // Подтверждённые экспертом / approve-нутой микрозадачей
   repeated string expert_skill_slugs = 16;   // Для роли EXPERT — declared экспертиза (без подтверждения)
   repeated string expert_verified_skill_slugs = 17; // Подтверждённая тестом экспертиза. Только по этим slug-ам эксперт может ревьюить «проектные» ачивки.
+  bool is_hidden = 18; // Студент скрыл свой профиль от других студентов (HR/Owner/Expert всё равно видят).
 }
 
 // Список профилей с пагинацией
