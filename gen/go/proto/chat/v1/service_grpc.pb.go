@@ -20,11 +20,12 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	ChatService_SendMessage_FullMethodName     = "/chat.v1.ChatService/SendMessage"
-	ChatService_ListMessages_FullMethodName    = "/chat.v1.ChatService/ListMessages"
-	ChatService_ListUserThreads_FullMethodName = "/chat.v1.ChatService/ListUserThreads"
-	ChatService_EditMessage_FullMethodName     = "/chat.v1.ChatService/EditMessage"
-	ChatService_HideThread_FullMethodName      = "/chat.v1.ChatService/HideThread"
+	ChatService_SendMessage_FullMethodName       = "/chat.v1.ChatService/SendMessage"
+	ChatService_ListMessages_FullMethodName      = "/chat.v1.ChatService/ListMessages"
+	ChatService_ListUserThreads_FullMethodName   = "/chat.v1.ChatService/ListUserThreads"
+	ChatService_EditMessage_FullMethodName       = "/chat.v1.ChatService/EditMessage"
+	ChatService_HideThread_FullMethodName        = "/chat.v1.ChatService/HideThread"
+	ChatService_ListHiddenThreads_FullMethodName = "/chat.v1.ChatService/ListHiddenThreads"
 )
 
 // ChatServiceClient is the client API for ChatService service.
@@ -41,6 +42,8 @@ type ChatServiceClient interface {
 	EditMessage(ctx context.Context, in *EditMessageRequest, opts ...grpc.CallOption) (*Message, error)
 	// Скрыть тред со своей стороны (собеседник по-прежнему видит — анти-зачистка).
 	HideThread(ctx context.Context, in *HideThreadRequest, opts ...grpc.CallOption) (*v1.Empty, error)
+	// Получить список thread_id, которые юзер скрыл у себя.
+	ListHiddenThreads(ctx context.Context, in *ListHiddenThreadsRequest, opts ...grpc.CallOption) (*HiddenThreadList, error)
 }
 
 type chatServiceClient struct {
@@ -101,6 +104,16 @@ func (c *chatServiceClient) HideThread(ctx context.Context, in *HideThreadReques
 	return out, nil
 }
 
+func (c *chatServiceClient) ListHiddenThreads(ctx context.Context, in *ListHiddenThreadsRequest, opts ...grpc.CallOption) (*HiddenThreadList, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(HiddenThreadList)
+	err := c.cc.Invoke(ctx, ChatService_ListHiddenThreads_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ChatServiceServer is the server API for ChatService service.
 // All implementations must embed UnimplementedChatServiceServer
 // for forward compatibility.
@@ -115,6 +128,8 @@ type ChatServiceServer interface {
 	EditMessage(context.Context, *EditMessageRequest) (*Message, error)
 	// Скрыть тред со своей стороны (собеседник по-прежнему видит — анти-зачистка).
 	HideThread(context.Context, *HideThreadRequest) (*v1.Empty, error)
+	// Получить список thread_id, которые юзер скрыл у себя.
+	ListHiddenThreads(context.Context, *ListHiddenThreadsRequest) (*HiddenThreadList, error)
 	mustEmbedUnimplementedChatServiceServer()
 }
 
@@ -139,6 +154,9 @@ func (UnimplementedChatServiceServer) EditMessage(context.Context, *EditMessageR
 }
 func (UnimplementedChatServiceServer) HideThread(context.Context, *HideThreadRequest) (*v1.Empty, error) {
 	return nil, status.Error(codes.Unimplemented, "method HideThread not implemented")
+}
+func (UnimplementedChatServiceServer) ListHiddenThreads(context.Context, *ListHiddenThreadsRequest) (*HiddenThreadList, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListHiddenThreads not implemented")
 }
 func (UnimplementedChatServiceServer) mustEmbedUnimplementedChatServiceServer() {}
 func (UnimplementedChatServiceServer) testEmbeddedByValue()                     {}
@@ -251,6 +269,24 @@ func _ChatService_HideThread_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ChatService_ListHiddenThreads_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListHiddenThreadsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChatServiceServer).ListHiddenThreads(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ChatService_ListHiddenThreads_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatServiceServer).ListHiddenThreads(ctx, req.(*ListHiddenThreadsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ChatService_ServiceDesc is the grpc.ServiceDesc for ChatService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -277,6 +313,10 @@ var ChatService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "HideThread",
 			Handler:    _ChatService_HideThread_Handler,
+		},
+		{
+			MethodName: "ListHiddenThreads",
+			Handler:    _ChatService_ListHiddenThreads_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

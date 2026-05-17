@@ -22,6 +22,17 @@ service ChatService {
 
   // Скрыть тред со своей стороны (собеседник по-прежнему видит — анти-зачистка).
   rpc HideThread(HideThreadRequest) returns (common.v1.Empty);
+
+  // Получить список thread_id, которые юзер скрыл у себя.
+  rpc ListHiddenThreads(ListHiddenThreadsRequest) returns (HiddenThreadList);
+}
+
+message ListHiddenThreadsRequest {
+  string user_id = 1;
+}
+
+message HiddenThreadList {
+  repeated string thread_ids = 1;
 }
 
 message EditMessageRequest {
