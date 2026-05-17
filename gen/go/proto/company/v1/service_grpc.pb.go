@@ -20,15 +20,16 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	CompanyService_NewCompany_FullMethodName          = "/company.v1.CompanyService/NewCompany"
-	CompanyService_UpdateCompany_FullMethodName       = "/company.v1.CompanyService/UpdateCompany"
-	CompanyService_DeleteCompany_FullMethodName       = "/company.v1.CompanyService/DeleteCompany"
-	CompanyService_GetCompany_FullMethodName          = "/company.v1.CompanyService/GetCompany"
-	CompanyService_GetAllCompanies_FullMethodName     = "/company.v1.CompanyService/GetAllCompanies"
-	CompanyService_ApplyMembership_FullMethodName     = "/company.v1.CompanyService/ApplyMembership"
-	CompanyService_ReviewMembership_FullMethodName    = "/company.v1.CompanyService/ReviewMembership"
-	CompanyService_ListMembers_FullMethodName         = "/company.v1.CompanyService/ListMembers"
-	CompanyService_GetMembershipByUser_FullMethodName = "/company.v1.CompanyService/GetMembershipByUser"
+	CompanyService_NewCompany_FullMethodName            = "/company.v1.CompanyService/NewCompany"
+	CompanyService_UpdateCompany_FullMethodName         = "/company.v1.CompanyService/UpdateCompany"
+	CompanyService_DeleteCompany_FullMethodName         = "/company.v1.CompanyService/DeleteCompany"
+	CompanyService_GetCompany_FullMethodName            = "/company.v1.CompanyService/GetCompany"
+	CompanyService_GetAllCompanies_FullMethodName       = "/company.v1.CompanyService/GetAllCompanies"
+	CompanyService_ApplyMembership_FullMethodName       = "/company.v1.CompanyService/ApplyMembership"
+	CompanyService_ReviewMembership_FullMethodName      = "/company.v1.CompanyService/ReviewMembership"
+	CompanyService_ListMembers_FullMethodName           = "/company.v1.CompanyService/ListMembers"
+	CompanyService_GetMembershipByUser_FullMethodName   = "/company.v1.CompanyService/GetMembershipByUser"
+	CompanyService_ListMembershipsByUser_FullMethodName = "/company.v1.CompanyService/ListMembershipsByUser"
 )
 
 // CompanyServiceClient is the client API for CompanyService service.
@@ -48,6 +49,9 @@ type CompanyServiceClient interface {
 	ListMembers(ctx context.Context, in *ListMembersRequest, opts ...grpc.CallOption) (*CompanyMemberList, error)
 	// Найти companyID, в которой пользователь подтверждённый HR.
 	GetMembershipByUser(ctx context.Context, in *GetMembershipByUserRequest, opts ...grpc.CallOption) (*CompanyMember, error)
+	// Все memberships пользователя (включая PENDING) — HR может быть в очереди
+	// на approve сразу в нескольких компаниях; UI HRMembership показывает список.
+	ListMembershipsByUser(ctx context.Context, in *ListMembershipsByUserRequest, opts ...grpc.CallOption) (*CompanyMemberList, error)
 }
 
 type companyServiceClient struct {
@@ -148,6 +152,16 @@ func (c *companyServiceClient) GetMembershipByUser(ctx context.Context, in *GetM
 	return out, nil
 }
 
+func (c *companyServiceClient) ListMembershipsByUser(ctx context.Context, in *ListMembershipsByUserRequest, opts ...grpc.CallOption) (*CompanyMemberList, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CompanyMemberList)
+	err := c.cc.Invoke(ctx, CompanyService_ListMembershipsByUser_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // CompanyServiceServer is the server API for CompanyService service.
 // All implementations must embed UnimplementedCompanyServiceServer
 // for forward compatibility.
@@ -165,6 +179,9 @@ type CompanyServiceServer interface {
 	ListMembers(context.Context, *ListMembersRequest) (*CompanyMemberList, error)
 	// Найти companyID, в которой пользователь подтверждённый HR.
 	GetMembershipByUser(context.Context, *GetMembershipByUserRequest) (*CompanyMember, error)
+	// Все memberships пользователя (включая PENDING) — HR может быть в очереди
+	// на approve сразу в нескольких компаниях; UI HRMembership показывает список.
+	ListMembershipsByUser(context.Context, *ListMembershipsByUserRequest) (*CompanyMemberList, error)
 	mustEmbedUnimplementedCompanyServiceServer()
 }
 
@@ -201,6 +218,9 @@ func (UnimplementedCompanyServiceServer) ListMembers(context.Context, *ListMembe
 }
 func (UnimplementedCompanyServiceServer) GetMembershipByUser(context.Context, *GetMembershipByUserRequest) (*CompanyMember, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetMembershipByUser not implemented")
+}
+func (UnimplementedCompanyServiceServer) ListMembershipsByUser(context.Context, *ListMembershipsByUserRequest) (*CompanyMemberList, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListMembershipsByUser not implemented")
 }
 func (UnimplementedCompanyServiceServer) mustEmbedUnimplementedCompanyServiceServer() {}
 func (UnimplementedCompanyServiceServer) testEmbeddedByValue()                        {}
@@ -385,6 +405,24 @@ func _CompanyService_GetMembershipByUser_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CompanyService_ListMembershipsByUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListMembershipsByUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CompanyServiceServer).ListMembershipsByUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CompanyService_ListMembershipsByUser_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CompanyServiceServer).ListMembershipsByUser(ctx, req.(*ListMembershipsByUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // CompanyService_ServiceDesc is the grpc.ServiceDesc for CompanyService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -427,6 +465,10 @@ var CompanyService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetMembershipByUser",
 			Handler:    _CompanyService_GetMembershipByUser_Handler,
+		},
+		{
+			MethodName: "ListMembershipsByUser",
+			Handler:    _CompanyService_ListMembershipsByUser_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

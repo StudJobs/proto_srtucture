@@ -22,6 +22,9 @@ service CompanyService {
   rpc ListMembers(ListMembersRequest) returns (CompanyMemberList);
   // Найти companyID, в которой пользователь подтверждённый HR.
   rpc GetMembershipByUser(GetMembershipByUserRequest) returns (CompanyMember);
+  // Все memberships пользователя (включая PENDING) — HR может быть в очереди
+  // на approve сразу в нескольких компаниях; UI HRMembership показывает список.
+  rpc ListMembershipsByUser(ListMembershipsByUserRequest) returns (CompanyMemberList);
 }
 
 message NewCompanyRequest {
@@ -89,4 +92,10 @@ message ListMembersRequest {
 
 message GetMembershipByUserRequest {
   string user_id = 1;
+}
+
+message ListMembershipsByUserRequest {
+  string user_id = 1;
+  // 0 = все (по умолчанию вернёт PENDING+APPROVED, REJECTED исключаются).
+  MembershipStatus status = 2;
 }

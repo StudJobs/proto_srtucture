@@ -672,6 +672,59 @@ func (x *GetMembershipByUserRequest) GetUserId() string {
 	return ""
 }
 
+type ListMembershipsByUserRequest struct {
+	state  protoimpl.MessageState `protogen:"open.v1"`
+	UserId string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	// 0 = все (по умолчанию вернёт PENDING+APPROVED, REJECTED исключаются).
+	Status        MembershipStatus `protobuf:"varint,2,opt,name=status,proto3,enum=company.v1.MembershipStatus" json:"status,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListMembershipsByUserRequest) Reset() {
+	*x = ListMembershipsByUserRequest{}
+	mi := &file_proto_company_v1_service_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListMembershipsByUserRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListMembershipsByUserRequest) ProtoMessage() {}
+
+func (x *ListMembershipsByUserRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_company_v1_service_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListMembershipsByUserRequest.ProtoReflect.Descriptor instead.
+func (*ListMembershipsByUserRequest) Descriptor() ([]byte, []int) {
+	return file_proto_company_v1_service_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *ListMembershipsByUserRequest) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *ListMembershipsByUserRequest) GetStatus() MembershipStatus {
+	if x != nil {
+		return x.Status
+	}
+	return MembershipStatus_MEMBERSHIP_STATUS_UNSPECIFIED
+}
+
 var File_proto_company_v1_service_proto protoreflect.FileDescriptor
 
 const file_proto_company_v1_service_proto_rawDesc = "" +
@@ -720,12 +773,15 @@ const file_proto_company_v1_service_proto_rawDesc = "" +
 	"company_id\x18\x01 \x01(\tR\tcompanyId\x124\n" +
 	"\x06status\x18\x02 \x01(\x0e2\x1c.company.v1.MembershipStatusR\x06status\"5\n" +
 	"\x1aGetMembershipByUserRequest\x12\x17\n" +
-	"\auser_id\x18\x01 \x01(\tR\x06userId*\x94\x01\n" +
+	"\auser_id\x18\x01 \x01(\tR\x06userId\"m\n" +
+	"\x1cListMembershipsByUserRequest\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\tR\x06userId\x124\n" +
+	"\x06status\x18\x02 \x01(\x0e2\x1c.company.v1.MembershipStatusR\x06status*\x94\x01\n" +
 	"\x10MembershipStatus\x12!\n" +
 	"\x1dMEMBERSHIP_STATUS_UNSPECIFIED\x10\x00\x12\x1d\n" +
 	"\x19MEMBERSHIP_STATUS_PENDING\x10\x01\x12\x1e\n" +
 	"\x1aMEMBERSHIP_STATUS_APPROVED\x10\x02\x12\x1e\n" +
-	"\x1aMEMBERSHIP_STATUS_REJECTED\x10\x032\xbf\x05\n" +
+	"\x1aMEMBERSHIP_STATUS_REJECTED\x10\x032\xa1\x06\n" +
 	"\x0eCompanyService\x12@\n" +
 	"\n" +
 	"NewCompany\x12\x1d.company.v1.NewCompanyRequest\x1a\x13.company.v1.Company\x12F\n" +
@@ -737,7 +793,8 @@ const file_proto_company_v1_service_proto_rawDesc = "" +
 	"\x0fApplyMembership\x12\".company.v1.ApplyMembershipRequest\x1a\x19.company.v1.CompanyMember\x12R\n" +
 	"\x10ReviewMembership\x12#.company.v1.ReviewMembershipRequest\x1a\x19.company.v1.CompanyMember\x12L\n" +
 	"\vListMembers\x12\x1e.company.v1.ListMembersRequest\x1a\x1d.company.v1.CompanyMemberList\x12X\n" +
-	"\x13GetMembershipByUser\x12&.company.v1.GetMembershipByUserRequest\x1a\x19.company.v1.CompanyMemberB=Z;github.com/StudJobs/proto_srtucture/gen/go/proto/company/v1b\x06proto3"
+	"\x13GetMembershipByUser\x12&.company.v1.GetMembershipByUserRequest\x1a\x19.company.v1.CompanyMember\x12`\n" +
+	"\x15ListMembershipsByUser\x12(.company.v1.ListMembershipsByUserRequest\x1a\x1d.company.v1.CompanyMemberListB=Z;github.com/StudJobs/proto_srtucture/gen/go/proto/company/v1b\x06proto3"
 
 var (
 	file_proto_company_v1_service_proto_rawDescOnce sync.Once
@@ -752,56 +809,60 @@ func file_proto_company_v1_service_proto_rawDescGZIP() []byte {
 }
 
 var file_proto_company_v1_service_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_proto_company_v1_service_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
+var file_proto_company_v1_service_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
 var file_proto_company_v1_service_proto_goTypes = []any{
-	(MembershipStatus)(0),              // 0: company.v1.MembershipStatus
-	(*NewCompanyRequest)(nil),          // 1: company.v1.NewCompanyRequest
-	(*UpdateCompanyRequest)(nil),       // 2: company.v1.UpdateCompanyRequest
-	(*DeleteCompanyRequest)(nil),       // 3: company.v1.DeleteCompanyRequest
-	(*GetCompanyRequest)(nil),          // 4: company.v1.GetCompanyRequest
-	(*GetAllCompaniesRequest)(nil),     // 5: company.v1.GetAllCompaniesRequest
-	(*CompanyMember)(nil),              // 6: company.v1.CompanyMember
-	(*CompanyMemberList)(nil),          // 7: company.v1.CompanyMemberList
-	(*ApplyMembershipRequest)(nil),     // 8: company.v1.ApplyMembershipRequest
-	(*ReviewMembershipRequest)(nil),    // 9: company.v1.ReviewMembershipRequest
-	(*ListMembersRequest)(nil),         // 10: company.v1.ListMembersRequest
-	(*GetMembershipByUserRequest)(nil), // 11: company.v1.GetMembershipByUserRequest
-	(*Company)(nil),                    // 12: company.v1.Company
-	(*v1.Pagination)(nil),              // 13: common.v1.Pagination
-	(*v1.Empty)(nil),                   // 14: common.v1.Empty
-	(*CompanyList)(nil),                // 15: company.v1.CompanyList
+	(MembershipStatus)(0),                // 0: company.v1.MembershipStatus
+	(*NewCompanyRequest)(nil),            // 1: company.v1.NewCompanyRequest
+	(*UpdateCompanyRequest)(nil),         // 2: company.v1.UpdateCompanyRequest
+	(*DeleteCompanyRequest)(nil),         // 3: company.v1.DeleteCompanyRequest
+	(*GetCompanyRequest)(nil),            // 4: company.v1.GetCompanyRequest
+	(*GetAllCompaniesRequest)(nil),       // 5: company.v1.GetAllCompaniesRequest
+	(*CompanyMember)(nil),                // 6: company.v1.CompanyMember
+	(*CompanyMemberList)(nil),            // 7: company.v1.CompanyMemberList
+	(*ApplyMembershipRequest)(nil),       // 8: company.v1.ApplyMembershipRequest
+	(*ReviewMembershipRequest)(nil),      // 9: company.v1.ReviewMembershipRequest
+	(*ListMembersRequest)(nil),           // 10: company.v1.ListMembersRequest
+	(*GetMembershipByUserRequest)(nil),   // 11: company.v1.GetMembershipByUserRequest
+	(*ListMembershipsByUserRequest)(nil), // 12: company.v1.ListMembershipsByUserRequest
+	(*Company)(nil),                      // 13: company.v1.Company
+	(*v1.Pagination)(nil),                // 14: common.v1.Pagination
+	(*v1.Empty)(nil),                     // 15: common.v1.Empty
+	(*CompanyList)(nil),                  // 16: company.v1.CompanyList
 }
 var file_proto_company_v1_service_proto_depIdxs = []int32{
-	12, // 0: company.v1.NewCompanyRequest.company:type_name -> company.v1.Company
-	12, // 1: company.v1.UpdateCompanyRequest.company:type_name -> company.v1.Company
-	13, // 2: company.v1.GetAllCompaniesRequest.pagination:type_name -> common.v1.Pagination
+	13, // 0: company.v1.NewCompanyRequest.company:type_name -> company.v1.Company
+	13, // 1: company.v1.UpdateCompanyRequest.company:type_name -> company.v1.Company
+	14, // 2: company.v1.GetAllCompaniesRequest.pagination:type_name -> common.v1.Pagination
 	0,  // 3: company.v1.CompanyMember.status:type_name -> company.v1.MembershipStatus
 	6,  // 4: company.v1.CompanyMemberList.members:type_name -> company.v1.CompanyMember
 	0,  // 5: company.v1.ReviewMembershipRequest.status:type_name -> company.v1.MembershipStatus
 	0,  // 6: company.v1.ListMembersRequest.status:type_name -> company.v1.MembershipStatus
-	1,  // 7: company.v1.CompanyService.NewCompany:input_type -> company.v1.NewCompanyRequest
-	2,  // 8: company.v1.CompanyService.UpdateCompany:input_type -> company.v1.UpdateCompanyRequest
-	3,  // 9: company.v1.CompanyService.DeleteCompany:input_type -> company.v1.DeleteCompanyRequest
-	4,  // 10: company.v1.CompanyService.GetCompany:input_type -> company.v1.GetCompanyRequest
-	5,  // 11: company.v1.CompanyService.GetAllCompanies:input_type -> company.v1.GetAllCompaniesRequest
-	8,  // 12: company.v1.CompanyService.ApplyMembership:input_type -> company.v1.ApplyMembershipRequest
-	9,  // 13: company.v1.CompanyService.ReviewMembership:input_type -> company.v1.ReviewMembershipRequest
-	10, // 14: company.v1.CompanyService.ListMembers:input_type -> company.v1.ListMembersRequest
-	11, // 15: company.v1.CompanyService.GetMembershipByUser:input_type -> company.v1.GetMembershipByUserRequest
-	12, // 16: company.v1.CompanyService.NewCompany:output_type -> company.v1.Company
-	12, // 17: company.v1.CompanyService.UpdateCompany:output_type -> company.v1.Company
-	14, // 18: company.v1.CompanyService.DeleteCompany:output_type -> common.v1.Empty
-	12, // 19: company.v1.CompanyService.GetCompany:output_type -> company.v1.Company
-	15, // 20: company.v1.CompanyService.GetAllCompanies:output_type -> company.v1.CompanyList
-	6,  // 21: company.v1.CompanyService.ApplyMembership:output_type -> company.v1.CompanyMember
-	6,  // 22: company.v1.CompanyService.ReviewMembership:output_type -> company.v1.CompanyMember
-	7,  // 23: company.v1.CompanyService.ListMembers:output_type -> company.v1.CompanyMemberList
-	6,  // 24: company.v1.CompanyService.GetMembershipByUser:output_type -> company.v1.CompanyMember
-	16, // [16:25] is the sub-list for method output_type
-	7,  // [7:16] is the sub-list for method input_type
-	7,  // [7:7] is the sub-list for extension type_name
-	7,  // [7:7] is the sub-list for extension extendee
-	0,  // [0:7] is the sub-list for field type_name
+	0,  // 7: company.v1.ListMembershipsByUserRequest.status:type_name -> company.v1.MembershipStatus
+	1,  // 8: company.v1.CompanyService.NewCompany:input_type -> company.v1.NewCompanyRequest
+	2,  // 9: company.v1.CompanyService.UpdateCompany:input_type -> company.v1.UpdateCompanyRequest
+	3,  // 10: company.v1.CompanyService.DeleteCompany:input_type -> company.v1.DeleteCompanyRequest
+	4,  // 11: company.v1.CompanyService.GetCompany:input_type -> company.v1.GetCompanyRequest
+	5,  // 12: company.v1.CompanyService.GetAllCompanies:input_type -> company.v1.GetAllCompaniesRequest
+	8,  // 13: company.v1.CompanyService.ApplyMembership:input_type -> company.v1.ApplyMembershipRequest
+	9,  // 14: company.v1.CompanyService.ReviewMembership:input_type -> company.v1.ReviewMembershipRequest
+	10, // 15: company.v1.CompanyService.ListMembers:input_type -> company.v1.ListMembersRequest
+	11, // 16: company.v1.CompanyService.GetMembershipByUser:input_type -> company.v1.GetMembershipByUserRequest
+	12, // 17: company.v1.CompanyService.ListMembershipsByUser:input_type -> company.v1.ListMembershipsByUserRequest
+	13, // 18: company.v1.CompanyService.NewCompany:output_type -> company.v1.Company
+	13, // 19: company.v1.CompanyService.UpdateCompany:output_type -> company.v1.Company
+	15, // 20: company.v1.CompanyService.DeleteCompany:output_type -> common.v1.Empty
+	13, // 21: company.v1.CompanyService.GetCompany:output_type -> company.v1.Company
+	16, // 22: company.v1.CompanyService.GetAllCompanies:output_type -> company.v1.CompanyList
+	6,  // 23: company.v1.CompanyService.ApplyMembership:output_type -> company.v1.CompanyMember
+	6,  // 24: company.v1.CompanyService.ReviewMembership:output_type -> company.v1.CompanyMember
+	7,  // 25: company.v1.CompanyService.ListMembers:output_type -> company.v1.CompanyMemberList
+	6,  // 26: company.v1.CompanyService.GetMembershipByUser:output_type -> company.v1.CompanyMember
+	7,  // 27: company.v1.CompanyService.ListMembershipsByUser:output_type -> company.v1.CompanyMemberList
+	18, // [18:28] is the sub-list for method output_type
+	8,  // [8:18] is the sub-list for method input_type
+	8,  // [8:8] is the sub-list for extension type_name
+	8,  // [8:8] is the sub-list for extension extendee
+	0,  // [0:8] is the sub-list for field type_name
 }
 
 func init() { file_proto_company_v1_service_proto_init() }
@@ -816,7 +877,7 @@ func file_proto_company_v1_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_company_v1_service_proto_rawDesc), len(file_proto_company_v1_service_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   11,
+			NumMessages:   12,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
