@@ -8,6 +8,7 @@ package v1
 
 import (
 	context "context"
+	v1 "github.com/StudJobs/proto_srtucture/gen/go/proto/common/v1"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -22,6 +23,8 @@ const (
 	ChatService_SendMessage_FullMethodName     = "/chat.v1.ChatService/SendMessage"
 	ChatService_ListMessages_FullMethodName    = "/chat.v1.ChatService/ListMessages"
 	ChatService_ListUserThreads_FullMethodName = "/chat.v1.ChatService/ListUserThreads"
+	ChatService_EditMessage_FullMethodName     = "/chat.v1.ChatService/EditMessage"
+	ChatService_HideThread_FullMethodName      = "/chat.v1.ChatService/HideThread"
 )
 
 // ChatServiceClient is the client API for ChatService service.
@@ -34,6 +37,10 @@ type ChatServiceClient interface {
 	ListMessages(ctx context.Context, in *ListMessagesRequest, opts ...grpc.CallOption) (*MessageList, error)
 	// Список тредов конкретного пользователя (для inbox-страницы — отложено в MVP).
 	ListUserThreads(ctx context.Context, in *ListUserThreadsRequest, opts ...grpc.CallOption) (*ThreadList, error)
+	// Редактировать своё сообщение. Проверка авторства: from_user_id должен совпасть.
+	EditMessage(ctx context.Context, in *EditMessageRequest, opts ...grpc.CallOption) (*Message, error)
+	// Скрыть тред со своей стороны (собеседник по-прежнему видит — анти-зачистка).
+	HideThread(ctx context.Context, in *HideThreadRequest, opts ...grpc.CallOption) (*v1.Empty, error)
 }
 
 type chatServiceClient struct {
@@ -74,6 +81,26 @@ func (c *chatServiceClient) ListUserThreads(ctx context.Context, in *ListUserThr
 	return out, nil
 }
 
+func (c *chatServiceClient) EditMessage(ctx context.Context, in *EditMessageRequest, opts ...grpc.CallOption) (*Message, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Message)
+	err := c.cc.Invoke(ctx, ChatService_EditMessage_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatServiceClient) HideThread(ctx context.Context, in *HideThreadRequest, opts ...grpc.CallOption) (*v1.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(v1.Empty)
+	err := c.cc.Invoke(ctx, ChatService_HideThread_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ChatServiceServer is the server API for ChatService service.
 // All implementations must embed UnimplementedChatServiceServer
 // for forward compatibility.
@@ -84,6 +111,10 @@ type ChatServiceServer interface {
 	ListMessages(context.Context, *ListMessagesRequest) (*MessageList, error)
 	// Список тредов конкретного пользователя (для inbox-страницы — отложено в MVP).
 	ListUserThreads(context.Context, *ListUserThreadsRequest) (*ThreadList, error)
+	// Редактировать своё сообщение. Проверка авторства: from_user_id должен совпасть.
+	EditMessage(context.Context, *EditMessageRequest) (*Message, error)
+	// Скрыть тред со своей стороны (собеседник по-прежнему видит — анти-зачистка).
+	HideThread(context.Context, *HideThreadRequest) (*v1.Empty, error)
 	mustEmbedUnimplementedChatServiceServer()
 }
 
@@ -102,6 +133,12 @@ func (UnimplementedChatServiceServer) ListMessages(context.Context, *ListMessage
 }
 func (UnimplementedChatServiceServer) ListUserThreads(context.Context, *ListUserThreadsRequest) (*ThreadList, error) {
 	return nil, status.Error(codes.Unimplemented, "method ListUserThreads not implemented")
+}
+func (UnimplementedChatServiceServer) EditMessage(context.Context, *EditMessageRequest) (*Message, error) {
+	return nil, status.Error(codes.Unimplemented, "method EditMessage not implemented")
+}
+func (UnimplementedChatServiceServer) HideThread(context.Context, *HideThreadRequest) (*v1.Empty, error) {
+	return nil, status.Error(codes.Unimplemented, "method HideThread not implemented")
 }
 func (UnimplementedChatServiceServer) mustEmbedUnimplementedChatServiceServer() {}
 func (UnimplementedChatServiceServer) testEmbeddedByValue()                     {}
@@ -178,6 +215,42 @@ func _ChatService_ListUserThreads_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ChatService_EditMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EditMessageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChatServiceServer).EditMessage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ChatService_EditMessage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatServiceServer).EditMessage(ctx, req.(*EditMessageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ChatService_HideThread_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HideThreadRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChatServiceServer).HideThread(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ChatService_HideThread_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatServiceServer).HideThread(ctx, req.(*HideThreadRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ChatService_ServiceDesc is the grpc.ServiceDesc for ChatService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -196,6 +269,14 @@ var ChatService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListUserThreads",
 			Handler:    _ChatService_ListUserThreads_Handler,
+		},
+		{
+			MethodName: "EditMessage",
+			Handler:    _ChatService_EditMessage_Handler,
+		},
+		{
+			MethodName: "HideThread",
+			Handler:    _ChatService_HideThread_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -16,6 +16,23 @@ service ChatService {
 
   // Список тредов конкретного пользователя (для inbox-страницы — отложено в MVP).
   rpc ListUserThreads(ListUserThreadsRequest) returns (ThreadList);
+
+  // Редактировать своё сообщение. Проверка авторства: from_user_id должен совпасть.
+  rpc EditMessage(EditMessageRequest) returns (Message);
+
+  // Скрыть тред со своей стороны (собеседник по-прежнему видит — анти-зачистка).
+  rpc HideThread(HideThreadRequest) returns (common.v1.Empty);
+}
+
+message EditMessageRequest {
+  string message_id = 1;
+  string from_user_id = 2;
+  string body = 3;
+}
+
+message HideThreadRequest {
+  string user_id = 1;
+  string thread_id = 2;
 }
 
 message SendMessageRequest {

@@ -37,6 +37,7 @@ type Message struct {
 	FromUserId    string                 `protobuf:"bytes,3,opt,name=from_user_id,json=fromUserId,proto3" json:"from_user_id,omitempty"`
 	Body          string                 `protobuf:"bytes,4,opt,name=body,proto3" json:"body,omitempty"`
 	CreatedAt     string                 `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	EditedAt      string                 `protobuf:"bytes,6,opt,name=edited_at,json=editedAt,proto3" json:"edited_at,omitempty"` // если сообщение редактировалось
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -106,6 +107,13 @@ func (x *Message) GetCreatedAt() string {
 	return ""
 }
 
+func (x *Message) GetEditedAt() string {
+	if x != nil {
+		return x.EditedAt
+	}
+	return ""
+}
+
 type MessageList struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Messages      []*Message             `protobuf:"bytes,1,rep,name=messages,proto3" json:"messages,omitempty"`
@@ -162,7 +170,7 @@ var File_proto_chat_v1_types_proto protoreflect.FileDescriptor
 
 const file_proto_chat_v1_types_proto_rawDesc = "" +
 	"\n" +
-	"\x19proto/chat/v1/types.proto\x12\achat.v1\x1a\x1bproto/common/v1/types.proto\"\x8b\x01\n" +
+	"\x19proto/chat/v1/types.proto\x12\achat.v1\x1a\x1bproto/common/v1/types.proto\"\xa8\x01\n" +
 	"\aMessage\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1b\n" +
 	"\tthread_id\x18\x02 \x01(\tR\bthreadId\x12 \n" +
@@ -170,7 +178,8 @@ const file_proto_chat_v1_types_proto_rawDesc = "" +
 	"fromUserId\x12\x12\n" +
 	"\x04body\x18\x04 \x01(\tR\x04body\x12\x1d\n" +
 	"\n" +
-	"created_at\x18\x05 \x01(\tR\tcreatedAt\"z\n" +
+	"created_at\x18\x05 \x01(\tR\tcreatedAt\x12\x1b\n" +
+	"\tedited_at\x18\x06 \x01(\tR\beditedAt\"z\n" +
 	"\vMessageList\x12,\n" +
 	"\bmessages\x18\x01 \x03(\v2\x10.chat.v1.MessageR\bmessages\x12=\n" +
 	"\n" +

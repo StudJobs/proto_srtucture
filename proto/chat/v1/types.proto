@@ -18,6 +18,7 @@ message Message {
   string from_user_id = 3;
   string body = 4;
   string created_at = 5;
+  string edited_at = 6; // если сообщение редактировалось
 }
 
 message MessageList {
